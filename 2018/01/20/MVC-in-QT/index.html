@@ -6,17 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="content [author[source]] [link] [source_link_title]">
-<meta name="keywords" content="PS3,Games">
+    <meta name="description" content="Qt是一种跨平台的C++框架，本文结合作者经验，总结了MVC在QT的具体实施细节。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How Hexo">
-<meta property="og:url" content="http://github.com/lsj9383/2018/01/18/How-Hexo/index.html">
+<meta property="og:title" content="MVC in QT">
+<meta property="og:url" content="http://github.com/lsj9383/2018/01/20/MVC-in-QT/index.html">
 <meta property="og:site_name" content="Code Love Philosophy">
-<meta property="og:description" content="content [author[source]] [link] [source_link_title]">
-<meta property="og:updated_time" content="2018-01-19T11:32:08.925Z">
+<meta property="og:description" content="Qt是一种跨平台的C++框架，本文结合作者经验，总结了MVC在QT的具体实施细节。">
+<meta property="og:updated_time" content="2018-01-19T17:43:59.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How Hexo">
-<meta name="twitter:description" content="content [author[source]] [link] [source_link_title]">
+<meta name="twitter:title" content="MVC in QT">
+<meta name="twitter:description" content="Qt是一种跨平台的C++框架，本文结合作者经验，总结了MVC在QT的具体实施细节。">
     
     
         
@@ -36,7 +35,7 @@
         
     
     <!-- title -->
-    <title>How Hexo</title>
+    <title>MVC in QT</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss -->
@@ -68,10 +67,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/01/19/test/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2018/01/18/hello-world/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/01/20/How-to-Start-Hexo/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -84,16 +81,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/01/18/How-Hexo/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&text=How Hexo"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&is_video=false&description=How Hexo"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=How Hexo&body=Check out this article: http://github.com/lsj9383/2018/01/18/How-Hexo/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&name=How Hexo&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/01/20/MVC-in-QT/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&text=MVC in QT"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&is_video=false&description=MVC in QT"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MVC in QT&body=Check out this article: http://github.com/lsj9383/2018/01/20/MVC-in-QT/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&name=MVC in QT&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -110,7 +107,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        How Hexo
+        MVC in QT
     </h1>
 
 
@@ -121,24 +118,18 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2018-01-18T13:45:29.000Z" itemprop="datePublished">2018-01-18</time>
+        <time datetime="2018-01-19T17:22:16.000Z" itemprop="datePublished">2018-01-20</time>
     </div>
 
 
       
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Games/">Games</a>, <a class="tag-link" href="/tags/PS3/">PS3</a>
-    </div>
-
 
     </div>
   </header>
   
 
   <div class="content" itemprop="articleBody">
-    <blockquote><p>content</p>
-<footer><strong>[author[</strong><cite>source]] [link] [source_link_title]</cite></footer></blockquote>
+    <p>Qt是一种跨平台的C++框架，本文结合作者经验，总结了MVC在QT的具体实施细节。</p>
 
   </div>
 </article>
@@ -170,16 +161,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/01/18/How-Hexo/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&text=How Hexo"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&is_video=false&description=How Hexo"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=How Hexo&body=Check out this article: http://github.com/lsj9383/2018/01/18/How-Hexo/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&title=How Hexo"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/01/18/How-Hexo/&name=How Hexo&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/01/20/MVC-in-QT/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&text=MVC in QT"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&is_video=false&description=MVC in QT"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MVC in QT&body=Check out this article: http://github.com/lsj9383/2018/01/20/MVC-in-QT/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&title=MVC in QT"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/01/20/MVC-in-QT/&name=MVC in QT&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
