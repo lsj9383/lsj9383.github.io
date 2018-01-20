@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://github.com/lsj9383/2018/01/20/How-to-Start-Hexo/index.html">
 <meta property="og:site_name" content="Code Love Philosophy">
 <meta property="og:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Page的解释：  GitHub Pages is designed to">
-<meta property="og:updated_time" content="2018-01-20T05:03:19.358Z">
+<meta property="og:updated_time" content="2018-01-20T05:40:47.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to Start Hexo">
 <meta name="twitter:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Page的解释：  GitHub Pages is designed to">
@@ -138,7 +138,7 @@
 <p>GitHub Pages is designed to host your personal, organization, or project pages directly from a GitHub repository.</p>
 </blockquote>
 <p>另外，GitHub Pages的使用是受限的, 请参考<a href="https://help.github.com/articles/what-is-github-pages/#usage-limits" target="_blank" rel="noopener">此处</a>。不用担心，一般来说完全足够我们使用了。</p>
-<h2 id="一、GitHub配置"><a href="#一、GitHub配置" class="headerlink" title="一、GitHub配置"></a>一、GitHub配置</h2><h4 id="1-创建仓库"><a href="#1-创建仓库" class="headerlink" title="1.创建仓库"></a>1.创建仓库</h4><p>只需要新建一个仓库，并且仓库名为<code>&lt;username&gt;.github.io</code>，就可以了。<br>访问<code>&lt;username&gt;.github.io</code>就是返回的该仓库下的<code>index.html</code>。<br>访问<code>&lt;username&gt;.github.io/path/file</code>就是返回该仓库下的<code>path/file</code>。</p>
+<h2 id="一、GitHub配置"><a href="#一、GitHub配置" class="headerlink" title="一、GitHub配置"></a>一、GitHub配置</h2><h4 id="1-创建仓库"><a href="#1-创建仓库" class="headerlink" title="1.创建仓库"></a>1.创建仓库</h4><p>只需要新建一个仓库，并且命名为<code>&lt;username&gt;.github.io</code>。<br>访问<code>&lt;username&gt;.github.io</code>就是返回的该仓库下的<code>index.html</code>。<br>访问<code>&lt;username&gt;.github.io/path/file</code>就是返回该仓库下的<code>path/file</code>。</p>
 <h4 id="2-配置DNS"><a href="#2-配置DNS" class="headerlink" title="2.配置DNS"></a>2.配置DNS</h4><p><code>&lt;username&gt;.github.io</code>不够个性化，可以配置CNAME解析，将其他域名转入该域名中。<br>但是github并不允许任意域名都能解析过去，需要在仓库中配置CNAME文件，并且在里面输入运行解析的域名, 例如：<code>echo &quot;blog.asir.com&quot; &gt;&gt; CNAME</code>。<br>这样只要配置好了blog.asir.com的CNAME解析就可以了。</p>
 <h2 id="二、Hexo安装"><a href="#二、Hexo安装" class="headerlink" title="二、Hexo安装"></a>二、Hexo安装</h2><h4 id="1-Node-js"><a href="#1-Node-js" class="headerlink" title="1.Node.js"></a>1.Node.js</h4><p>Hexo是基于Node.js的基础上开发的，因此使用Hexo前需要安装<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">Node.js</a>。<br>若安装Node.js成功后，可以在控制台下通过<code>node -v</code>指令查看版本，若可以出现版本信息，则表示安装成功。</p>
 <h4 id="2-Hexo"><a href="#2-Hexo" class="headerlink" title="2.Hexo"></a>2.Hexo</h4><p>在控制台下通过NPM指令直接安装Hexo:<code>npm install -g hexo-cli</code>，执行完成以后Hexo安装成功，可以通过<code>hexo -v</code>观察版本信息。</p>
