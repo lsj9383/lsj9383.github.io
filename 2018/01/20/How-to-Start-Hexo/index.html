@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Page的解释：  GitHub Pages is designed to">
+    <meta name="description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to Start Hexo">
 <meta property="og:url" content="http://github.com/lsj9383/2018/01/20/How-to-Start-Hexo/index.html">
 <meta property="og:site_name" content="Code Love Philosophy">
-<meta property="og:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Page的解释：  GitHub Pages is designed to">
-<meta property="og:updated_time" content="2018-01-20T05:40:47.227Z">
+<meta property="og:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
+<meta property="og:updated_time" content="2018-01-20T13:11:36.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to Start Hexo">
-<meta name="twitter:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Page的解释：  GitHub Pages is designed to">
+<meta name="twitter:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
     
     
         
@@ -133,32 +133,34 @@
 <blockquote>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 </blockquote>
-<p>GitHub Pages是什么？借助<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Page</a>的解释：</p>
+<p>GitHub Pages是什么？借助<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages官网</a>的解释：</p>
 <blockquote>
 <p>GitHub Pages is designed to host your personal, organization, or project pages directly from a GitHub repository.</p>
 </blockquote>
 <p>另外，GitHub Pages的使用是受限的, 请参考<a href="https://help.github.com/articles/what-is-github-pages/#usage-limits" target="_blank" rel="noopener">此处</a>。不用担心，一般来说完全足够我们使用了。</p>
-<h2 id="一、GitHub配置"><a href="#一、GitHub配置" class="headerlink" title="一、GitHub配置"></a>一、GitHub配置</h2><h4 id="1-创建仓库"><a href="#1-创建仓库" class="headerlink" title="1.创建仓库"></a>1.创建仓库</h4><p>只需要新建一个仓库，并且命名为<code>&lt;username&gt;.github.io</code>。<br>访问<code>&lt;username&gt;.github.io</code>就是返回的该仓库下的<code>index.html</code>。<br>访问<code>&lt;username&gt;.github.io/path/file</code>就是返回该仓库下的<code>path/file</code>。</p>
-<h4 id="2-配置DNS"><a href="#2-配置DNS" class="headerlink" title="2.配置DNS"></a>2.配置DNS</h4><p><code>&lt;username&gt;.github.io</code>不够个性化，可以配置CNAME解析，将其他域名转入该域名中。<br>但是github并不允许任意域名都能解析过去，需要在仓库中配置CNAME文件，并且在里面输入运行解析的域名, 例如：<code>echo &quot;blog.asir.com&quot; &gt;&gt; CNAME</code>。<br>这样只要配置好了blog.asir.com的CNAME解析就可以了。</p>
+<h2 id="一、GitHub配置"><a href="#一、GitHub配置" class="headerlink" title="一、GitHub配置"></a>一、GitHub配置</h2><h4 id="1-创建仓库"><a href="#1-创建仓库" class="headerlink" title="1.创建仓库"></a>1.创建仓库</h4><p>只需要新建一个仓库，并且命名为<username>.github.io即可。通过URL访问<code>&lt;username&gt;.github.io</code>就是返回的该仓库下的index.html网页。而通过访问URL<code>&lt;username&gt;.github.io/path/file</code>就是返回该仓库下的path/file。</username></p>
+<h4 id="2-配置DNS"><a href="#2-配置DNS" class="headerlink" title="2.配置DNS"></a>2.配置DNS</h4><p><code>&lt;username&gt;.github.io</code>这样的域名不够个性化，可以配置CNAME解析，将其他域名解析至该域名中。但是github并不允许任意域名都能解析过去，需要在仓库中配置CNAME文件，并且在里面输入运行解析的域名。例如：<code>echo &quot;blog.asir.com&quot; &gt;&gt; CNAME</code>。</p>
 <h2 id="二、Hexo安装"><a href="#二、Hexo安装" class="headerlink" title="二、Hexo安装"></a>二、Hexo安装</h2><h4 id="1-Node-js"><a href="#1-Node-js" class="headerlink" title="1.Node.js"></a>1.Node.js</h4><p>Hexo是基于Node.js的基础上开发的，因此使用Hexo前需要安装<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">Node.js</a>。<br>若安装Node.js成功后，可以在控制台下通过<code>node -v</code>指令查看版本，若可以出现版本信息，则表示安装成功。</p>
 <h4 id="2-Hexo"><a href="#2-Hexo" class="headerlink" title="2.Hexo"></a>2.Hexo</h4><p>在控制台下通过NPM指令直接安装Hexo:<code>npm install -g hexo-cli</code>，执行完成以后Hexo安装成功，可以通过<code>hexo -v</code>观察版本信息。</p>
 <h2 id="三、Hexo使用"><a href="#三、Hexo使用" class="headerlink" title="三、Hexo使用"></a>三、Hexo使用</h2><h4 id="1-初始化"><a href="#1-初始化" class="headerlink" title="1.初始化"></a>1.初始化</h4><p>Hexo的操作空间是一个文件夹，因此需要新建一个文件夹，并对其进行初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;    对指定路径的文件夹进行初始化</span><br><span class="line">$ cd &lt;folder&gt;           控制台工作空间进入该文件夹</span><br><span class="line">$ npm install           进一步初始化</span><br></pre></td></tr></table></figure></p>
 <p>完成初始化后，指定文件夹的目录如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml     Hexo配置文件</span><br><span class="line">├── package.json    应用程序信息，保持默认即可</span><br><span class="line">├── scaffolds       Front-matter模板</span><br><span class="line">|   ├── post</span><br><span class="line">|   ├── page</span><br><span class="line">|   └── draft</span><br><span class="line">├── source          博客内容文件夹</span><br><span class="line">|   ├── _drafts     草稿文件夹(也可能没有)</span><br><span class="line">|   └── _posts      发布文件夹</span><br><span class="line">└── themes          主题文件夹</span><br></pre></td></tr></table></figure></p>
-<p>需要注意的是，source文件夹下除了<code>_post</code>文件夹外，其他任何以下划线<code>_</code>开头的文件夹都会在解析生成的时候忽略。</p>
-<h4 id="2-编写博客"><a href="#2-编写博客" class="headerlink" title="2.编写博客"></a>2.编写博客</h4><p><code>hexo new [layout] &lt;title&gt;</code><br>layout有三种取值 : <code>post</code>, <code>page</code>, <code>draft</code>.省略layout时，默认取值为来自<code>_config.yml</code>中的<code>default_layout</code>属性，该属性的默认值为<code>post</code>。<br>title可以用双引号，也可以省略。当博客title中间包含空格时，一定要用双引号。</p>
+<p>需要注意的是，source文件夹下除了<em>_post</em>文件夹外，其他任何以下划线<code>_</code>开头的文件夹都会在解析生成的时候忽略。</p>
+<h4 id="2-编写博客"><a href="#2-编写博客" class="headerlink" title="2.编写博客"></a>2.编写博客</h4><p><code>hexo new [layout] &lt;title&gt;</code><br>一般而言，layout有三种取值 : <em>post</em>, <em>page</em>, <em>draft</em>。省略<strong>[layout]</strong>时，默认取值为来自<strong>_config.yml</strong>中的<strong>default_layout</strong>属性，该属性的默认值为：post。<br>title可以用双引号，也可以省略。当博客title中间包含空格时，一定要用双引号。</p>
 <ul>
-<li>post<br>  将会在创建文件<code>source/_posts/&lt;title&gt;</code>，并以此作为博客名。<br>  以该方式的博客，在部署以后，其标题通常会在<code>/archives/index.html</code>中显示出来，其博客内容文件一般存放在<code>/&lt;date&gt;/&lt;title&gt;/index.html</code>中。</li>
-<li>page<br>  将会创建文件<code>source/_post/&lt;title&gt;/index.md</code>，通常在博客中添加链接<code>/&lt;title&gt;/index.md</code>来进行访问。</li>
-<li>draft<br>  用于做草稿的，使用的不多，此处不做介绍。请参考<a href="https://hexo.io/zh-cn/docs/writing.html#草稿" target="_blank" rel="noopener">此处</a>。<h4 id="3-主题"><a href="#3-主题" class="headerlink" title="3.主题"></a>3.主题</h4></li>
-<li>下载主题<br>  不同的主题将会解析出不同的静态文件来显示博客，选择一个自己喜欢的现成的主题是一个非常棒的想法。从这些<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">主题</a>中选择一个自己喜欢的吧！</li>
-<li>切换主题<br>  这些博客通常提供了自己的GitHub和Demo。将博客从GitHub中下载下来，并解压至<code>themes/</code>文件夹下。在<code>_config.yml</code>中的<code>theme</code>属性中输入自己想采用的主题名。</li>
+<li><em>post</em><br>  将会在创建文件<em>source/_posts/<title></title></em>，并以此作为博客名。<br>  以该方式的博客，在部署以后，其标题通常会在<em>/archives/index.html</em>中显示出来，其博客内容文件一般存放在<em>/<date>/<title>/index.html</title></date></em>中。</li>
+<li><em>page</em><br>  将会创建文件<em>source/_post/<title>/index.md</title></em>，通常在博客中添加链接<em>/<title>/index.md</title></em>来进行访问。</li>
+<li><em>draft</em><br>  用于做草稿的，使用的不多，此处不做介绍。请参考<a href="https://hexo.io/zh-cn/docs/writing.html#草稿" target="_blank" rel="noopener">此处</a>。</li>
 </ul>
-<p>用一个现成的主题非常简单，但是如果想要自己的博客显得有个性，还需要对在对博客源码进行修改哦(博客源码就在<code>themes/</code>中)。</p>
+<h4 id="3-主题"><a href="#3-主题" class="headerlink" title="3.主题"></a>3.主题</h4><ul>
+<li><em>下载主题</em><br>  不同的主题将会解析出不同的静态文件来显示博客，选择一个自己喜欢的现成的主题是一个非常棒的想法。从这些<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">主题</a>中选择一个自己喜欢的吧！</li>
+<li><em>切换主题</em><br>  这些博客通常提供了自己的GitHub和Demo。将博客从GitHub中下载下来，并解压至<em>themes/</em>文件夹下。在<strong>_config.yml</strong>中的<strong>theme</strong>属性中输入自己想采用的主题名。</li>
+</ul>
+<p>用一个现成的主题非常简单，但是如果想要自己的博客显得有个性，还需要对在对博客源码进行修改哦(博客源码就在<em>themes/</em>中)。</p>
 <h4 id="4-部署"><a href="#4-部署" class="headerlink" title="4.部署"></a>4.部署</h4><p>博客和主题准备好以后，就可以进行部署了。</p>
 <ul>
-<li>生成<br>  <code>hexo generate</code>和<code>hexo g</code>，都可以解析和生成静态文件。这些文件将会被放置至<code>/public</code>文件夹中。实则部署的时候，只会上传该文件夹中的内容。</li>
-<li>本地模式<br>  <code>hexo server</code>将会在本地运行一个Node.js服务器，用于在本地显示博客。默认端口4000，通过<code>localhost:4000</code>来访问本地博客。该模式在写博客的时候相当方便，因为可以动态看到编写博客的内容。</li>
-<li><p>GitHub<br>  博客希望分享给其他人以阅读，因此需要将博客上传至自己的服务器上。由于GitHub提供了一个简单的静态文件服务器，因此需要将博客上传至该服务器。<br>  在_config.yml中配置上传信息：</p>
+<li><em>生成</em><br>  <code>hexo generate</code>和<code>hexo g</code>，都可以解析和生成静态文件。这些文件将会被放置至/public文件夹中。实则部署的时候，只会上传该文件夹中的内容。</li>
+<li><em>本地模式</em><br>  <code>hexo server</code>将会在本地运行一个Node.js服务器，用于在本地显示博客。默认端口4000，通过localhost:4000来访问本地博客。该模式在写博客的时候相当方便，因为可以动态看到编写博客的内容。</li>
+<li><p><em>GitHub</em><br>  博客希望分享给其他人以阅读，因此需要将博客上传至自己的服务器上。由于GitHub提供了一个简单的静态文件服务器，因此需要将博客上传至该服务器。<br>  在_config.yml中配置上传信息：</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">type: &lt;protocal&gt;  // 协议名，GitHub采用Git</span><br><span class="line">repo: &lt;server&gt;    // 服务器地址, 通常为GitHub仓库。</span><br><span class="line">branch: &lt;branch&gt;  // 分支名，个人博客通常为master</span><br></pre></td></tr></table></figure>
 <p>  下一步 通过下述指令，将博客生成并发布。</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
@@ -167,21 +169,25 @@
 <h2 id="四-其他"><a href="#四-其他" class="headerlink" title="四.其他"></a>四.其他</h2><h4 id="1-自定义layout"><a href="#1-自定义layout" class="headerlink" title="1.自定义layout"></a>1.自定义layout</h4><p>一切自定义layout文件都和post的行为相同，在<code>source/_posts/&lt;title&gt;</code>中创建。<br>其实，当执行了<code>hexo new [layout] &lt;title&gt;</code>指令后，首先将会到<code>scaffolds</code>中寻找同名<code>[layout]文件</code>，找到以后将以该<code>[layout]文件</code>的内容创建博客文件。</p>
 <h4 id="2-显示照片"><a href="#2-显示照片" class="headerlink" title="2.显示照片"></a>2.显示照片</h4><p>若想在博客中显示图片，有两种方案：</p>
 <ul>
-<li>传统方案<br>  新建一个<code>/source/img/</code>文件夹，hexo在生成的时候，会将source文件夹下所有单元生成到<code>/public/</code>根文件夹下。因此在博客中用<code>![](/img/xx.jpg)</code>的方式可以显示照片。当然为了各个博客之间解耦，可能需要在<code>/source/img/</code>下面继续创建博客文件夹。</li>
-<li>Hexo3方案<br>  可以在_config.yml中将属性<code>post_asset_folder</code>置为true。以后每次创建新的博客，都会在<code>/source/_posts/</code>下额外生成一个文件，该文件与博客同名，用于放置资源文件。<br>  需要注意的是，当进行生成静态文件时，博客内容文件将会和资源文件夹下的文件放置在一起。这样只需要通过<code>![](xx.jpg)</code>就可以显示照片了。<h2 id="五、FAQ"><a href="#五、FAQ" class="headerlink" title="五、FAQ"></a>五、FAQ</h2><h4 id="1-hexo-server无响应"><a href="#1-hexo-server无响应" class="headerlink" title="1.hexo server无响应"></a>1.hexo server无响应</h4></li>
-<li><p>问题</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行了指令hexo server开启本地模式后，</span><br><span class="line">通过localhost:4000访问网页，没有网页返回。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解决方案</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">需要注意此时很可能是端口被占用，</span><br><span class="line">可以通过hexo server -p 4001，换一个端口进行测试。</span><br><span class="line">此时访问的URL为localhost:4001</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="2-hexo-deploy无反应"><a href="#2-hexo-deploy无反应" class="headerlink" title="2.hexo deploy无反应"></a>2.hexo deploy无反应</h4><ul>
-<li><p>问题</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当配置好Git后，执行hexo deploy没有任何返回。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>解决方案</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">在执行hexo deploy前，请确保安装了所需要的组件：</span><br><span class="line">    npm install hexo-deployer-git --save</span><br><span class="line">并且在_config.yml的属性对中，冒号后面必须空一格，再写值。</span><br><span class="line">deploy:</span><br><span class="line">type: git</span><br><span class="line">repo: abcdefg</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
+<li>传统方案<br>  新建一个<em>/source/img/</em>文件夹，hexo在生成的时候，会将source文件夹下所有单元生成到<em>/public/</em>根文件夹下。因此在博客中用<code>![](/img/xx.jpg)</code>的方式可以显示照片。当然为了各个博客之间解耦，可能需要在<em>/source/img/</em>下面继续创建博客文件夹。</li>
+<li>Hexo3方案<br>  可以在<strong>_config.yml</strong>中将属性<strong>post_asset_folder</strong>置为true。以后每次创建新的博客，都会在<em>/source/_posts/</em>下额外生成一个文件，该文件与博客同名，用于放置资源文件。<br>  需要注意的是，当进行生成静态文件时，博客内容文件将会和资源文件夹下的文件放置在一起。这样只需要通过<code>![](xx.jpg)</code>就可以显示照片了。<h2 id="五、FAQ"><a href="#五、FAQ" class="headerlink" title="五、FAQ"></a>五、FAQ</h2><h4 id="1-hexo-server无响应"><a href="#1-hexo-server无响应" class="headerlink" title="1.hexo server无响应"></a>1.hexo server无响应</h4></li>
+<li>问题:<pre><code>执行了指令hexo server开启本地模式后，
+通过localhost:4000访问网页，没有网页返回。
+</code></pre></li>
+<li>解决方案:<pre><code>需要注意此时很可能是端口被占用，
+可以通过hexo server -p 4001，换一个端口进行测试。
+此时访问的URL为localhost:4001
+</code></pre><h4 id="2-hexo-deploy无反应"><a href="#2-hexo-deploy无反应" class="headerlink" title="2.hexo deploy无反应"></a>2.hexo deploy无反应</h4></li>
+<li>问题:<pre><code>当配置好Git后，执行hexo deploy没有任何返回。
+</code></pre></li>
+<li>解决方案:<pre><code>在执行hexo deploy前，请确保安装了所需要的组件：
+    npm install hexo-deployer-git --save
+并且在_config.yml的属性对中，冒号后面必须空一格，再写值。
+    deploy:
+        type: git
+        repo: abcdefg
+        branch: master
+</code></pre></li>
 </ul>
 
   </div>
