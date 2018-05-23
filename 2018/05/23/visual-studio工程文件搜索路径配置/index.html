@@ -10,7 +10,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="visual studio工程文件搜索路径配置">
 <meta property="og:url" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/index.html">
-<meta property="og:site_name" content="Code Love Philosophy">
+<meta property="og:site_name" content="小记">
 <meta property="og:description" content="visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。 一、visual studio的常用路径1.工作目录工作目录是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。">
 <meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/work.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/output.png">
@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/lib.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/lib-dir.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/path.png">
-<meta property="og:updated_time" content="2018-05-23T16:54:10.258Z">
+<meta property="og:updated_time" content="2018-05-23T17:05:01.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="visual studio工程文件搜索路径配置">
 <meta name="twitter:description" content="visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。 一、visual studio的常用路径1.工作目录工作目录是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。">
@@ -121,7 +121,7 @@
 
     <div class="meta">
       <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Code Love Philosophy</span>
+        <span itemprop="name">小记</span>
       </span>
       
     <div class="postdate">
@@ -139,7 +139,7 @@
     <p>visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。</p>
 <h2 id="一、visual-studio的常用路径"><a href="#一、visual-studio的常用路径" class="headerlink" title="一、visual studio的常用路径"></a>一、visual studio的常用路径</h2><h3 id="1-工作目录"><a href="#1-工作目录" class="headerlink" title="1.工作目录"></a><em>1.工作目录</em></h3><p><code>工作目录</code>是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。在windows进程中，可以通过如下程序获得进程的工作目录：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;  </span></span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">char</span> workspace[<span class="number">1024</span>];</span><br><span class="line">GetCurrentDirectory(<span class="number">1024</span>,workspace);        <span class="comment">//得到当前工作目录</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>工作目录也是io操作中相对路径的基本路径。可以直接在visual studio中配置进程的工作目录，在【工程属性】-&gt;【配置属性】-&gt;【调试】-&gt;【工作目录】中配置，如下图所示。<br><img src="work.png" alt="工作目录"></p>
-<h3 id="2-输出路径"><a href="#2-输出路径" class="headerlink" title="2.输出路径"></a><em>2.输出路径</em></h3><p>输出路径就是可执行文件的输出目录。可以在visual studio的【工程属性】-&gt;【配置属性】-&gt;【常规】-&gt;【输出目录】中配置，如下图。<br><img src="output.png" alt="输出目录"></p>
+<h3 id="2-输出路径"><a href="#2-输出路径" class="headerlink" title="2.输出路径"></a><em>2.输出路径</em></h3><p>输出路径就是可执行文件的输出目录。在visual studio的【工程属性】-&gt;【配置属性】-&gt;【常规】-&gt;【输出目录】中配置，如下图。<br><img src="output.png" alt="输出目录"></p>
 <h3 id="3-可执行文件路径"><a href="#3-可执行文件路径" class="headerlink" title="3.可执行文件路径"></a><em>3.可执行文件路径</em></h3><p>可执行文件也有路径，并且往往可执行查询的路径和当前工作路径不一样，有时为了方便，会将工作路径设置为可执行文件的路径。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">char</span> moduleName[<span class="number">1024</span>];</span><br><span class="line">GetModuleFileName(<span class="literal">NULL</span>,moduleName, <span class="number">1024</span>);   <span class="comment">//得到当前模块路径</span></span><br><span class="line">SetCurrentDirectory(moduleName);            <span class="comment">//设置当前工作路径为模块路径</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <h2 id="二、Buidlding中的文件查找"><a href="#二、Buidlding中的文件查找" class="headerlink" title="二、Buidlding中的文件查找"></a>二、Buidlding中的文件查找</h2><p>Build过程是从源文件、头文件以及lib文件生成可执行的二进制文件的过程，如果其中有需要的文件无法找到，则Build失败。</p>
 <h3 id="1-c-cpp"><a href="#1-c-cpp" class="headerlink" title="1.c/cpp"></a><em>1.c/cpp</em></h3><p>c和cpp文件均称为源文件，这些文件文件的搜寻较为简单，因为在visual studio工程中添加源文件的时候，就已经默认将该文件的工作路径添加至工程属性中。在编译时，visual studio将会把所有的源文件路径交给编译器进行编译。若没有指明c/cpp文件，则该文件无法编译，那么其中涉及到的变量等均无法链接。</p>
