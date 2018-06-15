@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask数据处理">
+<meta property="og:url" content="http://github.com/lsj9383/2018/06/15/Flask数据处理/index.html">
+<meta property="og:site_name" content="小记">
+<meta property="og:description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
+<meta property="og:updated_time" content="2018-06-15T04:57:47.786Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flask数据处理">
+<meta name="twitter:description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Flask数据处理</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</head>
+
+<body>
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/05/23/visual-studio工程文件搜索路径配置/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/06/15/Flask数据处理/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&text=Flask数据处理"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&is_video=false&description=Flask数据处理"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flask数据处理&body=Check out this article: http://github.com/lsj9383/2018/06/15/Flask数据处理/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&name=Flask数据处理&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、请求中的数据"><span class="toc-number">1.</span> <span class="toc-text">一、请求中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-GET"><span class="toc-number">1.1.</span> <span class="toc-text">1.GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-POST"><span class="toc-number">1.2.</span> <span class="toc-text">2.POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie"><span class="toc-number">1.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Headers"><span class="toc-number">1.4.</span> <span class="toc-text">4.Headers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Files"><span class="toc-number">1.5.</span> <span class="toc-text">5.Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-urlencode-urldecode"><span class="toc-number">1.6.</span> <span class="toc-text">6.urlencode/urldecode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-POST的中文处理"><span class="toc-number">1.7.</span> <span class="toc-text">7.POST的中文处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、响应中的数据"><span class="toc-number">2.</span> <span class="toc-text">二、响应中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串"><span class="toc-number">2.1.</span> <span class="toc-text">1.字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON"><span class="toc-number">2.2.</span> <span class="toc-text">2.JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie-1"><span class="toc-number">2.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-template"><span class="toc-number">2.4.</span> <span class="toc-text">3.template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Response"><span class="toc-number">2.5.</span> <span class="toc-text">4.Response</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、缓存中的数据"><span class="toc-number">3.</span> <span class="toc-text">三、缓存中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session"><span class="toc-number">3.1.</span> <span class="toc-text">1.Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SimpleCache"><span class="toc-number">3.2.</span> <span class="toc-text">2.SimpleCache</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Flask数据处理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">小记</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-15T03:17:07.000Z" itemprop="datePublished">2018-06-15</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="一、请求中的数据"><a href="#一、请求中的数据" class="headerlink" title="一、请求中的数据"></a>一、请求中的数据</h2><p>请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过<code>from flask import request</code>来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。</p>
+<h3 id="1-GET"><a href="#1-GET" class="headerlink" title="1.GET"></a>1.<em>GET</em></h3><p>GET请求会将参数以urlencode编码的形式放到URL的最后面，如:<code>http://host?k1=v1&amp;k2=v2</code>。在Flask通过flask.request.args可以将GET的参数提取出来。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.args.get(<span class="string">"k1"</span>, d=<span class="keyword">None</span>)  // 获取k1对应的值,若k1不存在则返回默认值<span class="keyword">None</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-POST"><a href="#2-POST" class="headerlink" title="2.POST"></a>2.<em>POST</em></h3><p>POST请求会将参数以urlencode编码的形式放到请求的请求体中。在Flask中通过flask.request.form来获取。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.form.get(<span class="string">"k1"</span>, <span class="keyword">None</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-Cookie"><a href="#3-Cookie" class="headerlink" title="3.Cookie"></a>3.<em>Cookie</em></h3><p>客户端可以自行缓存一些数据，并在每次请求的时候将这些数据发送到服务器。通过将Cookie数据放入到请求行的<code>Cookie</code>请求行里，指定请求含Cookie。后台可以在不操作Headers的情况下，直接读取Cookie。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">form flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.cookies.get(<span class="string">"k1"</span>, <span class="keyword">None</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-Headers"><a href="#4-Headers" class="headerlink" title="4.Headers"></a>4.<em>Headers</em></h3><h3 id="5-Files"><a href="#5-Files" class="headerlink" title="5.Files"></a>5.Files</h3><h3 id="6-urlencode-urldecode"><a href="#6-urlencode-urldecode" class="headerlink" title="6.urlencode/urldecode"></a>6.<em>urlencode/urldecode</em></h3><p>在Web发送GET或者POST请求时，会对参数进行编码，例如urlencode和json，具体采用的编码模式，由Headers中的<code>content-type</code>指出，通常默认采用urlencode的编码模式，响应请求行如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content-type:&apos;application/x-www-form-urlencoded&apos;</span><br></pre></td></tr></table></figure></p>
+<p>服务器在接收到请求后，会通过urldecode来将kv值重新结构话，并放在request.args或者request.form中。当服务器接收到的请求是以其他方式进行编码的(如JSON)，Flask无法将其urldecode，造成无法解析，这时Flask将会把请求体中的二进制数据放到request.data中。</p>
+<h3 id="7-POST的中文处理"><a href="#7-POST的中文处理" class="headerlink" title="7.POST的中文处理"></a>7.POST的中文处理</h3><p>在发送POST请求时，除了涉及到urlencode外，还会对中文进行NCR(数字字符引用)，意思就是取中文的Unicode数值代替中文本身。</p>
+<ul>
+<li>#&amp;, 代表数字采用十进制表示，POST所采用的。</li>
+<li>&amp;#x, 代表数字采用十六进制表示。</li>
+</ul>
+<p>例如<code>好</code>对应的Unicode标识是<code>22909</code>，再POST传输<code>好</code>时，将会用<code>&amp;#22909</code>来代替好。</p>
+<p>在Flask中，需要对POST的中文数据进行反义处理，才能在Python中获得正确的中文字符串:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unescape</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">from</span> html.parser <span class="keyword">import</span> HTMLParser</span><br><span class="line">    <span class="keyword">return</span> HTMLParser().unescape(s) <span class="keyword">if</span> s!=<span class="keyword">None</span> <span class="keyword">else</span> <span class="keyword">None</span></span><br><span class="line">    </span><br><span class="line">print(unescape(<span class="string">"&amp;#22909"</span>))      <span class="comment"># 输出"好"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="二、响应中的数据"><a href="#二、响应中的数据" class="headerlink" title="二、响应中的数据"></a>二、响应中的数据</h2><h3 id="1-字符串"><a href="#1-字符串" class="headerlink" title="1.字符串"></a>1.<em>字符串</em></h3><p>在视图函数中直接返回字符串，则响应体就是该字符串。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route("/view")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">view</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"hello world"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-JSON"><a href="#2-JSON" class="headerlink" title="2.JSON"></a>2.<em>JSON</em></h3><h3 id="3-Cookie-1"><a href="#3-Cookie-1" class="headerlink" title="3.Cookie"></a>3.<em>Cookie</em></h3><h3 id="3-template"><a href="#3-template" class="headerlink" title="3.template"></a>3.<em>template</em></h3><h3 id="4-Response"><a href="#4-Response" class="headerlink" title="4.Response"></a>4.<em>Response</em></h3><h2 id="三、缓存中的数据"><a href="#三、缓存中的数据" class="headerlink" title="三、缓存中的数据"></a>三、缓存中的数据</h2><h3 id="1-Session"><a href="#1-Session" class="headerlink" title="1.Session"></a>1.<em>Session</em></h3><h3 id="2-SimpleCache"><a href="#2-SimpleCache" class="headerlink" title="2.SimpleCache"></a>2.<em>SimpleCache</em></h3>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、请求中的数据"><span class="toc-number">1.</span> <span class="toc-text">一、请求中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-GET"><span class="toc-number">1.1.</span> <span class="toc-text">1.GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-POST"><span class="toc-number">1.2.</span> <span class="toc-text">2.POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie"><span class="toc-number">1.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Headers"><span class="toc-number">1.4.</span> <span class="toc-text">4.Headers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Files"><span class="toc-number">1.5.</span> <span class="toc-text">5.Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-urlencode-urldecode"><span class="toc-number">1.6.</span> <span class="toc-text">6.urlencode/urldecode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-POST的中文处理"><span class="toc-number">1.7.</span> <span class="toc-text">7.POST的中文处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、响应中的数据"><span class="toc-number">2.</span> <span class="toc-text">二、响应中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串"><span class="toc-number">2.1.</span> <span class="toc-text">1.字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON"><span class="toc-number">2.2.</span> <span class="toc-text">2.JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie-1"><span class="toc-number">2.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-template"><span class="toc-number">2.4.</span> <span class="toc-text">3.template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Response"><span class="toc-number">2.5.</span> <span class="toc-text">4.Response</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、缓存中的数据"><span class="toc-number">3.</span> <span class="toc-text">三、缓存中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session"><span class="toc-number">3.1.</span> <span class="toc-text">1.Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SimpleCache"><span class="toc-number">3.2.</span> <span class="toc-text">2.SimpleCache</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/06/15/Flask数据处理/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&text=Flask数据处理"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&is_video=false&description=Flask数据处理"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flask数据处理&body=Check out this article: http://github.com/lsj9383/2018/06/15/Flask数据处理/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&title=Flask数据处理"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/06/15/Flask数据处理/&name=Flask数据处理&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Arthur Lu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
