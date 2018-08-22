@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 一、系统管理工具1.dfdf可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。1234567&amp;gt;&amp;gt; df -h# 命令输出Filesystem      Size   Used  Avail Capacity iused               ifr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UNIX指令">
+<meta property="og:url" content="http://github.com/lsj9383/2018/08/16/UNIX指令/index.html">
+<meta property="og:site_name" content="小记">
+<meta property="og:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 一、系统管理工具1.dfdf可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。1234567&amp;gt;&amp;gt; df -h# 命令输出Filesystem      Size   Used  Avail Capacity iused               ifr">
+<meta property="og:updated_time" content="2018-08-22T16:06:23.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UNIX指令">
+<meta name="twitter:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 一、系统管理工具1.dfdf可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。1234567&amp;gt;&amp;gt; df -h# 命令输出Filesystem      Size   Used  Avail Capacity iused               ifr">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>UNIX指令</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</head>
+
+<body>
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/07/26/Macbook-Configuration/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/08/16/UNIX指令/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&text=UNIX指令"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&is_video=false&description=UNIX指令"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UNIX指令&body=Check out this article: http://github.com/lsj9383/2018/08/16/UNIX指令/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&name=UNIX指令&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、系统管理工具"><span class="toc-number">1.</span> <span class="toc-text">一、系统管理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-df"><span class="toc-number">1.1.</span> <span class="toc-text">1.df</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-du"><span class="toc-number">1.2.</span> <span class="toc-text">2.du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-top"><span class="toc-number">1.3.</span> <span class="toc-text">3.top</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-iostat"><span class="toc-number">1.4.</span> <span class="toc-text">4.iostat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ifstat"><span class="toc-number">1.5.</span> <span class="toc-text">5.ifstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-vmstat"><span class="toc-number">1.6.</span> <span class="toc-text">6.vmstat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SSH工具"><span class="toc-number">2.</span> <span class="toc-text">二、SSH工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、性能分析工具"><span class="toc-number">3.</span> <span class="toc-text">三、性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ab"><span class="toc-number">3.1.</span> <span class="toc-text">1.ab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、网络分析工具"><span class="toc-number">4.</span> <span class="toc-text">四、网络分析工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、网络分析工具-1"><span class="toc-number">5.</span> <span class="toc-text">四、网络分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-curl"><span class="toc-number">5.1.</span> <span class="toc-text">1.curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-netstat"><span class="toc-number">5.2.</span> <span class="toc-text">2.netstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-tcpdump"><span class="toc-number">5.3.</span> <span class="toc-text">3.tcpdump</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、内存诊断工具"><span class="toc-number">6.</span> <span class="toc-text">五、内存诊断工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、AWK"><span class="toc-number">7.</span> <span class="toc-text">六、AWK</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        UNIX指令
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">小记</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-08-16T14:21:29.000Z" itemprop="datePublished">2018-08-16</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。</p>
+<h2 id="一、系统管理工具"><a href="#一、系统管理工具" class="headerlink" title="一、系统管理工具"></a>一、系统管理工具</h2><h3 id="1-df"><a href="#1-df" class="headerlink" title="1.df"></a>1.<em>df</em></h3><p><code>df</code>可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; df -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令输出</span></span><br><span class="line">Filesystem      Size   Used  Avail Capacity iused               ifree %iused  Mounted on</span><br><span class="line">/dev/disk1s1   233Gi   46Gi  186Gi    20% 1259054 9223372036853516753    0%   /</span><br><span class="line">devfs          184Ki  184Ki    0Bi   100%     638                   0  100%   /dev</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-du"><a href="#2-du" class="headerlink" title="2.du"></a>2.<em>du</em></h3><h3 id="3-top"><a href="#3-top" class="headerlink" title="3.top"></a>3.<em>top</em></h3><h3 id="4-iostat"><a href="#4-iostat" class="headerlink" title="4.iostat"></a>4.<em>iostat</em></h3><h3 id="5-ifstat"><a href="#5-ifstat" class="headerlink" title="5.ifstat"></a>5.<em>ifstat</em></h3><h3 id="6-vmstat"><a href="#6-vmstat" class="headerlink" title="6.vmstat"></a>6.<em>vmstat</em></h3><h2 id="二、SSH工具"><a href="#二、SSH工具" class="headerlink" title="二、SSH工具"></a>二、SSH工具</h2><h2 id="三、性能分析工具"><a href="#三、性能分析工具" class="headerlink" title="三、性能分析工具"></a>三、性能分析工具</h2><h3 id="1-ab"><a href="#1-ab" class="headerlink" title="1.ab"></a>1.<em>ab</em></h3><h2 id="四、网络分析工具"><a href="#四、网络分析工具" class="headerlink" title="四、网络分析工具"></a>四、网络分析工具</h2><h2 id="四、网络分析工具-1"><a href="#四、网络分析工具-1" class="headerlink" title="四、网络分析工具"></a>四、网络分析工具</h2><h3 id="1-curl"><a href="#1-curl" class="headerlink" title="1.curl"></a>1.<em>curl</em></h3><p>curl用以模拟http请求，可以用来测试和制作爬虫。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &lt;options&gt; <span class="string">"&lt;url&gt;"</span></span><br></pre></td></tr></table></figure></p>
+<p><code>options</code>在下面列出常用的选项:</p>
+<ul>
+<li>-d 设置请求body，并将请求设置为POST请求</li>
+<li>-H 设置请求头，每个请求头都要加一个-H。</li>
+<li>-b 设置Cookie内容, 如:curl -b “a=1;b=2;c=3;”</li>
+<li>-s 静默模式, 不显示错误信息和请求进度条，这在脚本中常用。</li>
+<li>-S 不显示请求进度条，但是显示错误信息。</li>
+<li>-i 输出http响应行(报文协议+响应状态)和响应头</li>
+<li>-v 输出http请求行(method+url+报文协议)和请求头 + 响应行和响应头<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -H <span class="string">"Content-Type:application/json"</span> -d <span class="string">'&#123;"name":"lsj"&#125;'</span> <span class="string">"http://www.baidu.com"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; curl -s <span class="string">"http://www.baidu.com"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-netstat"><a href="#2-netstat" class="headerlink" title="2.netstat"></a>2.<em>netstat</em></h3><h3 id="3-tcpdump"><a href="#3-tcpdump" class="headerlink" title="3.tcpdump"></a>3.<em>tcpdump</em></h3><h2 id="五、内存诊断工具"><a href="#五、内存诊断工具" class="headerlink" title="五、内存诊断工具"></a>五、内存诊断工具</h2><h2 id="六、AWK"><a href="#六、AWK" class="headerlink" title="六、AWK"></a>六、AWK</h2>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、系统管理工具"><span class="toc-number">1.</span> <span class="toc-text">一、系统管理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-df"><span class="toc-number">1.1.</span> <span class="toc-text">1.df</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-du"><span class="toc-number">1.2.</span> <span class="toc-text">2.du</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-top"><span class="toc-number">1.3.</span> <span class="toc-text">3.top</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-iostat"><span class="toc-number">1.4.</span> <span class="toc-text">4.iostat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ifstat"><span class="toc-number">1.5.</span> <span class="toc-text">5.ifstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-vmstat"><span class="toc-number">1.6.</span> <span class="toc-text">6.vmstat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SSH工具"><span class="toc-number">2.</span> <span class="toc-text">二、SSH工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、性能分析工具"><span class="toc-number">3.</span> <span class="toc-text">三、性能分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ab"><span class="toc-number">3.1.</span> <span class="toc-text">1.ab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、网络分析工具"><span class="toc-number">4.</span> <span class="toc-text">四、网络分析工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、网络分析工具-1"><span class="toc-number">5.</span> <span class="toc-text">四、网络分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-curl"><span class="toc-number">5.1.</span> <span class="toc-text">1.curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-netstat"><span class="toc-number">5.2.</span> <span class="toc-text">2.netstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-tcpdump"><span class="toc-number">5.3.</span> <span class="toc-text">3.tcpdump</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、内存诊断工具"><span class="toc-number">6.</span> <span class="toc-text">五、内存诊断工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、AWK"><span class="toc-number">7.</span> <span class="toc-text">六、AWK</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/08/16/UNIX指令/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&text=UNIX指令"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&is_video=false&description=UNIX指令"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UNIX指令&body=Check out this article: http://github.com/lsj9383/2018/08/16/UNIX指令/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&title=UNIX指令"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/08/16/UNIX指令/&name=UNIX指令&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Arthur Lu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
