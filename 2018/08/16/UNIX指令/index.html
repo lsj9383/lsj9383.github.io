@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://github.com/lsj9383/2018/08/16/UNIX指令/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 一、系统管理工具1.dfdf可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。1234567&amp;gt;&amp;gt; df -h# 命令输出Filesystem      Size   Used  Avail Capacity iused               ifr">
-<meta property="og:updated_time" content="2018-08-22T16:06:23.710Z">
+<meta property="og:updated_time" content="2018-08-22T16:12:19.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX指令">
 <meta name="twitter:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 一、系统管理工具1.dfdf可以查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，指的是采用便于人类阅读的方式进行结果的显示。1234567&amp;gt;&amp;gt; df -h# 命令输出Filesystem      Size   Used  Avail Capacity iused               ifr">
@@ -66,6 +66,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2018/08/23/funny-parameter-in-c/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/07/26/Macbook-Configuration/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -140,9 +142,9 @@
 <li>-s 静默模式, 不显示错误信息和请求进度条，这在脚本中常用。</li>
 <li>-S 不显示请求进度条，但是显示错误信息。</li>
 <li>-i 输出http响应行(报文协议+响应状态)和响应头</li>
-<li>-v 输出http请求行(method+url+报文协议)和请求头 + 响应行和响应头<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -H <span class="string">"Content-Type:application/json"</span> -d <span class="string">'&#123;"name":"lsj"&#125;'</span> <span class="string">"http://www.baidu.com"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; curl -s <span class="string">"http://www.baidu.com"</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>-v 输出http请求行(method+url+报文协议)和请求头 + 响应行和响应头</li>
 </ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -H <span class="string">"Content-Type:application/json"</span> -d <span class="string">'&#123;"name":"lsj"&#125;'</span> <span class="string">"http://www.baidu.com"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; curl -s <span class="string">"http://www.baidu.com"</span></span><br></pre></td></tr></table></figure>
 <h3 id="2-netstat"><a href="#2-netstat" class="headerlink" title="2.netstat"></a>2.<em>netstat</em></h3><h3 id="3-tcpdump"><a href="#3-tcpdump" class="headerlink" title="3.tcpdump"></a>3.<em>tcpdump</em></h3><h2 id="五、内存诊断工具"><a href="#五、内存诊断工具" class="headerlink" title="五、内存诊断工具"></a>五、内存诊断工具</h2><h2 id="六、AWK"><a href="#六、AWK" class="headerlink" title="六、AWK"></a>六、AWK</h2>
   </div>
 </article>
