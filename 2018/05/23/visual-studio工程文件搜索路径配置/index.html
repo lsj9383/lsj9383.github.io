@@ -8,21 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。 一、visual studio的常用路径1.工作目录工作目录是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="visual studio工程文件搜索路径配置">
-<meta property="og:url" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/index.html">
+<meta property="og:title" content="Visual Studio工程文件搜索路径配置">
+<meta property="og:url" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。 一、visual studio的常用路径1.工作目录工作目录是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/work.png">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/output.png">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/header.png">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/lib.png">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/lib-dir.png">
-<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/path.png">
-<meta property="og:updated_time" content="2018-06-15T03:00:04.224Z">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/work.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/output.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/header.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/lib.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/lib-dir.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/path.png">
+<meta property="og:updated_time" content="2018-08-28T16:27:12.919Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="visual studio工程文件搜索路径配置">
+<meta name="twitter:title" content="Visual Studio工程文件搜索路径配置">
 <meta name="twitter:description" content="visual studio在生成可执行文件时涉及到搜索头文件、cpp文件、lib文件等操作。在进程运行中，涉及到搜索dll等操作。这些文件搜索操作都是在一定的指定路径下进行的，当在指定路径下无法搜素到文件时，均会导致错误，如编译错误、链接错误以及动态链接库的加载错误。 一、visual studio的常用路径1.工作目录工作目录是进程中最为重要的路径，所有的文件搜索都基本上会在优先工作路径上进行。">
-<meta name="twitter:image" content="http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/work.png">
+<meta name="twitter:image" content="http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/work.png">
     
     
         
@@ -42,7 +42,7 @@
         
     
     <!-- title -->
-    <title>visual studio工程文件搜索路径配置</title>
+    <title>Visual Studio工程文件搜索路径配置</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -90,16 +90,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&text=visual studio工程文件搜索路径配置"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&is_video=false&description=visual studio工程文件搜索路径配置"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=visual studio工程文件搜索路径配置&body=Check out this article: http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&name=visual studio工程文件搜索路径配置&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&text=Visual Studio工程文件搜索路径配置"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&is_video=false&description=Visual Studio工程文件搜索路径配置"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Visual Studio工程文件搜索路径配置&body=Check out this article: http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&name=Visual Studio工程文件搜索路径配置&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -116,7 +116,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        visual studio工程文件搜索路径配置
+        Visual Studio工程文件搜索路径配置
     </h1>
 
 
@@ -203,16 +203,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&text=visual studio工程文件搜索路径配置"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&is_video=false&description=visual studio工程文件搜索路径配置"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=visual studio工程文件搜索路径配置&body=Check out this article: http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&title=visual studio工程文件搜索路径配置"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/05/23/visual-studio工程文件搜索路径配置/&name=visual studio工程文件搜索路径配置&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&text=Visual Studio工程文件搜索路径配置"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&is_video=false&description=Visual Studio工程文件搜索路径配置"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Visual Studio工程文件搜索路径配置&body=Check out this article: http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&title=Visual Studio工程文件搜索路径配置"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/05/23/Visual-Studio工程文件搜索路径配置/&name=Visual Studio工程文件搜索路径配置&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
