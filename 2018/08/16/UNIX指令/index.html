@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://github.com/lsj9383/2018/08/16/UNIX指令/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
-<meta property="og:updated_time" content="2018-08-28T17:24:19.549Z">
+<meta property="og:updated_time" content="2018-08-28T17:40:28.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX指令">
 <meta name="twitter:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
@@ -244,15 +244,21 @@
 <li><p>活跃进程<br><br>  进程有5种状态:</p>
 <ul>
 <li>RUNNING ：正在运行或者在就绪队列中等待运行的进程。</li>
-<li>UNINTERRUPTABLE:不可中断阻塞状态，处于这种状态的进程正在等待队列中，当资源有效时，可以由操作系统唤醒，否则一直处于等待状态，例如IO操作。</li>
-<li>INTERRUPTABLE：可中断阻塞状态，处于这种状态的进程在等待队列中，当资源有效时，可以由操作系统进行唤醒，处于此状态中的进程也可以被其他进程所唤醒，例如wait。</li>
+<li>UNINTERRUPTABLE:不可中断阻塞状态，处于这种状态的进程正在等待队列中，当资源有效时，可以由操作系统唤醒，否则一直处于等待状态，例如磁盘IO操作。</li>
+<li>INTERRUPTABLE：可中断阻塞状态，处于这种状态的进程在等待队列中，当资源有效时，可以由操作系统进行唤醒，处于此状态中的进程也可以被其他进程所唤醒，例如键盘输入，sleep等。</li>
 <li>STOPPED：挂起状态，需要通过其它进程的信号才能被唤醒。阻塞是被动行为(等待资源就绪)，挂起是主动行为。</li>
 <li><p>ZOMBIE：僵尸状态。表示进程结束但尚未消亡的一种状态，此时进程已经结束运行并释放掉大部分资源，但尚未释放进程控制块。</p>
 <p>活跃进程主要指的是<code>RUNNING</code>和<code>UNINTERRUPTABLE</code>状态的进程。</p>
 </li>
 </ul>
 </li>
-<li>两种负载<br><br>  系统平均负载可以视为由两种负载组成：<code>CPU负载</code>和<code>IO负载</code>。CPU负载高的进程是CPU密集型，主要体现在CPU进行复杂的运输。IO负载高的进程是IO密集型，主要体现在大量的IO操作。其中一种密集型操作都有可能导致高负载，CPU密集型会导致大量的进程等待CPU空闲，IO密集型会导致大量的时间进行等待操作完成。IO密集型的有个特点是大量的等待时间导致高负载，并且CPU利用率较低。<h3 id="6-top-htop"><a href="#6-top-htop" class="headerlink" title="6.top/htop"></a>6.<em>top/htop</em></h3>top和htop，都是linux下面的任务管理器，会显示所有进程的详细情况。htop是更加好看的显示方式。包括系统的负载、CPU使用率、任务数，进程列表。对于进程列表，通过<code>M</code>和<code>P</code>可以切换到以内存从高到低的排序以及CPU从高到低的排序。</li>
+<li><p>两种负载<br><br>  系统平均负载可以视为由两种负载组成：<code>CPU负载</code>和<code>IO负载</code>。CPU负载高的进程是CPU密集型，主要体现在CPU进行复杂的运输。IO负载高的进程是IO密集型，主要体现在大量的IO操作。其中一种密集型操作都有可能导致高负载，CPU密集型会导致大量的进程等待CPU空闲，IO密集型会导致大量的时间进行等待操作完成。IO密集型的有个特点是大量的等待时间导致高负载，并且CPU利用率较低。</p>
+<h3 id="6-top-htop"><a href="#6-top-htop" class="headerlink" title="6.top/htop"></a>6.<em>top/htop</em></h3><p>top和htop，都是linux下面的任务管理器，会显示所有进程的详细情况。htop是更加好看的显示方式。包括系统的负载、CPU使用率、任务数，进程列表。对于进程列表，通过<code>M</code>和<code>P</code>可以切换到以内存从高到低的排序以及CPU从高到低的排序。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; top</span><br><span class="line"><span class="comment"># 指令输出</span></span><br><span class="line"></span><br><span class="line">top - 01:24:44 up 12 days,  2:20,  1 user,  load average: 0.00, 0.01, 0.05</span><br><span class="line">Tasks:  74 total,   2 running,  72 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1016288 total,   123064 free,   141524 used,   751700 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   704920 avail Mem</span><br><span class="line"></span><br><span class="line">PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line">334 root      20   0   94180  38168  37852 S  0.0  3.8   3:01.91 systemd-journal</span><br><span class="line">3777 root      20   0  378936  24400   5116 S  0.0  2.4  15:44.37 python3</span><br><span class="line">473 root      20   0  494808  23292  21732 S  0.0  2.3   1:43.15 rsyslogd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第一行，时间和系统负载(1min, 5min, 15min)</p>
+</li>
+<li>第二行，总进程数，RUNNING状态的进程数，休眠进程数，停止进程数，僵死进程数。(负载数RUNNING的进程数+休眠进程中的不可中断进程部分)</li>
 </ul>
 <h3 id="7-sar"><a href="#7-sar" class="headerlink" title="7.sar"></a>7.<em>sar</em></h3><p>sar, System Activity Reporter(系统活动情况报告)，可以周期性的报告性能数据。<br>总结来说:</p>
 <ul>
