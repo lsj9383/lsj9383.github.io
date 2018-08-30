@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://github.com/lsj9383/2018/08/16/UNIX指令/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
-<meta property="og:updated_time" content="2018-08-28T17:40:28.406Z">
+<meta property="og:updated_time" content="2018-08-30T15:14:02.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX指令">
 <meta name="twitter:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
@@ -172,9 +172,9 @@
 <li><code>./a.out | xargs -n&lt;items&gt;</code>，将指定的输入字符串进行分割，空格和回车为分割符。将分割后的数据以一行<code>&lt;items&gt;</code>个进行输出。</li>
 <li><code>./a.out | xargs</code>, 将数据全部一行输出。</li>
 <li><code>./a.out | xargs -d&lt;split-char&gt; -n&lt;items&gt;</code>，设置分割符</li>
-<li><code>./a.out | xargs &lt;用于输出的相关参数&gt; -p &lt;command&gt;</code>, 在组织好输出以后执行指定命令，若输出有多行，每行执行该命令。<h2 id="一、系统工具"><a href="#一、系统工具" class="headerlink" title="一、系统工具"></a>一、系统工具</h2><h3 id="1-df"><a href="#1-df" class="headerlink" title="1.df"></a>1.<em>df</em></h3>查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，用于显示合适的单位。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; df -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令输出</span></span><br><span class="line">Filesystem      Size   Used  Avail Capacity iused               ifree %iused  Mounted on</span><br><span class="line">/dev/disk1s1   233Gi   46Gi  186Gi    20% 1259054 9223372036853516753    0%   /</span><br><span class="line">devfs          184Ki  184Ki    0Bi   100%     638                   0  100%   /dev</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
-</li>
+<li><code>./a.out | xargs &lt;用于输出的相关参数&gt; -p &lt;command&gt;</code>, 在组织好输出以后执行指定命令，若输出有多行，每行执行该命令。</li>
 </ul>
+<h2 id="一、系统工具"><a href="#一、系统工具" class="headerlink" title="一、系统工具"></a>一、系统工具</h2><h3 id="1-df"><a href="#1-df" class="headerlink" title="1.df"></a>1.<em>df</em></h3><p>查看磁盘设备的使用情况以及其挂载情况。通常搭配-h使用，用于显示合适的单位。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; df -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令输出</span></span><br><span class="line">Filesystem      Size   Used  Avail Capacity iused               ifree %iused  Mounted on</span><br><span class="line">/dev/disk1s1   233Gi   46Gi  186Gi    20% 1259054 9223372036853516753    0%   /</span><br><span class="line">devfs          184Ki  184Ki    0Bi   100%     638                   0  100%   /dev</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-du"><a href="#2-du" class="headerlink" title="2.du"></a>2.<em>du</em></h3><p>对文件和目录所占用磁盘的查询。<code>du &lt;option&gt; &lt;file-or-dir&gt;</code>，常用的<code>&lt;option&gt;</code>:</p>
 <ul>
 <li>-s 仅显示指定目录或文件的大小</li>
@@ -208,7 +208,6 @@
 <li>PID, 进程ID</li>
 <li>USER, 所属用户</li>
 <li>FD, 打开的文件描述符</li>
-<li></li>
 </ul>
 <h3 id="4-free"><a href="#4-free" class="headerlink" title="4.free"></a>4.<em>free</em></h3><p>free用于查询系统的内存使用情况：<code>free &lt;option&gt;</code>，常用的<code>&lt;option&gt;</code>:</p>
 <ul>
@@ -252,12 +251,11 @@
 </li>
 </ul>
 </li>
-<li><p>两种负载<br><br>  系统平均负载可以视为由两种负载组成：<code>CPU负载</code>和<code>IO负载</code>。CPU负载高的进程是CPU密集型，主要体现在CPU进行复杂的运输。IO负载高的进程是IO密集型，主要体现在大量的IO操作。其中一种密集型操作都有可能导致高负载，CPU密集型会导致大量的进程等待CPU空闲，IO密集型会导致大量的时间进行等待操作完成。IO密集型的有个特点是大量的等待时间导致高负载，并且CPU利用率较低。</p>
-<h3 id="6-top-htop"><a href="#6-top-htop" class="headerlink" title="6.top/htop"></a>6.<em>top/htop</em></h3><p>top和htop，都是linux下面的任务管理器，会显示所有进程的详细情况。htop是更加好看的显示方式。包括系统的负载、CPU使用率、任务数，进程列表。对于进程列表，通过<code>M</code>和<code>P</code>可以切换到以内存从高到低的排序以及CPU从高到低的排序。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; top</span><br><span class="line"><span class="comment"># 指令输出</span></span><br><span class="line"></span><br><span class="line">top - 01:24:44 up 12 days,  2:20,  1 user,  load average: 0.00, 0.01, 0.05</span><br><span class="line">Tasks:  74 total,   2 running,  72 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1016288 total,   123064 free,   141524 used,   751700 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   704920 avail Mem</span><br><span class="line"></span><br><span class="line">PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line">334 root      20   0   94180  38168  37852 S  0.0  3.8   3:01.91 systemd-journal</span><br><span class="line">3777 root      20   0  378936  24400   5116 S  0.0  2.4  15:44.37 python3</span><br><span class="line">473 root      20   0  494808  23292  21732 S  0.0  2.3   1:43.15 rsyslogd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第一行，时间和系统负载(1min, 5min, 15min)</p>
-</li>
+<li>两种负载<br><br>  系统平均负载可以视为由两种负载组成：<code>CPU负载</code>和<code>IO负载</code>。CPU负载高的进程是CPU密集型，主要体现在CPU进行复杂的运输。IO负载高的进程是IO密集型，主要体现在大量的IO操作。其中一种密集型操作都有可能导致高负载，CPU密集型会导致大量的进程等待CPU空闲，IO密集型会导致大量的时间进行等待操作完成。IO密集型的有个特点是大量的等待时间导致高负载，并且CPU利用率较低。</li>
+</ul>
+<h3 id="6-top-htop"><a href="#6-top-htop" class="headerlink" title="6.top/htop"></a>6.<em>top/htop</em></h3><p>top和htop，都是linux下面的任务管理器，会显示所有进程的详细情况。htop是更加好看的显示方式。包括系统的负载、CPU使用率、任务数，进程列表。对于进程列表，通过<code>M</code>和<code>P</code>可以切换到以内存从高到低的排序以及CPU从高到低的排序。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; top</span><br><span class="line"><span class="comment"># 指令输出</span></span><br><span class="line"></span><br><span class="line">top - 01:24:44 up 12 days,  2:20,  1 user,  load average: 0.00, 0.01, 0.05</span><br><span class="line">Tasks:  74 total,   2 running,  72 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1016288 total,   123064 free,   141524 used,   751700 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   704920 avail Mem</span><br><span class="line"></span><br><span class="line">PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line">334 root      20   0   94180  38168  37852 S  0.0  3.8   3:01.91 systemd-journal</span><br><span class="line">3777 root      20   0  378936  24400   5116 S  0.0  2.4  15:44.37 python3</span><br><span class="line">473 root      20   0  494808  23292  21732 S  0.0  2.3   1:43.15 rsyslogd</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>第一行，时间和系统负载(1min, 5min, 15min)</li>
 <li>第二行，总进程数，RUNNING状态的进程数，休眠进程数，停止进程数，僵死进程数。(负载数RUNNING的进程数+休眠进程中的不可中断进程部分)</li>
 </ul>
 <h3 id="7-sar"><a href="#7-sar" class="headerlink" title="7.sar"></a>7.<em>sar</em></h3><p>sar, System Activity Reporter(系统活动情况报告)，可以周期性的报告性能数据。<br>总结来说:</p>
@@ -278,14 +276,38 @@
 <li>-v 输出http请求行(method+url+报文协议)和请求头 + 响应行和响应头</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -H <span class="string">"Content-Type:application/json"</span> -d <span class="string">'&#123;"name":"lsj"&#125;'</span> <span class="string">"http://www.baidu.com"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; curl -s <span class="string">"http://www.baidu.com"</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-netstat"><a href="#2-netstat" class="headerlink" title="2.netstat"></a>2.<em>netstat</em></h3><h3 id="3-tcpdump"><a href="#3-tcpdump" class="headerlink" title="3.tcpdump"></a>3.<em>tcpdump</em></h3><h3 id="4-ssh"><a href="#4-ssh" class="headerlink" title="4.ssh"></a>4.<em>ssh</em></h3><h3 id="5-scp"><a href="#5-scp" class="headerlink" title="5.scp"></a>5.<em>scp</em></h3><h2 id="五、程序工具"><a href="#五、程序工具" class="headerlink" title="五、程序工具"></a>五、程序工具</h2><h3 id="1-pstack"><a href="#1-pstack" class="headerlink" title="1.pstack"></a>1.<em>pstack</em></h3><h3 id="2-strace"><a href="#2-strace" class="headerlink" title="2.strace"></a>2.<em>strace</em></h3><h2 id="六、AWK"><a href="#六、AWK" class="headerlink" title="六、AWK"></a>六、AWK</h2><h2 id="七、其他"><a href="#七、其他" class="headerlink" title="七、其他"></a>七、其他</h2><h3 id="1-proc-pid"><a href="#1-proc-pid" class="headerlink" title="1./proc/pid"></a>1.<em>/proc/pid</em></h3><p><code>/proc/&lt;pid&gt;</code>并没有保存在磁盘中，而是内存中，这个目录下是对应进程id的运行环境，包括其可执行文件的软连接。</p>
+<h3 id="2-netstat"><a href="#2-netstat" class="headerlink" title="2.netstat"></a>2.<em>netstat</em></h3><p>用于查看网络状态, <code>netstat &lt;option&gt;</code>, 其中<code>&lt;option&gt;</code>选项如下所示:</p>
+<ul>
+<li>-a/-all 显示所有的socket</li>
+<li>-n 直接显示ip地址，而非域名</li>
+<li>-t 显示tcp的连接情况</li>
+<li>-u 显示udp的连接情况</li>
+<li>-p 显示使用socket的进程pid和进程名称</li>
+</ul>
+<p>最常使用的命令格式就是<code>netstat -antp</code>，即以ip形式显示所有的tcp连接，及其计算机使用该连接的进程pid和名称。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; netstat -antp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令输出</span></span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      8010/smbd</span><br><span class="line">tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      1/systemd</span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      10184/nginx: master</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      947/sshd</span><br><span class="line">tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      8010/smbd</span><br><span class="line">tcp        0      0 127.0.0.1:5000          0.0.0.0:*               LISTEN      3770/python3</span><br><span class="line">tcp        0     36 172.27.0.5:22           220.152.162.188:49324   ESTABLISHED 4355/sshd: root@pts</span><br><span class="line">tcp        0      0 172.27.0.5:22           180.101.88.221:32567    ESTABLISHED 8764/sshd: root [pr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Active Internet connections，表示下面显示活跃的网络的连接</li>
+<li>Proto，代表连接形式，包括<code>tcp/udp/raw</code></li>
+<li>Recv-Q, 接收队列</li>
+<li>Send-Q, 发送队列</li>
+<li>Local Address, 表示socket的被连接/监听的一端，也就是本地的socket的ip和port</li>
+<li>Foreign Address, 表示发起连接的socket的ip和port</li>
+<li>State, 网络连接状态， 通常只有tcp才有连接信息</li>
+<li>PID/Programe name, 故名思议</li>
+<li>Active UNIX domain sockets, 表示下面Unix socket，这些socket仅用于本地通信，不是网络连接，在上图中没有列出改内容。</li>
+</ul>
+<h3 id="3-tcpdump"><a href="#3-tcpdump" class="headerlink" title="3.tcpdump"></a>3.<em>tcpdump</em></h3><h3 id="4-ssh"><a href="#4-ssh" class="headerlink" title="4.ssh"></a>4.<em>ssh</em></h3><h3 id="5-scp"><a href="#5-scp" class="headerlink" title="5.scp"></a>5.<em>scp</em></h3><h2 id="五、程序工具"><a href="#五、程序工具" class="headerlink" title="五、程序工具"></a>五、程序工具</h2><h3 id="1-pstack"><a href="#1-pstack" class="headerlink" title="1.pstack"></a>1.<em>pstack</em></h3><h3 id="2-strace"><a href="#2-strace" class="headerlink" title="2.strace"></a>2.<em>strace</em></h3><h2 id="六、AWK"><a href="#六、AWK" class="headerlink" title="六、AWK"></a>六、AWK</h2><h2 id="七、其他"><a href="#七、其他" class="headerlink" title="七、其他"></a>七、其他</h2><h3 id="1-proc-pid"><a href="#1-proc-pid" class="headerlink" title="1./proc/pid"></a>1.<em>/proc/pid</em></h3><p><code>/proc/&lt;pid&gt;</code>并没有保存在磁盘中，而是内存中，这个目录下是对应进程id的运行环境，包括其可执行文件的软连接。</p>
 <h3 id="2-gt-dev-null-2-gt-amp-1"><a href="#2-gt-dev-null-2-gt-amp-1" class="headerlink" title="2.&gt; /dev/null 2&gt;&amp;1"></a>2.<em>&gt; /dev/null 2&gt;&amp;1</em></h3><p>这是一个非常常见的查询启动命令<code>./a.out &gt; /dev/null 2&gt;&amp;1</code>，这里的<code>/dev/null</code>是一个黑洞，向起进行的所有输出都不会被保存，而是直接扔弃。对于这条命令的解释是：程序的标准输出重定向到/dev/null，以丢弃标准输出，接着把标识错误重定向到标准输出上，因为此时标准输出对应的是/dev/null，因此标准错误输出也是定位到/dev/null。简而言之，对进程的标准错误和标准输出全部屏蔽。<br><br>也常见<code>./a.out 2&gt;&amp;1 &gt; /dev/null</code>，这代表将标准错误定向到标准输出，即显示屏，再将标准输出重定向到/dev/null，很明显，这将导致标准输出内容屏蔽，并将标准错误输出到屏幕。</p>
 <h3 id="3-gt-amp-amp"><a href="#3-gt-amp-amp" class="headerlink" title="3.| &gt; ; &amp;&amp; ||"></a>3.<code>| &gt; ; &amp;&amp; ||</code></h3><ul>
 <li><code>a | b</code>  用于管道重定向，将左边的标准输出和右边的标准输入连接</li>
 <li><code>a &gt; b</code>  也是重定向，不过数和指定的文件或文件描述符进行连接</li>
 <li><code>a ; b</code>  按顺序执行</li>
 <li><code>a &amp;&amp; b</code> a成功则执行b，否则不执行b</li>
-<li><code>a || b</code> a失败则执行b，否则不执行b<h3 id="4-预启动脚本"><a href="#4-预启动脚本" class="headerlink" title="4.预启动脚本"></a>4.<em>预启动脚本</em></h3>当login获取一个shell时，会启动一系列预启动脚本，这些脚本里面包含了初始化配置。</li>
+<li><code>a || b</code> a失败则执行b，否则不执行b</li>
+</ul>
+<h3 id="4-预启动脚本"><a href="#4-预启动脚本" class="headerlink" title="4.预启动脚本"></a>4.<em>预启动脚本</em></h3><p>当login获取一个shell时，会启动一系列预启动脚本，这些脚本里面包含了初始化配置。</p>
+<ul>
 <li>首先读取<code>/etc/profile</code>，这是所有用户共享的。</li>
 <li>读取<code>~/.bash_profile</code>，<code>~/.bash_login</code>，<code>~/.profile</code>，这是用户特定，可以实现用户个性定制。</li>
 <li>最后读取<code>~/.bashrc</code>。需要注意的是，该脚本在每个shell scripts执行前都会进行运行。</li>
