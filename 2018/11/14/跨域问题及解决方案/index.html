@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="一、跨域问题1.何为跨域域的概念由两部分组成：域名和端口。当两个域的域名和端口相同时，即同域，否则为不同域。跨域请求主要是指，浏览器获取了来自域A的资源，这些资源又发起了对域B的请求。 2.浏览器对跨域的限制出于安全原因考虑，浏览器对跨域请求做了一些限制: 来自域A的脚本发起了对域B的请求，需要进行跨域校验。当跨域校验成功时，脚本才能正确的获取到对应的数据，需要注意这里存在两种可能的阻止脚本请求域">
 <meta property="og:image" content="http://github.com/lsj9383/2018/11/14/跨域问题及解决方案/get-cros-failed.png">
-<meta property="og:updated_time" content="2018-11-14T18:28:09.042Z">
+<meta property="og:updated_time" content="2018-11-14T18:39:02.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域问题及解决方案">
 <meta name="twitter:description" content="一、跨域问题1.何为跨域域的概念由两部分组成：域名和端口。当两个域的域名和端口相同时，即同域，否则为不同域。跨域请求主要是指，浏览器获取了来自域A的资源，这些资源又发起了对域B的请求。 2.浏览器对跨域的限制出于安全原因考虑，浏览器对跨域请求做了一些限制: 来自域A的脚本发起了对域B的请求，需要进行跨域校验。当跨域校验成功时，脚本才能正确的获取到对应的数据，需要注意这里存在两种可能的阻止脚本请求域">
@@ -138,7 +138,30 @@
 <li>请求已经发出，并拿到响应，但是浏览器禁止脚本拿到响应数据。(chrome使用的该策略)</li>
 </ul>
 <p>很明显，跨域限制并不存在于http请求本身，而是浏览器的跨域校验，并且只是对脚本发起的http请求进行了限制。也就是说对于<code>&lt;img&gt;</code>和<code>&lt;script&gt;</code>等标签而言，是允许不做任何安全校验，而进行跨域访问的，这也是后面<code>JSONP</code>的跨域解决方案可以得以实施的原因。跨域校验失败的时候，脚本是无法获取到失败原因的，只能显示打开控制台观察，这是为了避免脚本获取失败原因，进而自动更新脚本，发起正确的请求。下图显示了由脚本发起的GET请求的跨域校验失败:<br><img src="get-cros-failed.png" alt="GET跨域"></p>
-<h1 id="二、CORS解决方案"><a href="#二、CORS解决方案" class="headerlink" title="二、CORS解决方案"></a>二、CORS解决方案</h1><h2 id="1-简单请求"><a href="#1-简单请求" class="headerlink" title="1.简单请求"></a>1.简单请求</h2><h2 id="2-预检请求"><a href="#2-预检请求" class="headerlink" title="2.预检请求"></a>2.预检请求</h2><h2 id="3-HTTP请求字段"><a href="#3-HTTP请求字段" class="headerlink" title="3.HTTP请求字段"></a>3.HTTP请求字段</h2><h1 id="三、JSONP方案"><a href="#三、JSONP方案" class="headerlink" title="三、JSONP方案"></a>三、JSONP方案</h1><h1 id="四、实际场景"><a href="#四、实际场景" class="headerlink" title="四、实际场景"></a>四、实际场景</h1><h2 id="1-Flask跨域方案"><a href="#1-Flask跨域方案" class="headerlink" title="1.Flask跨域方案"></a>1.Flask跨域方案</h2><h2 id="2-Nginx跨域方案"><a href="#2-Nginx跨域方案" class="headerlink" title="2.Nginx跨域方案"></a>2.Nginx跨域方案</h2>
+<h1 id="二、CORS解决方案"><a href="#二、CORS解决方案" class="headerlink" title="二、CORS解决方案"></a>二、CORS解决方案</h1><p>CORS即跨域共享标准(Cross-Origin Sharing Standard)，Web浏览器通过制定一套协议来提供对CORS的支持。这个协议主要是在请求和响应中添加适当的Headers，这些特殊的Headers标明了哪种HTTP请求的响应允许脚本去获取数据。CORS有两种请求:<code>简单请求</code>和<code>预检请求</code>, 其中预检请求会先发送<code>OPTIONS</code>请求，检查服务器是否对紧接着的数据请求支持。简单请求和预检请求都是由Web浏览器自动根据实际的数据请求进行选择并发起。</p>
+<h2 id="1-简单请求"><a href="#1-简单请求" class="headerlink" title="1.简单请求"></a>1.简单请求</h2><p>简单请求是相对于预检请求而言的，简单请求会直接发送HTTP请求，浏览器根据响应的<code>CORS-HEADERS</code>，判断脚本是否有权限获取数据。当请求满足以下几个条件时，属于简单请求:</p>
+<ul>
+<li>使用下列方法之一:<ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+</ul>
+</li>
+<li>只使用了CORS安全HEADERS集合:<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type(在一些特殊的取值为简单请求，其他的取值为预检请求)</li>
+</ul>
+</li>
+<li>Content-Type为下列3者之一:<ul>
+<li>text/plain</li>
+<li>multipart/form-data</li>
+<li>application/x-www-form-urlencoded</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-预检请求"><a href="#2-预检请求" class="headerlink" title="2.预检请求"></a>2.预检请求</h2><h2 id="3-HTTP请求字段"><a href="#3-HTTP请求字段" class="headerlink" title="3.HTTP请求字段"></a>3.HTTP请求字段</h2><h1 id="三、JSONP方案"><a href="#三、JSONP方案" class="headerlink" title="三、JSONP方案"></a>三、JSONP方案</h1><h1 id="四、实际场景"><a href="#四、实际场景" class="headerlink" title="四、实际场景"></a>四、实际场景</h1><h2 id="1-Flask跨域方案"><a href="#1-Flask跨域方案" class="headerlink" title="1.Flask跨域方案"></a>1.Flask跨域方案</h2><h2 id="2-Nginx跨域方案"><a href="#2-Nginx跨域方案" class="headerlink" title="2.Nginx跨域方案"></a>2.Nginx跨域方案</h2>
   </div>
 </article>
 
