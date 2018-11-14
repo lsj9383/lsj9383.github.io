@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server三、授权码模式工作流程四、Token模式工作流程五、其">
+    <meta name="description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ouath原理剖析">
 <meta property="og:url" content="http://github.com/lsj9383/2018/10/19/ouath原理剖析/index.html">
 <meta property="og:site_name" content="小记">
-<meta property="og:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server三、授权码模式工作流程四、Token模式工作流程五、其">
-<meta property="og:updated_time" content="2018-10-19T15:36:34.587Z">
+<meta property="og:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
+<meta property="og:updated_time" content="2018-11-14T14:55:13.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ouath原理剖析">
-<meta name="twitter:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server三、授权码模式工作流程四、Token模式工作流程五、其">
+<meta name="twitter:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
     
     
         
@@ -66,6 +66,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2018/11/14/跨域问题及解决方案/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/10/14/Flask上下文解析/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -135,7 +137,9 @@
 <h2 id="5-client"><a href="#5-client" class="headerlink" title="5.client"></a>5.<em>client</em></h2><p>client代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:</p>
 <ul>
 <li>client-web</li>
-<li>client-server<h1 id="三、授权码模式工作流程"><a href="#三、授权码模式工作流程" class="headerlink" title="三、授权码模式工作流程"></a>三、授权码模式工作流程</h1><h1 id="四、Token模式工作流程"><a href="#四、Token模式工作流程" class="headerlink" title="四、Token模式工作流程"></a>四、Token模式工作流程</h1><h1 id="五、其他授权模式"><a href="#五、其他授权模式" class="headerlink" title="五、其他授权模式"></a>五、其他授权模式</h1><h1 id="六、实现"><a href="#六、实现" class="headerlink" title="六、实现"></a>六、实现</h1><h1 id="七、参考"><a href="#七、参考" class="headerlink" title="七、参考"></a>七、参考</h1></li>
+<li>client-server</li>
+</ul>
+<h1 id="三、授权码模式工作流程"><a href="#三、授权码模式工作流程" class="headerlink" title="三、授权码模式工作流程"></a>三、授权码模式工作流程</h1><h1 id="四、Token模式工作流程"><a href="#四、Token模式工作流程" class="headerlink" title="四、Token模式工作流程"></a>四、Token模式工作流程</h1><h1 id="五、其他授权模式"><a href="#五、其他授权模式" class="headerlink" title="五、其他授权模式"></a>五、其他授权模式</h1><h1 id="六、实现"><a href="#六、实现" class="headerlink" title="六、实现"></a>六、实现</h1><h1 id="七、参考"><a href="#七、参考" class="headerlink" title="七、参考"></a>七、参考</h1><ul>
 <li>1.<a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">RFC 6749</a></li>
 <li>2.<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">理解OAuth2.0</a></li>
 </ul>
