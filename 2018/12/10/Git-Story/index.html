@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。 绝大多数的 Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Story">
+<meta property="og:url" content="http://github.com/lsj9383/2018/12/10/Git-Story/index.html">
+<meta property="og:site_name" content="小记">
+<meta property="og:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。 绝大多数的 Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/local.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/centralized.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/distributed.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/deltas.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/snapshots.png">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/areas.png">
+<meta property="og:updated_time" content="2018-12-10T15:31:20.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Story">
+<meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。 绝大多数的 Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核">
+<meta name="twitter:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/local.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Git Story</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</head>
+
+<body>
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/11/14/跨域问题及解决方案/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/12/10/Git-Story/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/12/10/Git-Story/&text=Git Story"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/12/10/Git-Story/&is_video=false&description=Git Story"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git Story&body=Check out this article: http://github.com/lsj9383/2018/12/10/Git-Story/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/12/10/Git-Story/&name=Git Story&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Git概述"><span class="toc-number">1.</span> <span class="toc-text">一、Git概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-版本控制系统"><span class="toc-number">1.1.</span> <span class="toc-text">1.版本控制系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-本地版本控制系统。"><span class="toc-number">1.1.1.</span> <span class="toc-text">1).本地版本控制系统。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-集中化的版本控制系统"><span class="toc-number">1.1.2.</span> <span class="toc-text">2).集中化的版本控制系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-分布式版本控制系统"><span class="toc-number">1.1.3.</span> <span class="toc-text">3).分布式版本控制系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-文件存储方式"><span class="toc-number">1.2.</span> <span class="toc-text">2.文件存储方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Git添加数据问题"><span class="toc-number">1.3.</span> <span class="toc-text">3.Git添加数据问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-三种区域"><span class="toc-number">1.4.</span> <span class="toc-text">4.三种区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Git配置"><span class="toc-number">1.5.</span> <span class="toc-text">4.Git配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-最小的Demo"><span class="toc-number">1.6.</span> <span class="toc-text">5.最小的Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git基础命令"><span class="toc-number">2.</span> <span class="toc-text">Git基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本命令"><span class="toc-number">2.1.</span> <span class="toc-text">基本命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git分支"><span class="toc-number">3.</span> <span class="toc-text">Git分支</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git远程仓库"><span class="toc-number">4.</span> <span class="toc-text">Git远程仓库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git常用工作流"><span class="toc-number">5.</span> <span class="toc-text">Git常用工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-特性分支"><span class="toc-number">5.1.</span> <span class="toc-text">1.特性分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-集中式工作流及分支模型"><span class="toc-number">5.2.</span> <span class="toc-text">2.集中式工作流及分支模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-集成管理者工作流"><span class="toc-number">5.3.</span> <span class="toc-text">3.集成管理者工作流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-司令官与副官工作流"><span class="toc-number">5.4.</span> <span class="toc-text">4.司令官与副官工作流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git底层机制"><span class="toc-number">6.</span> <span class="toc-text">Git底层机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-底层命令"><span class="toc-number">6.1.</span> <span class="toc-text">1.底层命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Git对象"><span class="toc-number">6.2.</span> <span class="toc-text">2.Git对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Git引用"><span class="toc-number">6.3.</span> <span class="toc-text">3.Git引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git原理"><span class="toc-number">7.</span> <span class="toc-text">Git原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#底层数据目录"><span class="toc-number">7.1.</span> <span class="toc-text">底层数据目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git对象"><span class="toc-number">7.2.</span> <span class="toc-text">git对象</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相比与SVN的优缺点"><span class="toc-number">8.</span> <span class="toc-text">相比与SVN的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优点"><span class="toc-number">8.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">8.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录一、SVN和Git的混合开发模式"><span class="toc-number">9.</span> <span class="toc-text">附录一、SVN和Git的混合开发模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#混合开发模型"><span class="toc-number">9.1.</span> <span class="toc-text">混合开发模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优点-1"><span class="toc-number">9.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-1"><span class="toc-number">9.3.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录二、相关链接"><span class="toc-number">10.</span> <span class="toc-text">附录二、相关链接</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git Story
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">小记</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-12-10T14:48:23.000Z" itemprop="datePublished">2018-12-10</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="一、Git概述"><a href="#一、Git概述" class="headerlink" title="一、Git概述"></a>一、Git概述</h1><p>Linux 内核开源项目有着为数众多的参与者。 绝大多数的 Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。</p>
+<p>到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区免费使用 BitKeeper 的权力。 这就迫使 Linux 开源社区（特别是 Linux 的缔造者 Linus Torvalds）基于使用 BitKeeper 时的经验教训，开发出自己的版本系统。</p>
+<h2 id="1-版本控制系统"><a href="#1-版本控制系统" class="headerlink" title="1.版本控制系统"></a>1.版本控制系统</h2><blockquote>
+<p>版本控制系统(VCS)是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
+</blockquote>
+<h3 id="1-本地版本控制系统。"><a href="#1-本地版本控制系统。" class="headerlink" title="1).本地版本控制系统。"></a>1).本地版本控制系统。</h3><p><img src="local.png" alt="LVCS"><br>在本地进行版本管理, 常见的如RCS。</p>
+<h3 id="2-集中化的版本控制系统"><a href="#2-集中化的版本控制系统" class="headerlink" title="2).集中化的版本控制系统"></a>2).集中化的版本控制系统</h3><p><img src="centralized.png" alt="CVCS"><br>将版本管理集中于一台单一服务器，该服务器上保存了文件所有的修订版本，开发人员可以从服务器上拷贝工作目录，完成工作后提交到服务器更新修订版本。常见的如CVS、Subversion和Perforce。主要问题是单点故障导致工作阻塞，严重的会导致修订历史版本数据全部丢失。</p>
+<h3 id="3-分布式版本控制系统"><a href="#3-分布式版本控制系统" class="headerlink" title="3).分布式版本控制系统"></a>3).分布式版本控制系统</h3><p><img src="distributed.png" alt="DVCS"><br>分布式管理控制系统中每个节点都包含整个仓库的拷贝，如Git。</p>
+<h2 id="2-文件存储方式"><a href="#2-文件存储方式" class="headerlink" title="2.文件存储方式"></a>2.文件存储方式</h2><ul>
+<li>SVN等传统VCS的文件存储方式:记录版本间的增量<br><img src="deltas.png" alt=""></li>
+<li>Git的文件存储方式:记录每个版本的快照<br><img src="snapshots.png" alt=""></li>
+</ul>
+<p>对于Git的文件存储方式，这样的描述其实并不准确，Git是混合了增量和快照的方式。默认采用快照的方式，当满足一些条件的时候(如git push)，将会对快照进行处理，并计算相似快照的增量进行存储。所以总的来说，通常git仓库会比传统VCS的仓库文件大。这样的存储方式对于Git分支及其管理有较大的益处。</p>
+<h2 id="3-Git添加数据问题"><a href="#3-Git添加数据问题" class="headerlink" title="3.Git添加数据问题"></a>3.Git添加数据问题</h2><p>在Git中进行提交的数据就一定存在与仓库中，就算将其删除文件其实仍然保存与Git仓库中，可以随时进行恢复。如果误操作将一个较大的文件存储到Git中，虽然可以做到将其从Git仓库中删除，但是较为繁琐。</p>
+<h2 id="4-三种区域"><a href="#4-三种区域" class="headerlink" title="4.三种区域"></a>4.三种区域</h2><p><img src="areas.png" alt=""></p>
+<ul>
+<li>工作目录(work directory), 用户的磁盘工作目录</li>
+<li>暂存区(stage/index), 保存了下次将提交的文件列表信息</li>
+<li>Git仓库(), 用来保存项目的元数据和提交的数据的地方, 提交的数据都是可以恢复的</li>
+</ul>
+<h2 id="4-Git配置"><a href="#4-Git配置" class="headerlink" title="4.Git配置"></a>4.Git配置</h2><p>Git配置采用了分层方式，每一个级别覆盖上一个级别的同名配置:</p>
+<ul>
+<li>设置配置<ul>
+<li>git config –system <code>&lt;key&gt; &lt;value&gt;</code></li>
+<li>git config –global <code>&lt;key&gt; &lt;value&gt;</code></li>
+<li>git config <code>&lt;key&gt; &lt;value&gt;</code></li>
+</ul>
+</li>
+<li>读取配置<ul>
+<li>git config –system <code>&lt;key&gt;</code></li>
+<li>git config –global <code>&lt;key&gt;</code></li>
+<li>git config <code>&lt;key&gt;</code></li>
+</ul>
+</li>
+<li>遍历配置项 : <code>--list</code></li>
+</ul>
+<h2 id="5-最小的Demo"><a href="#5-最小的Demo" class="headerlink" title="5.最小的Demo"></a>5.最小的Demo</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化配置</span></span><br><span class="line">&gt;&gt; git config --global user.name arthurlu</span><br><span class="line">&gt;&gt; git config --global user.email arthurlu@tencent.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化git</span></span><br><span class="line">&gt;&gt; git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交到stage</span></span><br><span class="line">&gt;&gt; git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交到git仓库, 提交人的信息会找配置文件种的user.name和user.email</span></span><br><span class="line">&gt;&gt; git commit -m<span class="string">"initial"</span></span><br></pre></td></tr></table></figure>
+<h1 id="Git基础命令"><a href="#Git基础命令" class="headerlink" title="Git基础命令"></a>Git基础命令</h1><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ul>
+<li>git config</li>
+<li>git init</li>
+<li>git add</li>
+<li>git commit</li>
+<li>git log</li>
+<li>git diff</li>
+<li>git reset</li>
+</ul>
+<h1 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h1><ul>
+<li>git branch <code>&lt;new-branch&gt;</code></li>
+<li>git branch -v</li>
+<li>git branch -d/-D</li>
+<li>git merge</li>
+<li>git rebase</li>
+<li>git cherry-pick</li>
+</ul>
+<h1 id="Git远程仓库"><a href="#Git远程仓库" class="headerlink" title="Git远程仓库"></a>Git远程仓库</h1><ul>
+<li>git remote -v</li>
+<li>git remote add <code>&lt;remote-server-name&gt;</code> <code>&lt;uri&gt;</code></li>
+<li>git remote remove <code>&lt;remote-server-name&gt;</code></li>
+<li>git clone</li>
+<li>git pull</li>
+<li>git push</li>
+<li>git fetch</li>
+</ul>
+<h1 id="Git常用工作流"><a href="#Git常用工作流" class="headerlink" title="Git常用工作流"></a>Git常用工作流</h1><h2 id="1-特性分支"><a href="#1-特性分支" class="headerlink" title="1.特性分支"></a>1.特性分支</h2><h2 id="2-集中式工作流及分支模型"><a href="#2-集中式工作流及分支模型" class="headerlink" title="2.集中式工作流及分支模型"></a>2.集中式工作流及分支模型</h2><h2 id="3-集成管理者工作流"><a href="#3-集成管理者工作流" class="headerlink" title="3.集成管理者工作流"></a>3.集成管理者工作流</h2><p>这也是GitHub开源项目进行贡献的核心流程。</p>
+<h2 id="4-司令官与副官工作流"><a href="#4-司令官与副官工作流" class="headerlink" title="4.司令官与副官工作流"></a>4.司令官与副官工作流</h2><h1 id="Git底层机制"><a href="#Git底层机制" class="headerlink" title="Git底层机制"></a>Git底层机制</h1><h2 id="1-底层命令"><a href="#1-底层命令" class="headerlink" title="1.底层命令"></a>1.底层命令</h2><h2 id="2-Git对象"><a href="#2-Git对象" class="headerlink" title="2.Git对象"></a>2.Git对象</h2><h2 id="3-Git引用"><a href="#3-Git引用" class="headerlink" title="3.Git引用"></a>3.Git引用</h2><h1 id="Git原理"><a href="#Git原理" class="headerlink" title="Git原理"></a>Git原理</h1><h2 id="底层数据目录"><a href="#底层数据目录" class="headerlink" title="底层数据目录"></a>底层数据目录</h2><ul>
+<li>HEAD, 指示目前被检出的分支</li>
+<li>index, 文件保存暂存区信息</li>
+<li>config</li>
+<li>description</li>
+<li>hooks/</li>
+<li>info/</li>
+<li>objects/, 存储所有数据内容</li>
+<li>refs/, 指向分支的提交对象的指针</li>
+</ul>
+<h2 id="git对象"><a href="#git对象" class="headerlink" title="git对象"></a>git对象</h2><h1 id="相比与SVN的优缺点"><a href="#相比与SVN的优缺点" class="headerlink" title="相比与SVN的优缺点"></a>相比与SVN的优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>分布式版本管理, git可以避免将一些本地分支对外开放, 也具备更好的可用性。</li>
+<li>轻量级分支, svn的分支基于服务器目录+写时复制(老版本的svn基于目录拷贝), git的分支是基于全量记录+标志的。</li>
+<li>储存功能</li>
+<li>关键词定位</li>
+</ul>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li>全局唯一版本号, 可以通过hook缓解该问题。</li>
+<li>读写锁，git不支持写锁申请，不便于二进制文件的管理。</li>
+<li>全量记录</li>
+<li>权限管理粒度</li>
+<li>clone代价</li>
+</ul>
+<h1 id="附录一、SVN和Git的混合开发模式"><a href="#附录一、SVN和Git的混合开发模式" class="headerlink" title="附录一、SVN和Git的混合开发模式"></a>附录一、SVN和Git的混合开发模式</h1><p>Git越来越流行，受到各个开发人员的追捧，但一些历史项目仍然采用了subversion, cvs等版本管理。项目迁移成本大，git又具有一定的学习成本，并不需要为了追求Git而把整个项目迁移。在避免迁移的基础上，可以采用混合开发模式，开发人员可以根据自己的情况将git的管理优势引入到开发中。</p>
+<h2 id="混合开发模型"><a href="#混合开发模型" class="headerlink" title="混合开发模型"></a>混合开发模型</h2><h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>分布式Git, 本地项目管理。 </li>
+<li>轻量级分支, 快速在本地建立分支, 业务并行处理。</li>
+<li>Git合并, 将svn本地和svn服务器的代码冲突交给Git进行处理。<ul>
+<li>svn的冲突会生成3个文件，手动解决冲突后, 需要进行删除(svn resolved), 才能进行commit。</li>
+</ul>
+</li>
+<li>版本发布的Tag标签。</li>
+<li>Git储存, 将不确定的修改进行储存。</li>
+<li>回退修改。<h2 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h2></li>
+<li>全量记录, 手动<code>git gc</code>可以缓解该问题。</li>
+</ul>
+<h1 id="附录二、相关链接"><a href="#附录二、相关链接" class="headerlink" title="附录二、相关链接"></a>附录二、相关链接</h1><ul>
+<li><a href="https://git-scm.com/book/zh/v2" target="_blank" rel="noopener">Pro Git</a></li>
+<li><a href="https://learngitbranching.js.org/" target="_blank" rel="noopener">learning git branch</a></li>
+<li><a href="https://github.com/Gazler/githug">Github</a></li>
+<li><a href="https://svnbucket.com/#/" target="_blank" rel="noopener">SVNBucket</a></li>
+<li><a href="https://github.com/">GitHub</a></li>
+<li><a href="https://bitbucket.org/" target="_blank" rel="noopener">BitBucket</a></li>
+<li><a href="https://coding.net/u/asirlu" target="_blank" rel="noopener">Coding.net</a></li>
+<li><a href="https://gitee.com/" target="_blank" rel="noopener">码云</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Git概述"><span class="toc-number">1.</span> <span class="toc-text">一、Git概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-版本控制系统"><span class="toc-number">1.1.</span> <span class="toc-text">1.版本控制系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-本地版本控制系统。"><span class="toc-number">1.1.1.</span> <span class="toc-text">1).本地版本控制系统。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-集中化的版本控制系统"><span class="toc-number">1.1.2.</span> <span class="toc-text">2).集中化的版本控制系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-分布式版本控制系统"><span class="toc-number">1.1.3.</span> <span class="toc-text">3).分布式版本控制系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-文件存储方式"><span class="toc-number">1.2.</span> <span class="toc-text">2.文件存储方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Git添加数据问题"><span class="toc-number">1.3.</span> <span class="toc-text">3.Git添加数据问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-三种区域"><span class="toc-number">1.4.</span> <span class="toc-text">4.三种区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Git配置"><span class="toc-number">1.5.</span> <span class="toc-text">4.Git配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-最小的Demo"><span class="toc-number">1.6.</span> <span class="toc-text">5.最小的Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git基础命令"><span class="toc-number">2.</span> <span class="toc-text">Git基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本命令"><span class="toc-number">2.1.</span> <span class="toc-text">基本命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git分支"><span class="toc-number">3.</span> <span class="toc-text">Git分支</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git远程仓库"><span class="toc-number">4.</span> <span class="toc-text">Git远程仓库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git常用工作流"><span class="toc-number">5.</span> <span class="toc-text">Git常用工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-特性分支"><span class="toc-number">5.1.</span> <span class="toc-text">1.特性分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-集中式工作流及分支模型"><span class="toc-number">5.2.</span> <span class="toc-text">2.集中式工作流及分支模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-集成管理者工作流"><span class="toc-number">5.3.</span> <span class="toc-text">3.集成管理者工作流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-司令官与副官工作流"><span class="toc-number">5.4.</span> <span class="toc-text">4.司令官与副官工作流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git底层机制"><span class="toc-number">6.</span> <span class="toc-text">Git底层机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-底层命令"><span class="toc-number">6.1.</span> <span class="toc-text">1.底层命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Git对象"><span class="toc-number">6.2.</span> <span class="toc-text">2.Git对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Git引用"><span class="toc-number">6.3.</span> <span class="toc-text">3.Git引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git原理"><span class="toc-number">7.</span> <span class="toc-text">Git原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#底层数据目录"><span class="toc-number">7.1.</span> <span class="toc-text">底层数据目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git对象"><span class="toc-number">7.2.</span> <span class="toc-text">git对象</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相比与SVN的优缺点"><span class="toc-number">8.</span> <span class="toc-text">相比与SVN的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优点"><span class="toc-number">8.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">8.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录一、SVN和Git的混合开发模式"><span class="toc-number">9.</span> <span class="toc-text">附录一、SVN和Git的混合开发模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#混合开发模型"><span class="toc-number">9.1.</span> <span class="toc-text">混合开发模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优点-1"><span class="toc-number">9.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-1"><span class="toc-number">9.3.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录二、相关链接"><span class="toc-number">10.</span> <span class="toc-text">附录二、相关链接</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/12/10/Git-Story/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/12/10/Git-Story/&text=Git Story"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/12/10/Git-Story/&is_video=false&description=Git Story"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git Story&body=Check out this article: http://github.com/lsj9383/2018/12/10/Git-Story/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/12/10/Git-Story/&title=Git Story"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/12/10/Git-Story/&name=Git Story&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Arthur Lu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
