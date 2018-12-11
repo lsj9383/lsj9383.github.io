@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。绝大多数的Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区">
+    <meta name="description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git Story">
 <meta property="og:url" content="http://github.com/lsj9383/2018/12/10/Git-Story/index.html">
 <meta property="og:site_name" content="小记">
-<meta property="og:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。绝大多数的Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区">
+<meta property="og:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/local.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/centralized.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/distributed.png">
@@ -26,10 +26,10 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/topic-branches-1.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/centralized_workflow.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/integration-manager.png">
-<meta property="og:updated_time" content="2018-12-11T10:59:55.509Z">
+<meta property="og:updated_time" content="2018-12-11T11:01:32.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
-<meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。绝大多数的Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区">
+<meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
 <meta name="twitter:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/local.png">
     
     
@@ -144,8 +144,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="一、Git概述"><a href="#一、Git概述" class="headerlink" title="一、Git概述"></a>一、Git概述</h1><p>Linux 内核开源项目有着为数众多的参与者。绝大多数的Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。 到 2002 年，整个项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。</p>
-<p>到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区免费使用 BitKeeper 的权力。 这就迫使 Linux 开源社区（特别是 Linux 的缔造者 Linus Torvalds）基于使用 BitKeeper 时的经验教训，开发出自己的版本系统。</p>
+    <h1 id="一、Git概述"><a href="#一、Git概述" class="headerlink" title="一、Git概述"></a>一、Git概述</h1><p>Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。</p>
 <h2 id="1-版本控制系统"><a href="#1-版本控制系统" class="headerlink" title="1.版本控制系统"></a>1.版本控制系统</h2><blockquote>
 <p>版本控制系统(VCS)是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
 </blockquote>
