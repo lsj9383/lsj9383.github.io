@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-1.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-3">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
-<meta property="og:updated_time" content="2018-12-16T12:55:13.405Z">
+<meta property="og:updated_time" content="2018-12-16T15:09:14.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -315,7 +315,11 @@
 <ul>
 <li>git verify-pack -v <code>&lt;package-idx&gt;</code>, 查看已打包的内容</li>
 </ul>
-<h3 id="2-垃圾回收"><a href="#2-垃圾回收" class="headerlink" title="2).垃圾回收"></a>2).<em>垃圾回收</em></h3><p>git gc除了生成包文件外，还可以搜寻每个提交对象的可达性。若某个提交对象不可达，则该提交将会在Git仓库中删除，并且该提交中没有被其他可达提交引用的对象也会被删除。需要注意，git并不会所有不可达对象都进行删除，而是对过期(存在两个周的不可达对象)进行删除。若需要立即将不可达对象删除可以代上prune参数：<code>git gc --prune=now</code></p>
+<h3 id="2-垃圾回收"><a href="#2-垃圾回收" class="headerlink" title="2).垃圾回收"></a>2).<em>垃圾回收</em></h3><p>git gc除了生成包文件外，还可以搜寻每个提交对象的可达性。若某个提交对象不可达，则该提交将会在Git仓库中删除，并且该提交中没有被其他可达提交引用的对象也会被删除。需要注意，git并不会所有不可达对象都进行删除，而是对过期(存在两个周的不可达对象)进行删除。若需要立即将不可达对象删除可以代上prune参数</p>
+<ul>
+<li>git gc –prune=now</li>
+<li>仅仅进行垃圾回收 : git prune –expire now</li>
+</ul>
 <h3 id="3-git-gc的触发"><a href="#3-git-gc的触发" class="headerlink" title="3).git gc的触发"></a>3).<em>git gc的触发</em></h3><ul>
 <li>手动执行git gc命令。</li>
 <li>7000个以上的松散对象，可以修改Git配置中的gc.auto来改变这一数值。</li>
@@ -332,7 +336,24 @@
 <li>git fsck –full</li>
 </ul>
 <p>其中<code>dangling</code>指示的对象不可达。</p>
-<h3 id="2-移除大对象"><a href="#2-移除大对象" class="headerlink" title="2).移除大对象"></a>2).<em>移除大对象</em></h3><h1 id="七、相比与SVN的优缺点"><a href="#七、相比与SVN的优缺点" class="headerlink" title="七、相比与SVN的优缺点"></a>七、相比与SVN的优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<h3 id="2-移除大对象"><a href="#2-移除大对象" class="headerlink" title="2).移除大对象"></a>2).<em>移除大对象</em></h3><p>由于Git的分布式特性，对Git的clone，都会导致整个仓库的拷贝，因此若Git仓库中若存在误添加的大对象，会导致所有节点的Git仓库都会包含该大对象，因此Git提交时需要谨慎。</p>
+<ul>
+<li>git count-objects -vH, 查看Git仓库的空间占用情况</li>
+<li>git gc, 确保大文件已经打包至pack</li>
+<li>将Git中的对象打印出来, 找到大对象的hash:<ul>
+<li><code>git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | tail -3</code></li>
+<li><code>git rev-list --objects --all | grep 82c99a3</code>, 从所有提交的hash、数据对象的hash和与它们相关联的文件路径中，找到大对象的文件，用以确认。</li>
+<li>可以将上面的命令浓缩:<code>git rev-list --objects --all | grep &quot;$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk &#39;{print$1}&#39;)&quot;</code></li>
+</ul>
+</li>
+<li><p>查询关于这个文件的首次提交:</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline --branches -- &lt;file-path&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从历史提交中删除:</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改所有提交历史</span></span><br><span class="line">git filter-branch --index-filter \</span><br><span class="line"><span class="string">'git rm --ignore-unmatch --cached &lt;file-path&gt;'</span> -- 7b30847^..</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除filter-branch生成的旧引用缓存, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/refs/original</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除日志, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/logs/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 垃圾回收</span></span><br><span class="line">git gc --prune=now</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="七、相比与SVN的优缺点"><a href="#七、相比与SVN的优缺点" class="headerlink" title="七、相比与SVN的优缺点"></a>七、相比与SVN的优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
 <li>分布式版本管理, git可以避免将一些本地分支对外开放, 也具备更好的可用性。</li>
 <li>轻量级分支, svn的分支基于服务器目录+写时复制(老版本的svn基于目录拷贝), git的分支是基于全量记录+标识的。</li>
 <li>储存功能</li>
