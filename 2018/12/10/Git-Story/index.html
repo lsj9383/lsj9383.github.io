@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-1.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-3">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
-<meta property="og:updated_time" content="2018-12-16T15:09:14.909Z">
+<meta property="og:updated_time" content="2018-12-16T15:35:46.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -340,11 +340,8 @@
 <ul>
 <li>git count-objects -vH, 查看Git仓库的空间占用情况</li>
 <li>git gc, 确保大文件已经打包至pack</li>
-<li>将Git中的对象打印出来, 找到大对象的hash:<ul>
-<li><code>git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | tail -3</code></li>
-<li><code>git rev-list --objects --all | grep 82c99a3</code>, 从所有提交的hash、数据对象的hash和与它们相关联的文件路径中，找到大对象的文件，用以确认。</li>
-<li>可以将上面的命令浓缩:<code>git rev-list --objects --all | grep &quot;$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk &#39;{print$1}&#39;)&quot;</code></li>
-</ul>
+<li><p>将Git中的对象打印出来, 找到大对象的hash及其路径(若已经知道了大对象的名称，不用做这步):</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到目标大文件的hash</span></span><br><span class="line">git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | tail -3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从所有提交的hash、数据对象的hash和与它们相关联的文件路径中，找到大对象的文件，用以确认。</span></span><br><span class="line">git rev-list --objects --all | grep 82c99a3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以将上面的命令浓缩</span></span><br><span class="line">`git rev-list --objects --all | grep <span class="string">"<span class="variable">$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '&#123;print$1&#125;')</span>"</span>`</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查询关于这个文件的首次提交:</p>
   <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline --branches -- &lt;file-path&gt;</span><br></pre></td></tr></table></figure>
@@ -353,6 +350,7 @@
   <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改所有提交历史</span></span><br><span class="line">git filter-branch --index-filter \</span><br><span class="line"><span class="string">'git rm --ignore-unmatch --cached &lt;file-path&gt;'</span> -- 7b30847^..</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除filter-branch生成的旧引用缓存, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/refs/original</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除日志, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/logs/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 垃圾回收</span></span><br><span class="line">git gc --prune=now</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>可以从上面看出，一个大对象的移除是繁琐，甚至是危险的(利用底层命令进行写几乎总是危险的)。在分布式环境下更是复杂，因为若大对象已经存在于各个节点，则每个节点都需要做这样的操作。大对象若已经保存在github，还是把git的仓库删了，在本地删除大对象后重新push吧。</p>
 <h1 id="七、相比与SVN的优缺点"><a href="#七、相比与SVN的优缺点" class="headerlink" title="七、相比与SVN的优缺点"></a>七、相比与SVN的优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
 <li>分布式版本管理, git可以避免将一些本地分支对外开放, 也具备更好的可用性。</li>
 <li>轻量级分支, svn的分支基于服务器目录+写时复制(老版本的svn基于目录拷贝), git的分支是基于全量记录+标识的。</li>
