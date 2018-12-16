@@ -29,7 +29,8 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-1.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-3">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
-<meta property="og:updated_time" content="2018-12-16T15:35:46.860Z">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/svn-git.png">
+<meta property="og:updated_time" content="2018-12-16T16:44:55.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -350,7 +351,7 @@
   <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改所有提交历史</span></span><br><span class="line">git filter-branch --index-filter \</span><br><span class="line"><span class="string">'git rm --ignore-unmatch --cached &lt;file-path&gt;'</span> -- 7b30847^..</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除filter-branch生成的旧引用缓存, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/refs/original</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除日志, 避免无法被回收</span></span><br><span class="line">rm -Rf .git/logs/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 垃圾回收</span></span><br><span class="line">git gc --prune=now</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>可以从上面看出，一个大对象的移除是繁琐，甚至是危险的(利用底层命令进行写几乎总是危险的)。在分布式环境下更是复杂，因为若大对象已经存在于各个节点，则每个节点都需要做这样的操作。大对象若已经保存在github，还是把git的仓库删了，在本地删除大对象后重新push吧。</p>
+<p>可以从上面看出，一个大对象的移除是繁琐，甚至是危险的(利用底层命令进行写几乎总是危险的)。在分布式环境下更是复杂，因为若大对象已经存在于各个节点，则更麻烦，需要进行多节点的同步。大对象若已经保存在github，还是把git的仓库删了，在本地删除大对象后重新push吧。</p>
 <h1 id="七、相比与SVN的优缺点"><a href="#七、相比与SVN的优缺点" class="headerlink" title="七、相比与SVN的优缺点"></a>七、相比与SVN的优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
 <li>分布式版本管理, git可以避免将一些本地分支对外开放, 也具备更好的可用性。</li>
 <li>轻量级分支, svn的分支基于服务器目录+写时复制(老版本的svn基于目录拷贝), git的分支是基于全量记录+标识的。</li>
@@ -365,7 +366,8 @@
 <li>clone代价</li>
 </ul>
 <h1 id="附录一、SVN和Git的混合开发模式"><a href="#附录一、SVN和Git的混合开发模式" class="headerlink" title="附录一、SVN和Git的混合开发模式"></a>附录一、SVN和Git的混合开发模式</h1><p>Git越来越流行，受到各个开发人员的追捧，但一些历史项目仍然采用了subversion, cvs等版本管理。项目迁移成本大，git又具有一定的学习成本，并不需要为了追求Git而把整个项目迁移。在避免迁移的基础上，可以采用混合开发模式，开发人员可以根据自己的情况将git的管理优势引入到开发中。</p>
-<h2 id="混合开发模型"><a href="#混合开发模型" class="headerlink" title="混合开发模型"></a>混合开发模型</h2><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<h2 id="混合开发模型"><a href="#混合开发模型" class="headerlink" title="混合开发模型"></a>混合开发模型</h2><p><img src="svn-git.png" alt=""></p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
 <li>分布式Git, 本地项目管理。 </li>
 <li>轻量级分支, 快速在本地建立分支, 业务并行处理。</li>
 <li>Git合并, 将svn本地和svn服务器的代码冲突交给Git进行处理。<ul>
