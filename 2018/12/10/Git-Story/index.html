@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/add-commit.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/svn-git.png">
-<meta property="og:updated_time" content="2018-12-17T15:10:35.479Z">
+<meta property="og:updated_time" content="2018-12-17T15:28:02.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -252,9 +252,14 @@
 <li>git remote -v, 列出远程仓库。</li>
 <li>git remote add <code>&lt;remote-server-name&gt;</code> <code>&lt;uri&gt;</code>, 添加远程仓库。</li>
 <li>git remote remove <code>&lt;remote-server-name&gt;</code>, 移除远程仓库。</li>
-<li>git clone <code>&lt;uri&gt;</code>, 从远程仓库clone, 会自动将其添加到远程仓库。<h2 id="2-拉取合并"><a href="#2-拉取合并" class="headerlink" title="2.拉取合并"></a>2.<em>拉取合并</em></h2>拉取远程仓库分支，这一行为本身和自己的工作分支是独立的，拉去远程仓库会更新远处仓库在本地的映射，<code>git pull</code>会自动将远程仓库在本地的映射进行合并，<code>git fetch</code>不会自动合并。</li>
+<li>git clone <code>&lt;uri&gt;</code>, 从远程仓库clone, 会自动将其添加到远程仓库。</li>
+</ul>
+<h2 id="2-拉取合并"><a href="#2-拉取合并" class="headerlink" title="2.拉取合并"></a>2.<em>拉取合并</em></h2><p>拉取远程仓库分支，这一行为本身和自己的工作分支是独立的，拉去远程仓库会更新远处仓库在本地的映射，<code>git pull</code>会自动将远程仓库在本地的映射进行合并，<code>git fetch</code>不会自动合并。</p>
+<ul>
 <li>git pull</li>
-<li>git fetch<h2 id="3-推送合并"><a href="#3-推送合并" class="headerlink" title="3.推送合并"></a>3.<em>推送合并</em></h2></li>
+<li>git fetch</li>
+</ul>
+<h2 id="3-推送合并"><a href="#3-推送合并" class="headerlink" title="3.推送合并"></a>3.<em>推送合并</em></h2><ul>
 <li>git push, 会将本地的分支直接推送到远程仓库的分支上，并在远程仓库进行合并，若合并失败会返回客户端失败，并建议客户端拉去服务器分支进行合并后再push。</li>
 </ul>
 <h1 id="五、Git常用工作流"><a href="#五、Git常用工作流" class="headerlink" title="五、Git常用工作流"></a>五、Git常用工作流</h1><h2 id="1-特性分支"><a href="#1-特性分支" class="headerlink" title="1.特性分支"></a>1.特性分支</h2><p>特性分支是一种短期分支，通常是为了完成一个需求或是解决一个Bug而建立。特性分支完成后，会将其合并回master分支。<br><img src="topic-branches-1.png" alt=""></p>
