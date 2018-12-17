@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/add-commit.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/svn-git.png">
-<meta property="og:updated_time" content="2018-12-17T15:28:02.702Z">
+<meta property="og:updated_time" content="2018-12-17T15:58:55.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -157,9 +157,12 @@
 <h3 id="2-集中化的版本控制系统"><a href="#2-集中化的版本控制系统" class="headerlink" title="2).集中化的版本控制系统"></a>2).集中化的版本控制系统</h3><p><img src="centralized.png" alt="CVCS"><br>将版本管理集中于一台单一服务器，该服务器上保存了文件所有的修订版本，开发人员可以从服务器上拷贝工作目录，完成工作后提交到服务器更新修订版本。常见的如CVS、Subversion和Perforce。主要问题是单点故障导致工作阻塞，严重的会导致修订历史版本数据全部丢失。</p>
 <h3 id="3-分布式版本控制系统"><a href="#3-分布式版本控制系统" class="headerlink" title="3).分布式版本控制系统"></a>3).分布式版本控制系统</h3><p><img src="distributed.png" alt="DVCS"><br>分布式管理控制系统中每个节点都包含整个仓库的拷贝，如Git。</p>
 <h2 id="2-文件存储方式"><a href="#2-文件存储方式" class="headerlink" title="2.文件存储方式"></a>2.文件存储方式</h2><ul>
-<li>SVN等传统VCS的文件存储方式:记录版本间的增量<br><img src="deltas.png" alt=""></li>
-<li>Git的文件存储方式:记录每个版本的快照<br><img src="snapshots.png" alt=""><br>对于Git的文件存储方式，这样的描述其实并不准确，Git是混合了增量和快照的方式。默认采用快照的方式，当满足一些条件的时候(如git push)，将会对快照进行处理，并计算相似快照的增量进行存储。所以总的来说，通常git仓库会比传统VCS的仓库文件大。这样的存储方式对于Git分支及其管理有较大的益处。</li>
+<li><p>SVN等传统VCS的文件存储方式:记录版本间的增量<br><img src="deltas.png" alt=""></p>
+</li>
+<li><p>Git的文件存储方式:记录每个版本的快照<br><img src="snapshots.png" alt=""></p>
+</li>
 </ul>
+<p>对于Git的文件存储方式，这样的描述其实并不准确，Git是混合了增量和快照的方式。默认采用快照的方式，当满足一些条件的时候(如git push)，将会对快照进行处理，并计算相似快照的增量进行存储。所以总的来说，通常git仓库会比传统VCS的仓库文件大。这样的存储方式对于Git分支及其管理有较大的益处。</p>
 <h2 id="3-Git添加数据问题"><a href="#3-Git添加数据问题" class="headerlink" title="3.Git添加数据问题"></a>3.Git添加数据问题</h2><p>在Git中进行提交的数据就一定存在与仓库中，就算将其删除文件其实仍然保存与Git仓库中，可以随时进行恢复。如果误操作将一个较大的文件存储到Git中，虽然可以做到将其从Git仓库中删除，但是较为繁琐。</p>
 <h2 id="4-三种区域"><a href="#4-三种区域" class="headerlink" title="4.三种区域"></a>4.三种区域</h2><p><img src="areas.png" alt=""></p>
 <ul>
@@ -271,8 +274,8 @@
 <li>issue1, 需要多人进行开发的迭代分支</li>
 <li>arthurlu, 开发人员分支</li>
 </ul>
-<p>远程仓库可能有成千上万的分支, 开发完成后要合并到master分支或是test分支需要发起<code>merge request</code>，这是一种<code>code review</code>，经同意后才会进行合并。</p>
-<h2 id="3-集成管理者工作流"><a href="#3-集成管理者工作流" class="headerlink" title="3.集成管理者工作流"></a>3.集成管理者工作流</h2><p>这也是GitHub开源项目进行贡献的核心流程。<br><img src="integration-manager.png" alt=""><br>会有一个管理者远程仓库(blessed), 该远程仓库只能由管理中读写, 其他开发人员只有读权限。各个开发人员可以fork这个远程仓库到自己的远程仓库中，再将自己的远程仓库clone到本地进行开发，开发完成后上传到开发人员自己的远程仓库。开发人员用远程仓库发起<code>pull request</code>，请求管理者将其开发的特性/分支合并到管理者的仓库中。</p>
+<p>对于大型项目的master、test和dev分支，它们相当重要，不允许开发人员直接push或merge这些分支，而是只能push到特性分支，merge操作只提供给特别的管理人员。开发人员开发完成后，会把开发的工作push到某个分支，然后发出<code>merge request</code>，项目团队人员检查后会进行merge。</p>
+<h2 id="3-集成管理者工作流"><a href="#3-集成管理者工作流" class="headerlink" title="3.集成管理者工作流"></a>3.集成管理者工作流</h2><p>这也是GitHub开源项目进行贡献的核心流程。<br><img src="integration-manager.png" alt=""><br>会有一个管理者远程仓库(blessed), 该远程仓库只能由管理中读写, 其他开发人员只有读权限。各个开发人员可以fork这个远程仓库到自己的远程仓库中，再将自己的远程仓库clone到本地进行开发，开发完成后上传到开发人员自己的远程仓库。开发人员用远程仓库发起<code>pull request</code>，请求管理者将其开发的特性/分支合并到管理者的仓库中。GitHub可以进行pull request, 并且merge request是pull request的一个子集。</p>
 <h1 id="六、Git底层机制"><a href="#六、Git底层机制" class="headerlink" title="六、Git底层机制"></a>六、Git底层机制</h1><h2 id="1-Git目录"><a href="#1-Git目录" class="headerlink" title="1.Git目录"></a>1.Git目录</h2><p><code>git init</code>会在当前目录下生成一个<code>.git</code>的隐藏目录，该目录就是本地Git仓库的入口。该目录下包含了一下子目录和文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── HEAD            <span class="comment"># 当前所处的分支/提交对象</span></span><br><span class="line">├── objects/        <span class="comment"># 所有add/commit的对象存储</span></span><br><span class="line">├── refs/           <span class="comment"># 指向提交对象的指针(hash)</span></span><br><span class="line">|   ├── heads       <span class="comment"># 记录分支</span></span><br><span class="line">|   ├── remotes     <span class="comment"># 记录远程分支</span></span><br><span class="line">|   └── tags        <span class="comment"># 记录标签</span></span><br><span class="line">├── index           <span class="comment"># 暂存区文件, 记录当前暂存区, 里面是一组Tree对象。git rm就是删除的这个里面对Blob的引用。</span></span><br><span class="line">├── hooks/          <span class="comment"># 保存git钩子文件</span></span><br><span class="line">├── description     <span class="comment"># GitWeb所需要的信息</span></span><br><span class="line">├── packed-refs     <span class="comment"># 将refs里面的指针打包存放, Git会首先在refs目录中查找指定的引用，然后再到packed-refs文件中查找</span></span><br><span class="line">└── info/           <span class="comment"># 用以放置那些不希望被记录在.gitignore 文件中的忽略模式</span></span><br></pre></td></tr></table></figure></p>
 <p>Git除了merge, checkout, rebase等等应用层命令外，还有一系列的底层</p>
 <h2 id="2-Git对象"><a href="#2-Git对象" class="headerlink" title="2.Git对象"></a>2.Git对象</h2><ul>
