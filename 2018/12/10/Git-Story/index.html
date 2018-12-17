@@ -28,9 +28,10 @@
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/integration-manager.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-1.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/data-model-3">
+<meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/add-commit.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/reset-checkout.png">
 <meta property="og:image" content="http://github.com/lsj9383/2018/12/10/Git-Story/svn-git.png">
-<meta property="og:updated_time" content="2018-12-16T16:44:55.886Z">
+<meta property="og:updated_time" content="2018-12-17T14:38:31.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Story">
 <meta name="twitter:description" content="一、Git概述Linux 内核开源项目有着为数众多的参与者。整个项目组开始启用一个专有的分布式版本控制系统BitKeeper来管理和维护代码。2005年，开发BitKeeper的商业公司同Linux内核开源社区的合作关系结束，他们收回了 Linux内核社区免费使用BitKeeper的权力。 这就迫使Linux开源社区(特别是Linux的缔造者Linus Torvalds)开发出自己的版本系统。 1">
@@ -303,7 +304,8 @@
 </ul>
 </li>
 </ul>
-<p>如下图所示:</p>
+<p>下图是3次提交所生成的各个对象, 以帮助理解:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下图所对应工作空间的目录树</span></span><br><span class="line">├── .git</span><br><span class="line">├── lib</span><br><span class="line">|   └──makefile</span><br><span class="line">└── readme</span><br></pre></td></tr></table></figure></p>
+<p><img src="add-commit.png" alt=""></p>
 <h2 id="3-gc与打包"><a href="#3-gc与打包" class="headerlink" title="3.gc与打包"></a>3.gc与打包</h2><p>Git每次提交都会建立一次快照，但是Git的存储实际上是非常高效的，主要是因为如下原因：</p>
 <ul>
 <li>提交快照并不是真正意义上的对整个工作目录进行拷贝，而是对被改动的文件进行拷贝快照。</li>
@@ -342,7 +344,7 @@
 <li>git count-objects -vH, 查看Git仓库的空间占用情况</li>
 <li>git gc, 确保大文件已经打包至pack</li>
 <li><p>将Git中的对象打印出来, 找到大对象的hash及其路径(若已经知道了大对象的名称，不用做这步):</p>
-  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到目标大文件的hash</span></span><br><span class="line">git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | tail -3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从所有提交的hash、数据对象的hash和与它们相关联的文件路径中，找到大对象的文件，用以确认。</span></span><br><span class="line">git rev-list --objects --all | grep 82c99a3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以将上面的命令浓缩</span></span><br><span class="line">`git rev-list --objects --all | grep <span class="string">"<span class="variable">$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '&#123;print$1&#125;')</span>"</span>`</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到目标大文件的hash</span></span><br><span class="line">git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | tail -3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从可以列出所有可达的objects中找到大对象</span></span><br><span class="line">git rev-list --objects --all | grep &lt;大对象<span class="built_in">hash</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以将上面的命令浓缩</span></span><br><span class="line">`git rev-list --objects --all | grep <span class="string">"<span class="variable">$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '&#123;print$1&#125;')</span>"</span>`</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查询关于这个文件的首次提交:</p>
   <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline --branches -- &lt;file-path&gt;</span><br></pre></td></tr></table></figure>
