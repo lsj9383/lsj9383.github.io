@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="在更新How to Use MySQL in Python一文时，阅读了Python数据库连接池常用的DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五">
+    <meta name="description" content="在更新How to Use MySQL in Python一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五、性能问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DBUtils In Python">
 <meta property="og:url" content="http://github.com/lsj9383/2019/01/02/DBUtils-In-Python/index.html">
 <meta property="og:site_name" content="小记">
-<meta property="og:description" content="在更新How to Use MySQL in Python一文时，阅读了Python数据库连接池常用的DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五">
-<meta property="og:updated_time" content="2019-01-02T09:40:40.242Z">
+<meta property="og:description" content="在更新How to Use MySQL in Python一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五、性能问题">
+<meta property="og:updated_time" content="2019-01-02T09:55:19.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DBUtils In Python">
-<meta name="twitter:description" content="在更新How to Use MySQL in Python一文时，阅读了Python数据库连接池常用的DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五">
+<meta name="twitter:description" content="在更新How to Use MySQL in Python一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。 一、概述DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。 二、池工作原理三、池类剖析四、连接包装类剖析五、性能问题">
     
     
         
@@ -95,7 +95,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、概述"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、池工作原理"><span class="toc-number">2.</span> <span class="toc-text">二、池工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、池类剖析"><span class="toc-number">3.</span> <span class="toc-text">三、池类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、连接包装类剖析"><span class="toc-number">4.</span> <span class="toc-text">四、连接包装类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、性能提升"><span class="toc-number">5.</span> <span class="toc-text">五、性能提升</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、概述"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、池工作原理"><span class="toc-number">2.</span> <span class="toc-text">二、池工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、池类剖析"><span class="toc-number">3.</span> <span class="toc-text">三、池类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、连接包装类剖析"><span class="toc-number">4.</span> <span class="toc-text">四、连接包装类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、性能问题"><span class="toc-number">5.</span> <span class="toc-text">五、性能问题</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -129,9 +129,9 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>在更新<a href="https://github.com/lsj9383/how-to-use-mysql-in-python/blob/master/README.md">How to Use MySQL in Python</a>一文时，阅读了Python数据库连接池常用的DButils相关源码，在这里对其做一个较为全面的总结。</p>
+    <p>在更新<a href="https://github.com/lsj9383/how-to-use-mysql-in-python/blob/master/README.md">How to Use MySQL in Python</a>一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。</p>
 <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>DBUtils是一套工具，提供了稳定和持久的数据库连接包装类，以及提供了数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。</p>
-<h1 id="二、池工作原理"><a href="#二、池工作原理" class="headerlink" title="二、池工作原理"></a>二、池工作原理</h1><h1 id="三、池类剖析"><a href="#三、池类剖析" class="headerlink" title="三、池类剖析"></a>三、池类剖析</h1><h1 id="四、连接包装类剖析"><a href="#四、连接包装类剖析" class="headerlink" title="四、连接包装类剖析"></a>四、连接包装类剖析</h1><h1 id="五、性能提升"><a href="#五、性能提升" class="headerlink" title="五、性能提升"></a>五、性能提升</h1>
+<h1 id="二、池工作原理"><a href="#二、池工作原理" class="headerlink" title="二、池工作原理"></a>二、池工作原理</h1><h1 id="三、池类剖析"><a href="#三、池类剖析" class="headerlink" title="三、池类剖析"></a>三、池类剖析</h1><h1 id="四、连接包装类剖析"><a href="#四、连接包装类剖析" class="headerlink" title="四、连接包装类剖析"></a>四、连接包装类剖析</h1><h1 id="五、性能问题"><a href="#五、性能问题" class="headerlink" title="五、性能问题"></a>五、性能问题</h1>
   </div>
 </article>
 
@@ -157,7 +157,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、概述"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、池工作原理"><span class="toc-number">2.</span> <span class="toc-text">二、池工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、池类剖析"><span class="toc-number">3.</span> <span class="toc-text">三、池类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、连接包装类剖析"><span class="toc-number">4.</span> <span class="toc-text">四、连接包装类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、性能提升"><span class="toc-number">5.</span> <span class="toc-text">五、性能提升</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、概述"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、池工作原理"><span class="toc-number">2.</span> <span class="toc-text">二、池工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、池类剖析"><span class="toc-number">3.</span> <span class="toc-text">三、池类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、连接包装类剖析"><span class="toc-number">4.</span> <span class="toc-text">四、连接包装类剖析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、性能问题"><span class="toc-number">5.</span> <span class="toc-text">五、性能问题</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
