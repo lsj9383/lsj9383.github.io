@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="sbin/kill.py - advance-interface - 代码浏览 - Topbook - asirluwindow.PDFJS_WORKER_SRC=void 0/* neo theme for codemirror */  /* Color scheme */  .cm-s-neo.CodeMirror {   background-color:#ffffff;   color">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小记">
+<meta property="og:url" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/index.html">
+<meta property="og:site_name" content="小记">
+<meta property="og:description" content="sbin/kill.py - advance-interface - 代码浏览 - Topbook - asirluwindow.PDFJS_WORKER_SRC=void 0/* neo theme for codemirror */  /* Color scheme */  .cm-s-neo.CodeMirror {   background-color:#ffffff;   color">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/coding_logo_128-128.adddcfb3.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/21815a71-027b-4954-afe8-04cbd9c0a5ae.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-4.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-7.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-13.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-20.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-7.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-17.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/d4831817-efbc-4d3b-8514-c219b91e572f.jpg">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/scenery-16.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/Fruit-12.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/medal-silver@2x.d1367cb8.png">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/d4831817-efbc-4d3b-8514-c219b91e572f.jpg">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/infinity.3fa45c39.svg">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/Fruit-12.png">
+<meta property="og:updated_time" content="2019-02-04T02:22:46.511Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小记">
+<meta name="twitter:description" content="sbin/kill.py - advance-interface - 代码浏览 - Topbook - asirluwindow.PDFJS_WORKER_SRC=void 0/* neo theme for codemirror */  /* Color scheme */  .cm-s-neo.CodeMirror {   background-color:#ffffff;   color">
+<meta name="twitter:image" content="http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu/sbin_kill.py%20-%20advance-interface%20-%20代码浏览%20-%20Topbook%20-%20asirlu_files/coding_logo_128-128.adddcfb3.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>小记</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/01/10/Nginx个人实践总结/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&text="><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&is_video=false&description="><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&name=&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><h1 class="posttitle" itemprop="name headline">
+        
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">小记</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-04T02:22:46.508Z" itemprop="datePublished">2019-02-04</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!DOCTYPE html>
+<!-- saved from url=(0077)https://coding.net/u/asirlu/p/Topbook/git/blob/advance-interface/sbin/kill.py -->
+<html lang="zh-cmn-Hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="Keywords" content="项目管理、需求管理、缺陷管理、Bug Tracking、Bug管理、代码托管、代码评审、Code Review、敏捷开发、看板、迭代、流水线、Wiki、DevOps、Git、SVN、持续集成、CI、Jenkins、CD、测试管理、自动构建、Pages 服务、网页搭建、任务系统、研发管理"><meta name="Description" content="Coding.net 是一个面向开发者的云端开发平台，提供 Git/SVN 代码托管、任务管理、在线 WebIDE、Cloud Studio、开发协作、文件管理、Wiki 管理、提供个人服务及企业版本的服务"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1"><link rel="icon" type="image/x-icon" href="https://dn-coding-net-production-static.codehub.cn/platform/favicon.ico"><link rel="shortcut icon" type="image/x-icon" href="https://dn-coding-net-production-static.codehub.cn/platform/favicon.ico"><title>sbin/kill.py - advance-interface - 代码浏览 - Topbook - asirlu</title><script async src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/analytics.js"></script><script>window.PDFJS_WORKER_SRC=void 0</script><link href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/index.bae84181.chunk.css" rel="stylesheet"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/29.b11bdabe.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/37.d53745d5.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/131.1de7e22d.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/130.269ceccc.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/130.9a9fb443.chunk.js"></script><style type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->/* neo theme for codemirror */
+
+/* Color scheme */
+
+.cm-s-neo.CodeMirror {
+  background-color:#ffffff;
+  color:#2e383c;
+  line-height:1.4375;
+}
+.cm-s-neo .cm-comment { color:#75787b; }
+.cm-s-neo .cm-keyword, .cm-s-neo .cm-property { color:#1d75b3; }
+.cm-s-neo .cm-atom,.cm-s-neo .cm-number { color:#75438a; }
+.cm-s-neo .cm-node,.cm-s-neo .cm-tag { color:#9c3328; }
+.cm-s-neo .cm-string { color:#b35e14; }
+.cm-s-neo .cm-variable,.cm-s-neo .cm-qualifier { color:#047d65; }
+
+
+/* Editor styling */
+
+.cm-s-neo pre {
+  padding:0;
+}
+
+.cm-s-neo .CodeMirror-gutters {
+  border:none;
+  border-right:10px solid transparent;
+  background-color:transparent;
+}
+
+.cm-s-neo .CodeMirror-linenumber {
+  padding:0;
+  color:#e0e2e5;
+}
+
+.cm-s-neo .CodeMirror-guttermarker { color: #1d75b3; }
+.cm-s-neo .CodeMirror-guttermarker-subtle { color: #e0e2e5; }
+
+.cm-s-neo .CodeMirror-cursor {
+  width: auto;
+  border: 0;
+  background: rgba(155,157,162,0.37);
+  z-index: 1;
+}
+</style><style type="text/css">/* BASICS */
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+
+/* PADDING */
+
+.CodeMirror-lines {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.CodeMirror pre {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+
+/* CURSOR */
+
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+.cm-fat-cursor-mark {
+  background-color: rgba(20, 255, 20, 0.5);
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+}
+.cm-animate-fat-cursor {
+  width: auto;
+  border: 0;
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+  background-color: #7e7;
+}
+@-moz-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+
+.cm-tab { display: inline-block; text-decoration: inherit; }
+
+.CodeMirror-rulers {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: -20px;
+  overflow: hidden;
+}
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+
+/* DEFAULT THEME */
+
+.cm-s-default .cm-header {color: blue;}
+.cm-s-default .cm-quote {color: #090;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+
+.cm-s-default .cm-keyword {color: #708;}
+.cm-s-default .cm-atom {color: #219;}
+.cm-s-default .cm-number {color: #164;}
+.cm-s-default .cm-def {color: #00f;}
+.cm-s-default .cm-variable,
+.cm-s-default .cm-punctuation,
+.cm-s-default .cm-property,
+.cm-s-default .cm-operator {}
+.cm-s-default .cm-variable-2 {color: #05a;}
+.cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
+.cm-s-default .cm-comment {color: #a50;}
+.cm-s-default .cm-string {color: #a11;}
+.cm-s-default .cm-string-2 {color: #f50;}
+.cm-s-default .cm-meta {color: #555;}
+.cm-s-default .cm-qualifier {color: #555;}
+.cm-s-default .cm-builtin {color: #30a;}
+.cm-s-default .cm-bracket {color: #997;}
+.cm-s-default .cm-tag {color: #170;}
+.cm-s-default .cm-attribute {color: #00c;}
+.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-link {color: #00c;}
+
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+
+.CodeMirror-composing { border-bottom: 2px solid; }
+
+/* Default styles for common addons */
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
+.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
+.CodeMirror-activeline-background {background: #e8f2ff;}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 30px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -30px; margin-right: -30px;
+  padding-bottom: 30px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 30px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -30px;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper ::selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-variant-ligatures: contextual;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-rtl pre { direction: rtl; }
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre { position: static; }
+
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+
+.cm-searching {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+</style><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/38.3ce90e00.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/38.5063e7ce.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/194.df0e1a7e.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/vendors_HOCEditor_MarkEditor.d0fa4122.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/HOCEditor.00d7e0c2.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/HOCEditor.b0b4cc43.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/19.29665822.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/138.ea71508f.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/138.4e1e879e.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/5.369f7c25.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/23.049adb57.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/27.20af5a26.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/26.15056df5.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/26.8b51ada0.chunk.js"></script><style type="text/css">/**
+    Name:       IDEA default theme
+    From IntelliJ IDEA by JetBrains
+ */
+
+.cm-s-idea span.cm-meta { color: #808000; }
+.cm-s-idea span.cm-number { color: #0000FF; }
+.cm-s-idea span.cm-keyword { line-height: 1em; font-weight: bold; color: #000080; }
+.cm-s-idea span.cm-atom { font-weight: bold; color: #000080; }
+.cm-s-idea span.cm-def { color: #000000; }
+.cm-s-idea span.cm-variable { color: black; }
+.cm-s-idea span.cm-variable-2 { color: black; }
+.cm-s-idea span.cm-variable-3, .cm-s-idea span.cm-type { color: black; }
+.cm-s-idea span.cm-property { color: black; }
+.cm-s-idea span.cm-operator { color: black; }
+.cm-s-idea span.cm-comment { color: #808080; }
+.cm-s-idea span.cm-string { color: #008000; }
+.cm-s-idea span.cm-string-2 { color: #008000; }
+.cm-s-idea span.cm-qualifier { color: #555; }
+.cm-s-idea span.cm-error { color: #FF0000; }
+.cm-s-idea span.cm-attribute { color: #0000FF; }
+.cm-s-idea span.cm-tag { color: #000080; }
+.cm-s-idea span.cm-link { color: #0000FF; }
+.cm-s-idea .CodeMirror-activeline-background { background: #FFFAE3; }
+
+.cm-s-idea span.cm-builtin { color: #30a; }
+.cm-s-idea span.cm-bracket { color: #cc7; }
+.cm-s-idea  { font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;}
+
+
+.cm-s-idea .CodeMirror-matchingbracket { outline:1px solid grey; color:black !important; }
+
+.CodeMirror-hints.idea {
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  color: #616569;
+  background-color: #ebf3fd !important;
+}
+
+.CodeMirror-hints.idea .CodeMirror-hint-active {
+  background-color: #a2b8c9 !important;
+  color: #5c6065 !important;
+}</style><style type="text/css">.CodeMirror-merge {
+  position: relative;
+  border: 1px solid #ddd;
+  white-space: pre;
+}
+
+.CodeMirror-merge, .CodeMirror-merge .CodeMirror {
+  height: 350px;
+}
+
+.CodeMirror-merge-2pane .CodeMirror-merge-pane { width: 47%; }
+.CodeMirror-merge-2pane .CodeMirror-merge-gap { width: 6%; }
+.CodeMirror-merge-3pane .CodeMirror-merge-pane { width: 31%; }
+.CodeMirror-merge-3pane .CodeMirror-merge-gap { width: 3.5%; }
+
+.CodeMirror-merge-pane {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+.CodeMirror-merge-pane-rightmost {
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+}
+
+.CodeMirror-merge-gap {
+  z-index: 2;
+  display: inline-block;
+  height: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  position: relative;
+  background: #f8f8f8;
+}
+
+.CodeMirror-merge-scrolllock-wrap {
+  position: absolute;
+  bottom: 0; left: 50%;
+}
+.CodeMirror-merge-scrolllock {
+  position: relative;
+  left: -50%;
+  cursor: pointer;
+  color: #555;
+  line-height: 1;
+}
+.CodeMirror-merge-scrolllock:after {
+  content: "\21DB\A0\A0\21DA";
+}
+.CodeMirror-merge-scrolllock.CodeMirror-merge-scrolllock-enabled:after {
+  content: "\21DB\21DA";
+}
+
+.CodeMirror-merge-copybuttons-left, .CodeMirror-merge-copybuttons-right {
+  position: absolute;
+  left: 0; top: 0;
+  right: 0; bottom: 0;
+  line-height: 1;
+}
+
+.CodeMirror-merge-copy {
+  position: absolute;
+  cursor: pointer;
+  color: #44c;
+  z-index: 3;
+}
+
+.CodeMirror-merge-copy-reverse {
+  position: absolute;
+  cursor: pointer;
+  color: #44c;
+}
+
+.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy { left: 2px; }
+.CodeMirror-merge-copybuttons-right .CodeMirror-merge-copy { right: 2px; }
+
+.CodeMirror-merge-r-inserted, .CodeMirror-merge-l-inserted {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAGUlEQVQI12MwuCXy3+CWyH8GBgYGJgYkAABZbAQ9ELXurwAAAABJRU5ErkJggg==);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.CodeMirror-merge-r-deleted, .CodeMirror-merge-l-deleted {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAGUlEQVQI12M4Kyb2/6yY2H8GBgYGJgYkAABURgPz6Ks7wQAAAABJRU5ErkJggg==);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.CodeMirror-merge-r-chunk { background: #ffffe0; }
+.CodeMirror-merge-r-chunk-start { border-top: 1px solid #ee8; }
+.CodeMirror-merge-r-chunk-end { border-bottom: 1px solid #ee8; }
+.CodeMirror-merge-r-connect { fill: #ffffe0; stroke: #ee8; stroke-width: 1px; }
+
+.CodeMirror-merge-l-chunk { background: #eef; }
+.CodeMirror-merge-l-chunk-start { border-top: 1px solid #88e; }
+.CodeMirror-merge-l-chunk-end { border-bottom: 1px solid #88e; }
+.CodeMirror-merge-l-connect { fill: #eef; stroke: #88e; stroke-width: 1px; }
+
+.CodeMirror-merge-l-chunk.CodeMirror-merge-r-chunk { background: #dfd; }
+.CodeMirror-merge-l-chunk-start.CodeMirror-merge-r-chunk-start { border-top: 1px solid #4e4; }
+.CodeMirror-merge-l-chunk-end.CodeMirror-merge-r-chunk-end { border-bottom: 1px solid #4e4; }
+
+.CodeMirror-merge-collapsed-widget:before {
+  content: "(...)";
+}
+.CodeMirror-merge-collapsed-widget {
+  cursor: pointer;
+  color: #88b;
+  background: #eef;
+  border: 1px solid #ddf;
+  font-size: 90%;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+.CodeMirror-merge-collapsed-line .CodeMirror-gutter-elt { display: none; }
+</style><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/vendors_GitChild.38237104.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/40.73abdccf.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/40.93a4a2e6.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/GitChild.e43ace66.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/GitChild.185733bf.chunk.js"></script><style type="text/css">.cm-s-eclipse span.cm-meta { color: #FF1717; }
+.cm-s-eclipse span.cm-keyword { line-height: 1em; font-weight: bold; color: #7F0055; }
+.cm-s-eclipse span.cm-atom { color: #219; }
+.cm-s-eclipse span.cm-number { color: #164; }
+.cm-s-eclipse span.cm-def { color: #00f; }
+.cm-s-eclipse span.cm-variable { color: black; }
+.cm-s-eclipse span.cm-variable-2 { color: #0000C0; }
+.cm-s-eclipse span.cm-variable-3, .cm-s-eclipse span.cm-type { color: #0000C0; }
+.cm-s-eclipse span.cm-property { color: black; }
+.cm-s-eclipse span.cm-operator { color: black; }
+.cm-s-eclipse span.cm-comment { color: #3F7F5F; }
+.cm-s-eclipse span.cm-string { color: #2A00FF; }
+.cm-s-eclipse span.cm-string-2 { color: #f50; }
+.cm-s-eclipse span.cm-qualifier { color: #555; }
+.cm-s-eclipse span.cm-builtin { color: #30a; }
+.cm-s-eclipse span.cm-bracket { color: #cc7; }
+.cm-s-eclipse span.cm-tag { color: #170; }
+.cm-s-eclipse span.cm-attribute { color: #00c; }
+.cm-s-eclipse span.cm-link { color: #219; }
+.cm-s-eclipse span.cm-error { color: #f00; }
+
+.cm-s-eclipse .CodeMirror-activeline-background { background: #e8f2ff; }
+.cm-s-eclipse .CodeMirror-matchingbracket { outline:1px solid grey; color:black !important; }
+</style><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/196.567f5e88.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/GitContainer.6ef81d78.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/6.5cb64e84.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/6.94d40a15.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/41.7624cbcf.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/41.49cce77e.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/4.d63fc94d.chunk.js"></script><link rel="stylesheet" type="text/css" href="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/147.45682f74.chunk.css"><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/147.a6fa9c73.chunk.js"></script><style type="text/css">/* Based on Sublime Text's Monokai theme */
+
+.cm-s-monokai.CodeMirror { background: #272822; color: #f8f8f2; }
+.cm-s-monokai div.CodeMirror-selected { background: #49483E; }
+.cm-s-monokai .CodeMirror-line::selection, .cm-s-monokai .CodeMirror-line > span::selection, .cm-s-monokai .CodeMirror-line > span > span::selection { background: rgba(73, 72, 62, .99); }
+.cm-s-monokai .CodeMirror-line::-moz-selection, .cm-s-monokai .CodeMirror-line > span::-moz-selection, .cm-s-monokai .CodeMirror-line > span > span::-moz-selection { background: rgba(73, 72, 62, .99); }
+.cm-s-monokai .CodeMirror-gutters { background: #272822; border-right: 0px; }
+.cm-s-monokai .CodeMirror-guttermarker { color: white; }
+.cm-s-monokai .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
+.cm-s-monokai .CodeMirror-linenumber { color: #d0d0d0; }
+.cm-s-monokai .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+
+.cm-s-monokai span.cm-comment { color: #75715e; }
+.cm-s-monokai span.cm-atom { color: #ae81ff; }
+.cm-s-monokai span.cm-number { color: #ae81ff; }
+
+.cm-s-monokai span.cm-comment.cm-attribute { color: #97b757; }
+.cm-s-monokai span.cm-comment.cm-def { color: #bc9262; }
+.cm-s-monokai span.cm-comment.cm-tag { color: #bc6283; }
+.cm-s-monokai span.cm-comment.cm-type { color: #5998a6; }
+
+.cm-s-monokai span.cm-property, .cm-s-monokai span.cm-attribute { color: #a6e22e; }
+.cm-s-monokai span.cm-keyword { color: #f92672; }
+.cm-s-monokai span.cm-builtin { color: #66d9ef; }
+.cm-s-monokai span.cm-string { color: #e6db74; }
+
+.cm-s-monokai span.cm-variable { color: #f8f8f2; }
+.cm-s-monokai span.cm-variable-2 { color: #9effff; }
+.cm-s-monokai span.cm-variable-3, .cm-s-monokai span.cm-type { color: #66d9ef; }
+.cm-s-monokai span.cm-def { color: #fd971f; }
+.cm-s-monokai span.cm-bracket { color: #f8f8f2; }
+.cm-s-monokai span.cm-tag { color: #f92672; }
+.cm-s-monokai span.cm-header { color: #ae81ff; }
+.cm-s-monokai span.cm-link { color: #ae81ff; }
+.cm-s-monokai span.cm-error { background: #f92672; color: #f8f8f0; }
+
+.cm-s-monokai .CodeMirror-activeline-background { background: #373831; }
+.cm-s-monokai .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+</style><style type="text/css">/*
+
+    Name:       material
+    Author:     Michael Kaminsky (http://github.com/mkaminsky11)
+
+    Original material color scheme by Mattia Astorino (https://github.com/equinusocio/material-theme)
+
+*/
+
+.cm-s-material.CodeMirror {
+  background-color: #263238;
+  color: rgba(233, 237, 237, 1);
+}
+.cm-s-material .CodeMirror-gutters {
+  background: #263238;
+  color: rgb(83,127,126);
+  border: none;
+}
+.cm-s-material .CodeMirror-guttermarker, .cm-s-material .CodeMirror-guttermarker-subtle, .cm-s-material .CodeMirror-linenumber { color: rgb(83,127,126); }
+.cm-s-material .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+.cm-s-material div.CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+.cm-s-material.CodeMirror-focused div.CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
+.cm-s-material .CodeMirror-line::selection, .cm-s-material .CodeMirror-line > span::selection, .cm-s-material .CodeMirror-line > span > span::selection { background: rgba(255, 255, 255, 0.10); }
+.cm-s-material .CodeMirror-line::-moz-selection, .cm-s-material .CodeMirror-line > span::-moz-selection, .cm-s-material .CodeMirror-line > span > span::-moz-selection { background: rgba(255, 255, 255, 0.10); }
+
+.cm-s-material .CodeMirror-activeline-background { background: rgba(0, 0, 0, 0); }
+.cm-s-material .cm-keyword { color: rgba(199, 146, 234, 1); }
+.cm-s-material .cm-operator { color: rgba(233, 237, 237, 1); }
+.cm-s-material .cm-variable-2 { color: #80CBC4; }
+.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #82B1FF; }
+.cm-s-material .cm-builtin { color: #DECB6B; }
+.cm-s-material .cm-atom { color: #F77669; }
+.cm-s-material .cm-number { color: #F77669; }
+.cm-s-material .cm-def { color: rgba(233, 237, 237, 1); }
+.cm-s-material .cm-string { color: #C3E88D; }
+.cm-s-material .cm-string-2 { color: #80CBC4; }
+.cm-s-material .cm-comment { color: #546E7A; }
+.cm-s-material .cm-variable { color: #82B1FF; }
+.cm-s-material .cm-tag { color: #80CBC4; }
+.cm-s-material .cm-meta { color: #80CBC4; }
+.cm-s-material .cm-attribute { color: #FFCB6B; }
+.cm-s-material .cm-property { color: #80CBAE; }
+.cm-s-material .cm-qualifier { color: #DECB6B; }
+.cm-s-material .cm-variable-3, .cm-s-material .cm-type { color: #DECB6B; }
+.cm-s-material .cm-tag { color: rgba(255, 83, 112, 1); }
+.cm-s-material .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #EC5F67;
+}
+.cm-s-material .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
+</style><style type="text/css">.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+  position: absolute;
+  background: #ccc;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+}
+
+.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+  position: absolute;
+  z-index: 6;
+  background: #eee;
+}
+
+.CodeMirror-simplescroll-horizontal {
+  bottom: 0; left: 0;
+  height: 8px;
+}
+.CodeMirror-simplescroll-horizontal div {
+  bottom: 0;
+  height: 100%;
+}
+
+.CodeMirror-simplescroll-vertical {
+  right: 0; top: 0;
+  width: 8px;
+}
+.CodeMirror-simplescroll-vertical div {
+  right: 0;
+  width: 100%;
+}
+
+
+.CodeMirror-overlayscroll .CodeMirror-scrollbar-filler, .CodeMirror-overlayscroll .CodeMirror-gutter-filler {
+  display: none;
+}
+
+.CodeMirror-overlayscroll-horizontal div, .CodeMirror-overlayscroll-vertical div {
+  position: absolute;
+  background: #bcd;
+  border-radius: 3px;
+}
+
+.CodeMirror-overlayscroll-horizontal, .CodeMirror-overlayscroll-vertical {
+  position: absolute;
+  z-index: 6;
+}
+
+.CodeMirror-overlayscroll-horizontal {
+  bottom: 0; left: 0;
+  height: 6px;
+}
+.CodeMirror-overlayscroll-horizontal div {
+  bottom: 0;
+  height: 100%;
+}
+
+.CodeMirror-overlayscroll-vertical {
+  right: 0; top: 0;
+  width: 6px;
+}
+.CodeMirror-overlayscroll-vertical div {
+  right: 0;
+  width: 100%;
+}
+</style><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/132.369fa84e.chunk.js"></script><script charset="utf-8" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/195.b819e3ef.chunk.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></head><body><div id="container"><div data-reactroot="" class="app-2Tg"><div></div><!-- react-empty: 897 --><!-- react-empty: 5 --><!-- react-empty: 6 --><div style="padding-top: 60px; min-height: 100%; overflow-x: hidden; margin-top: 47px;"><header class="header-2b0"><div class="container-3My"><a target="_self" class="logo-1XE" href="https://coding.net/"><img src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/coding_logo_128-128.adddcfb3.png"></a><div tabindex="0" class="cuk-dropdown container-3jy search-input-Sas cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><span class="cuk-label cuk-label-small cuk-label-color-dark label-2vB" style="background-color: rgb(242, 244, 246);"><span>本项目</span></span><form autocomplete="off"><div class="cuk-input input-2PZ with-label-g0n"><input type="text" class="cuk-input-control cuk-input-size-small" value="" placeholder="搜索" name="search"></div></form></div><div class="cuk-dropdown-menu-container cuk-hide"></div></div><ul class="menu-RYC "><li class="new-li-Tca"><a target="_blank" href="https://studio.coding.net/"><span>Cloud Studio</span></a></li><li><a href="https://coding.net/help" target="_blank"><span>帮助</span></a></li><li><a href="https://coding.net/pp" target="_blank"><span>冒泡</span></a></li><li><a href="https://e.coding.net/" target="_blank">企业版</a></li><li class="new-li-Tca"><a target="_blank" href="https://feedback.coding.net/topics/7257"><!-- react-text: 926 -->升级公告<!-- /react-text --><img src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/21815a71-027b-4954-afe8-04cbd9c0a5ae.png"></a></li></ul><div class="right-1Id"><div class="right-zone-1Mr"><div class="menus-CKO"><div tabindex="0" class="cuk-dropdown plus-menu-dropdown-3HW cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><div class="item-3po"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 24 24" class="cuk-icon cuk-icon-pixel-plus fs-20" style="vertical-align: middle;"><g><g fill-rule="evenodd"><rect width="16" height="4" x="4" y="10"/><rect width="4" height="16" x="10" y="4"/></g></g></svg></div></div><div class="cuk-dropdown-menu-container cuk-hide"><ul class="cuk-list plus-menu-ykQ cuk-list-type-block" style="padding: 0px;"><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a class="plus-menu-item-3G8"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-tasks plus-menu-icon-OQm" style="vertical-align: middle;"><g><path d="m22.9 31.4h14.2v-2.8h-14.2v2.8z m-8.6-11.4h22.8v-2.9h-22.8v2.9z m14.3-11.4h8.5v-2.9h-8.5v2.9z m11.4 18.5v5.8q0 0.5-0.4 1t-1 0.4h-37.2q-0.6 0-1-0.4t-0.4-1v-5.8q0-0.5 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z m0-11.4v5.7q0 0.6-0.4 1t-1 0.5h-37.2q-0.6 0-1-0.5t-0.4-1v-5.7q0-0.6 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z m0-11.4v5.7q0 0.6-0.4 1t-1 0.4h-37.2q-0.6 0-1-0.4t-0.4-1v-5.7q0-0.6 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z"/></g></svg><span>任务</span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a class="plus-menu-item-3G8" href="https://coding.net/user/projects/create" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 1024 1024" class="cuk-icon cuk-icon-coding-project plus-menu-icon-OQm" style="vertical-align: middle;"><g><title/><g><g><path d="M926.61,237.45c-1.218-30.212-10.964-37.278-36.79-37.278c0,0-295.784,0-348.899,0 c-53.115,0-59.449,0.731-99.651-42.394c-33.379-36.059-20.223-35.572-89.174-35.572c-55.064,0-183.464,0-183.464,0 c-42.394,0-57.5-3.655-61.398,40.445c-3.655,40.689-12.182,139.365-13.4,154.471h836.675L926.61,237.45z"/></g><path d="M936.112,356.105H87.742c-43.125,0-45.318,22.415-42.882,49.947l31.674,445.869 c2.193,27.288,8.528,49.947,51.409,49.947h33.992L288.221,674.49l97.222,53.997l-96.295,173.38h609.199 c43.856,0,48.972-22.415,51.409-49.947l29.481-451.473C981.43,373.16,979.237,356.105,936.112,356.105z M611.718,635.204 l-23.121,41.63l-1.667,3.001l-23.121,41.63c-5.916,10.652-19.348,14.491-30,8.575l-42.433-23.567 c-18.954-8.284-4.48-34.596-21.292-45.475l-36.115-19.795l-28.156,50.695l-97.296-54.038l18.449-33.218 c3.333-6.001,2.673-15.864-1.931-23.786c-13.48-23.19-62.485-57.138-101.965-72.895c-39.479-15.758-120.064-17.082-120.064-17.082 s192.296-54.405,237.869-31.443c21.892,11.031,52.291,29.042,52.291,29.042l76.722,42.611c10.652,5.916,14.491,19.348,8.575,30 l-3.504,6.309l35.892,20.198c18.121,8.522,32.809-17.671,49.858-5.959l42.433,23.567 C613.795,611.121,617.635,624.552,611.718,635.204z"/></g></g></svg><span>项目</span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a class="plus-menu-item-3G8"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-envelope plus-menu-icon-OQm" style="vertical-align: middle;"><g><path d="m40 15.8v17.8q0 1.4-1 2.5t-2.6 1h-32.8q-1.5 0-2.6-1t-1-2.5v-17.8q1 1.1 2.3 2 8 5.5 11 7.7 1.3 0.9 2.1 1.5t2.1 1 2.5 0.6h0q1.2 0 2.5-0.6t2.1-1 2.1-1.5q3.7-2.8 11.1-7.7 1.2-0.9 2.2-1.9z m0-6.5q0 1.7-1.1 3.4t-2.7 2.7q-8.4 5.8-10.5 7.3-0.2 0.1-0.9 0.6t-1.2 0.9-1.2 0.7-1.3 0.6-1.1 0.2h0q-0.5 0-1.1-0.2t-1.3-0.6-1.2-0.7-1.2-0.9-0.9-0.6q-2.1-1.5-5.9-4.1t-4.6-3.2q-1.3-0.9-2.6-2.6t-1.2-3q0-1.8 0.9-2.9t2.7-1.2h32.8q1.5 0 2.5 1.1t1.1 2.5z"/></g></svg><span>私信</span></a></li></ul></div></div><div tabindex="0" class="cuk-dropdown dropdown-JwF project-menu-dropdown-Ozo cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><a class="item-3po" href="https://coding.net/user/projects" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 24 24" class="cuk-icon cuk-icon-pixel-project fs-20" style="vertical-align: middle;"><g><path fill-rule="evenodd" d="M18,6 L6,6 L6,4 L20,4 L20,6 L20,18 L18,18 L18,6 Z M4,8 L16,8 L16,20 L4,20 L4,8 Z"/></g></svg></a></div><div class="cuk-dropdown-menu-container cuk-hide"><div><div class="cuk-search"><div class="cuk-input cuk-search-input"><div class="cuk-input-icon"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-search null" style="vertical-align: middle; font-size: 1em;"><g><path d="m27.2 18.6q0-4.2-2.9-7.1t-7.1-2.9-7 2.9-3 7.1 2.9 7 7.1 3 7.1-3 2.9-7z m11.4 18.5q0 1.2-0.8 2.1t-2 0.8q-1.2 0-2-0.8l-7.7-7.7q-4 2.8-8.9 2.8-3.2 0-6.1-1.3t-5-3.3-3.4-5-1.2-6.1 1.2-6.1 3.4-5.1 5-3.3 6.1-1.2 6.1 1.2 5 3.3 3.4 5.1 1.2 6.1q0 4.9-2.7 8.9l7.6 7.6q0.8 0.9 0.8 2z"/></g></svg></div><input type="text" class="cuk-input-control" value="" placeholder="筛选项目"></div></div></div><ul class="cuk-list list-1zh cuk-list-type-block" style="padding: 0px;"><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/cc" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-4.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 983 -->cc<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/zym2513023434/p/crp" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-7.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 992 -->crp<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/switchball/p/Line" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-13.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1001 -->Line<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/public-note" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-20.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1010 -->public-note<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/refer" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-7.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1019 -->refer<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/Tencent" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-17.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1028 -->Tencent<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP item-selected-1km"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/Topbook" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/d4831817-efbc-4d3b-8514-c219b91e572f.jpg"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1037 -->Topbook<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div><div class="item-3qP"><a class="project-path-3kC" href="https://coding.net/u/asirlu/p/vih" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-tiny project-item-avatar-k8J" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/scenery-16.png"><span class="ellipsis project-path-name-2Y2"><!-- react-text: 1046 -->vih<!-- /react-text --></span></a><div class="tooltip-trigger-area-3Kc unpinned-project-9Rd"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-thumb-tack thumb-tack-icon-9fB" style="vertical-align: middle;"><g><path d="m17.7 19.3v-10q0-0.3-0.2-0.5t-0.5-0.2-0.5 0.2-0.2 0.5v10q0 0.3 0.2 0.5t0.5 0.2 0.5-0.2 0.2-0.5z m15 7.8q0 0.6-0.4 1t-1 0.5h-9.6l-1.1 10.8q-0.1 0.2-0.3 0.4t-0.4 0.2h0q-0.6 0-0.8-0.6l-1.7-10.8h-9q-0.6 0-1-0.5t-0.4-1q0-2.7 1.8-4.9t3.9-2.2v-11.4q-1.1 0-2-0.9t-0.8-2 0.8-2 2-0.8h14.3q1.2 0 2 0.8t0.9 2-0.9 2-2 0.9v11.4q2.2 0 4 2.2t1.7 4.9z"/></g></svg></div></div></ul></div></div><div tabindex="0" class="cuk-dropdown task-menu-dropdown-3mE cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><a class="item-3po" href="https://coding.net/user/tasks?owner=1298265" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 24 24" class="cuk-icon cuk-icon-pixel-tasks fs-20" style="vertical-align: middle;"><g><path fill-rule="evenodd" d="M17,7 L20,7 L20,20 L4,20 L4,7 L7,7 L7,4 L10,4 L10,7 L14,7 L14,4 L17,4 L17,7 Z M8,12 L8,14 L10,14 L10,12 L8,12 Z M10,14 L10,16 L12,16 L12,14 L10,14 Z M12,12 L12,14 L14,14 L14,12 L12,12 Z M14,10 L14,12 L16,12 L16,10 L14,10 Z"/></g></svg></a></div><div class="cuk-dropdown-menu-container cuk-hide"><div class="task-menu-1cV"><ul class="cuk-list cuk-list-empty task-menu-list-1AE cuk-list-type-block" style="padding: 0px;"><div class="empty-holder-container-1S_"><div class="empty-holder-content-2I9"><div class="text-Sfa" style="font-size: 12px;"><div><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-coffee null" style="vertical-align: middle;"><g><path d="m36.2 14.4q0-1.7-1.2-2.9t-2.9-1.3h-1.4v8.4h1.4q1.7 0 2.9-1.2t1.2-3z m-36.2 16.8h39q0 2.3-1.6 3.9t-4 1.6h-27.8q-2.3 0-4-1.6t-1.6-3.9z m40.4-16.8q0 3.5-2.4 5.9t-5.9 2.5h-1.4v0.7q0 2-1.5 3.4t-3.4 1.5h-15.3q-2.1 0-3.5-1.5t-1.4-3.4v-16q0-0.6 0.4-1t1-0.4h25.1q3.4 0 5.9 2.4t2.4 5.9z"/></g></svg><span><span>没有未完成的任务</span></span></div></div></div></div></ul><a class="bottom-link-qR4" href="https://coding.net/user/tasks?owner=1298265" target="_blank" rel="noopener"><span>查看全部任务</span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-angle-double-right null" style="vertical-align: middle;"><g><path d="m22.3 21.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.6 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.3-0.2 0.5-0.2t0.6 0.2l10.4 10.4q0.2 0.2 0.2 0.5z m8.6 0q0 0.3-0.3 0.5l-10.4 10.4q-0.2 0.3-0.5 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.2-0.2 0.5-0.2t0.5 0.2l10.4 10.4q0.3 0.2 0.3 0.5z"/></g></svg></a></div></div></div><div tabindex="0" class="cuk-dropdown notification-message-dropdown-2Sk cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><a class="item-34J" href="https://coding.net/user" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 24 24" class="cuk-icon cuk-icon-pixel-workspace fs-20" style="vertical-align: middle;"><g><path fill-rule="evenodd" d="M4,4 L20,4 L20,16 L4,16 L4,4 Z M9,9 L9,13 L11,13 L11,9 L9,9 Z M13,7 L13,13 L15,13 L15,7 L13,7 Z M6,18 L18,18 L18,20 L6,20 L6,18 Z"/></g></svg><span style="opacity: 0; transform: scale(0) translateZ(0px);"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-check-circle check-1x6" style="vertical-align: middle;"><g><path d="m31.7 16.4q0-0.6-0.4-1l-2.1-2.1q-0.4-0.4-1-0.4t-1 0.4l-9.1 9.1-5-5q-0.5-0.4-1-0.4t-1 0.4l-2.1 2q-0.4 0.4-0.4 1 0 0.6 0.4 1l8.1 8.1q0.4 0.4 1 0.4 0.6 0 1-0.4l12.2-12.1q0.4-0.4 0.4-1z m5.6 3.6q0 4.7-2.3 8.6t-6.3 6.2-8.6 2.3-8.6-2.3-6.2-6.2-2.3-8.6 2.3-8.6 6.2-6.2 8.6-2.3 8.6 2.3 6.3 6.2 2.3 8.6z"/></g></svg></span></a></div><div class="cuk-dropdown-menu-container cuk-hide"><div class="container-3w_"><div class="cuk-tab tab-3lv"><div class="cuk-tab-bar-nav"><div class="cuk-tab-bar cuk-tab-bar-active"><span><span>通知</span></span></div><div class="cuk-tab-bar"><span><span>待办</span></span></div><div class="cuk-tab-bar"><span><span>私信</span></span></div></div><div class="cuk-tab-panes"><div class="cuk-tab-pane"><div><ul class="cuk-list pane-3Jh cuk-list-type-block" style="padding: 0px;"><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/fovzhao" target="_blank" rel="noopener">fovzhao</a> <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- hexo-inject:begin --><!-- hexo-inject:end -->在项目 
+<a href="https://coding.net/u/asirlu/p/Topbook" target="_blank">Topbook</a> 中给 
+<a href="https://coding.net/u/asirlu" target="_blank" rel="noopener">asirlu</a> 指派了一个任务： 
+<a href="https://coding.net/u/asirlu/p/Topbook/task/4164023" target="_blank" rel="noopener">后端开发任务拆分</a></span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/fovzhao" target="_blank" rel="noopener">fovzhao</a> 在项目 
+<a href="https://coding.net/u/asirlu/p/Topbook" target="_blank">Topbook</a> 中给 
+<a href="https://coding.net/u/asirlu" target="_blank" rel="noopener">asirlu</a> 指派了一个任务： 
+<a href="https://coding.net/u/asirlu/p/Topbook/task/4164013" target="_blank" rel="noopener">后端 Tech desing</a></span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 合并了项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank" rel="noopener">Line</a> 的合并请求 : 
+<a href="https://coding.net/u/switchball/p/Line/git/merge/1" target="_blank" rel="noopener">#1 合并到dev</a></span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 在项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank" rel="noopener">Line</a> 中向合并请求 : 
+<a href="https://coding.net/u/switchball/p/Line/git/merge/1" target="_blank" rel="noopener">#1 合并到dev</a> 的源分支推送了新的提交</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 在项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank" rel="noopener">Line</a> 中向合并请求 : 
+<a href="https://coding.net/u/switchball/p/Line/git/merge/1" target="_blank" rel="noopener">#1 合并到dev</a> 的源分支推送了新的提交</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 在项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank" rel="noopener">Line</a> 中向合并请求 : 
+<a href="https://coding.net/u/switchball/p/Line/git/merge/1" target="_blank" rel="noopener">#1 合并到dev</a> 的源分支推送了新的提交</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 邀请你对 Merge Request 
+<a href="https://coding.net/u/switchball/p/Line/git/merge/1" target="_blank" rel="noopener">#1 合并到dev</a> 进行评审</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 将你设置为项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank">Line</a> 的项目管理员</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/switchball" target="_blank" rel="noopener">switchball</a> 将你添加为项目 
+<a href="https://coding.net/u/switchball/p/Line" target="_blank">Line</a> 的成员</span></a></li><li class="cuk-list-item cuk-list-item-hover list-item-1hQ" style="padding: 0px;"><a class="link-Itm"><span class="notification-item-3nM"><a href="https://coding.net/u/asirlu" target="_blank" rel="noopener">asirlu</a> 删除了项目 
+<a href="https://coding.net/u/asirlu/p/vih" target="_blank">vih</a>。</span></a></li></ul><a class="bottom-link-qR4"><span>查看所有通知</span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-angle-double-right null" style="vertical-align: middle;"><g><path d="m22.3 21.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.6 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.3-0.2 0.5-0.2t0.6 0.2l10.4 10.4q0.2 0.2 0.2 0.5z m8.6 0q0 0.3-0.3 0.5l-10.4 10.4q-0.2 0.3-0.5 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.2-0.2 0.5-0.2t0.5 0.2l10.4 10.4q0.3 0.2 0.3 0.5z"/></g></svg></a></div></div></div></div></div></div></div></div><div tabindex="0" class="cuk-dropdown user-menu-dropdown-19r cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><div class="user-3hE"><a href="https://coding.net/user" target="_blank" rel="noopener"><div class="vip-sizeregular-7Oa"><img class="cuk-avatar cuk-avatar-circle cuk-avatar-regular" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/Fruit-12.png"></div></a><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 24 24" class="cuk-icon cuk-icon-pixel-angle-down angle-hpP fs-24" style="vertical-align: middle;"><g><path fill-rule="evenodd" d="M7,9 L9,9 L9,11 L7,11 L7,9 Z M9,11 L11,11 L11,13 L9,13 L9,11 Z M11,13 L13,13 L13,15 L11,15 L11,13 Z M13,11 L15,11 L15,13 L13,13 L13,11 Z M15,9 L17,9 L17,11 L15,11 L15,9 Z"/></g></svg></div></div><div class="cuk-dropdown-menu-container cuk-hide"><ul class="cuk-list user-menu-qjO cuk-list-type-block" style="padding: 0px;"><li class="cuk-list-item cuk-list-item-hover user-menu-border-bottom-3R5" style="padding: 0px;"><a href="https://coding.net/user/account/upgrade" target="_blank" rel="noopener"><span class="vip-item-3Ss"><img src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/medal-silver@2x.d1367cb8.png"><span><span>银牌会员</span></span></span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a href="https://coding.net/user/account" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-dashboard user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m8.6 25.7q0-1.2-0.9-2t-2-0.8-2 0.8-0.8 2 0.8 2 2 0.9 2-0.9 0.9-2z m4.3-10q0-1.2-0.9-2t-2-0.8-2 0.8-0.9 2 0.9 2 2 0.9 2-0.9 0.9-2z m9.5 10.7l2.3-8.5q0.1-0.6-0.2-1.1t-0.9-0.6-1 0.1-0.7 0.9l-2.3 8.5q-1.3 0.1-2.3 1t-1.5 2.2q-0.4 1.7 0.5 3.3t2.6 2 3.3-0.5 2-2.6q0.3-1.3-0.2-2.6t-1.6-2z m14.7-0.7q0-1.2-0.8-2t-2-0.8-2 0.8-0.9 2 0.9 2 2 0.9 2-0.9 0.8-2z m-14.2-14.3q0-1.2-0.9-2t-2-0.8-2 0.8-0.9 2 0.9 2 2 0.9 2-0.9 0.9-2z m10 4.3q0-1.2-0.9-2t-2-0.8-2 0.8-0.9 2 0.9 2 2 0.9 2-0.9 0.9-2z m7.1 10q0 5.8-3.1 10.8-0.5 0.6-1.3 0.6h-31.2q-0.8 0-1.3-0.6-3.1-4.9-3.1-10.8 0-4 1.6-7.8t4.2-6.3 6.4-4.3 7.8-1.6 7.8 1.6 6.4 4.3 4.2 6.3 1.6 7.8z"/></g></svg><span>我的帐号</span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a href="https://coding.net/user/account/setting/basic" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-user user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m35.9 31.4q0 2.6-1.6 4.2t-4.3 1.5h-19.5q-2.7 0-4.4-1.5t-1.6-4.2q0-1.2 0.1-2.3t0.3-2.5 0.6-2.4 0.9-2.2 1.4-1.8 1.9-1.2 2.5-0.4q0.2 0 1 0.5t1.6 1 2.4 1.1 3 0.5 3-0.5 2.4-1.1 1.7-1 0.9-0.5q1.4 0 2.5 0.4t1.9 1.2 1.4 1.8 0.9 2.2 0.6 2.4 0.4 2.5 0 2.3z m-7.1-20q0 3.6-2.5 6.1t-6.1 2.5-6-2.5-2.6-6.1 2.6-6 6-2.5 6.1 2.5 2.5 6z"/></g></svg><span>个人设置</span></a></li><li class="cuk-list-item cuk-list-item-hover user-menu-border-bottom-3R5" style="padding: 0px;"><a target="_self" href="https://coding.net/u/asirlu"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-magic user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m27.6 13l6.5-6.6-2.4-2.4-6.5 6.6z m9.9-6.6q0 0.6-0.4 1l-28.7 28.7q-0.4 0.4-1 0.4t-1-0.4l-4.4-4.4q-0.4-0.4-0.4-1t0.4-1l28.7-28.7q0.4-0.4 1-0.4t1 0.4l4.4 4.4q0.4 0.4 0.4 1z m-30.1-4.2l2.2 0.7-2.2 0.6-0.7 2.2-0.7-2.2-2.1-0.6 2.1-0.7 0.7-2.2z m7.8 3.6l4.4 1.3-4.4 1.4-1.3 4.4-1.4-4.4-4.4-1.4 4.4-1.3 1.4-4.4z m20.8 10.7l2.1 0.6-2.1 0.7-0.7 2.2-0.7-2.2-2.2-0.7 2.2-0.6 0.7-2.2z m-14.3-14.3l2.2 0.7-2.2 0.6-0.7 2.2-0.7-2.2-2.2-0.6 2.2-0.7 0.7-2.2z"/></g></svg><span>我的主页</span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a href="https://blog.coding.net/" target="_blank"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-lightbulb-o user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m24.9 12.9q0 0.2-0.2 0.5t-0.5 0.2-0.5-0.2-0.2-0.5q0-1.1-1.2-1.6t-2.4-0.6q-0.3 0-0.5-0.2t-0.2-0.5 0.2-0.5 0.5-0.2q1.1 0 2.2 0.3t2 1.2 0.8 2.1z m3.6 0q0-1.6-0.8-3t-2-2.3-2.7-1.4-3.1-0.5-3 0.5-2.8 1.4-2 2.3-0.7 3q0 2.2 1.5 4 0.2 0.2 0.7 0.7t0.6 0.7q2.9 3.5 3.2 6.7h5.1q0.3-3.2 3.1-6.6 0.2-0.3 0.7-0.8t0.7-0.7q1.5-1.8 1.5-4z m2.9 0q0 3.4-2.3 5.9-1 1.1-1.7 2t-1.3 2.1-0.8 2.4q1.1 0.6 1.1 1.8 0 0.9-0.6 1.5 0.6 0.6 0.6 1.4 0 1.2-1 1.8 0.2 0.5 0.2 1.1 0 1-0.7 1.5t-1.7 0.6q-0.4 1-1.3 1.6t-2 0.5-1.9-0.5-1.4-1.6q-1 0-1.7-0.6t-0.7-1.5q0-0.6 0.3-1.1-1-0.6-1-1.8 0-0.8 0.6-1.4-0.6-0.6-0.6-1.5 0-1.2 1.1-1.8-0.1-1.1-0.8-2.4t-1.3-2.1-1.7-2q-2.3-2.5-2.3-5.9 0-2.3 1-4.2t2.6-3.1 3.7-2 4.1-0.7 4.2 0.7 3.7 2 2.6 3.1 1 4.2z"/></g></svg><span>博客</span></a></li><li class="cuk-list-item cuk-list-item-hover user-menu-border-bottom-3R5" style="padding: 0px;"><a href="https://coding.net/app" target="_blank"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-download user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m30.1 30q0-0.6-0.5-1t-1-0.4-1 0.4-0.4 1 0.4 1 1 0.4 1-0.4 0.5-1z m5.7 0q0-0.6-0.4-1t-1-0.4-1 0.4-0.5 1 0.5 1 1 0.4 1-0.4 0.4-1z m2.8-5v7.1q0 0.9-0.6 1.6t-1.5 0.6h-32.9q-0.8 0-1.5-0.6t-0.6-1.6v-7.1q0-0.9 0.6-1.5t1.5-0.6h10.4l3 3q1.3 1.2 3.1 1.2t3-1.2l3-3h10.4q0.9 0 1.5 0.6t0.6 1.5z m-7.2-12.7q0.4 0.9-0.3 1.6l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.7-0.7-0.3-1.6 0.3-0.9 1.3-0.9h5.7v-10q0-0.6 0.4-1t1-0.4h5.7q0.6 0 1 0.4t0.5 1v10h5.7q0.9 0 1.3 0.9z"/></g></svg><span>APP 下载</span></a></li><li class="cuk-list-item cuk-list-item-hover" style="padding: 0px;"><a><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-sign-out user-menu-icon-1iR" style="vertical-align: middle;"><g><path d="m16.8 32.1q0 0.1 0 0.5t0 0.6 0 0.5-0.3 0.4-0.4 0.2h-7.2q-2.6 0-4.5-1.9t-1.9-4.5v-15.8q0-2.6 1.9-4.5t4.5-1.9h7.2q0.3 0 0.5 0.2t0.2 0.5q0 0.1 0 0.5t0 0.6 0 0.5-0.3 0.4-0.4 0.2h-7.2q-1.4 0-2.5 1t-1 2.5v15.8q0 1.4 1 2.5t2.5 1h7l0.2 0.1 0.3 0 0.2 0.1 0.1 0.2 0.1 0.3z m20.7-12.1q0 0.6-0.4 1l-12.2 12.1q-0.4 0.5-1 0.5t-1-0.5-0.4-1v-6.4h-10q-0.6 0-1-0.4t-0.4-1v-8.6q0-0.6 0.4-1t1-0.4h10v-6.4q0-0.6 0.4-1t1-0.5 1 0.5l12.2 12.1q0.4 0.4 0.4 1z"/></g></svg><span>退出</span></a></li></ul></div></div></div></div><!-- react-empty: 1189 --></div><div class="alert-3vA"><div class="cuk-alert cuk-alert-info"><span class="cuk-alert-close"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-close null" style="vertical-align: middle;"><g><path d="m33.5 29.5q0 0.9-0.7 1.5l-3 3.1q-0.6 0.6-1.5 0.6t-1.5-0.6l-6.6-6.6-6.5 6.6q-0.7 0.6-1.6 0.6t-1.5-0.6l-3-3.1q-0.6-0.6-0.6-1.5t0.6-1.5l6.5-6.6-6.5-6.5q-0.6-0.7-0.6-1.6t0.6-1.5l3-3q0.6-0.6 1.5-0.6t1.6 0.6l6.5 6.6 6.6-6.6q0.6-0.6 1.5-0.6t1.5 0.6l3.1 3q0.6 0.7 0.6 1.5t-0.6 1.6l-6.6 6.5 6.6 6.6q0.6 0.6 0.6 1.5z"/></g></svg></span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-info cuk-alert-icon" style="vertical-align: middle;"><g><path d="m27.3 30v2.9q0 0.5-0.4 1t-1 0.4h-11.5q-0.6 0-1-0.4t-0.4-1v-2.9q0-0.6 0.4-1t1-0.4h1.5v-8.6h-1.5q-0.6 0-1-0.4t-0.4-1v-2.9q0-0.6 0.4-1t1-0.4h8.6q0.6 0 1 0.4t0.4 1v12.9h1.5q0.5 0 1 0.4t0.4 1z m-2.9-25.7v4.3q0 0.6-0.4 1t-1 0.4h-5.7q-0.6 0-1-0.4t-0.4-1v-4.3q0-0.6 0.4-1t1-0.4h5.7q0.6 0 1 0.4t0.4 1z"/></g></svg><!-- react-text: 1199 -->升级账号可免费畅享代码仓库容量，体验持续集成等高级功能！<!-- /react-text --><a href="https://feedback.coding.net/topics/7257" target="_blank">查看详情</a></div></div></header><div class="cuk-layout cuk-layout-full-size container-2nK show-alert-1h8"><div class="cuk-layout-aside project-aside-Eic" style="padding: 0px; width: 240px; flex-basis: 240px; transition: width 0.3s ease 0s;"><div class="inner" id="sideBarMenu"><a class="project-header-2JA expanded-2yB" title="Topbook 项目首页" href="https://coding.net/u/asirlu/p/Topbook" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-square cuk-avatar-small project-avatar-3s-" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/d4831817-efbc-4d3b-8514-c219b91e572f.jpg"><span class="project-name-37N">Topbook</span></a><ul class="side-menu cuk-menu clearfix cuk-menu-theme-dark" style="padding-bottom: 50px;"><li class="cuk-sub-menu cuk-sub-menu-with-icon submenu-19b"><div class="cuk-sub-menu-title cuk-sub-menu-title-outer"><span class="cuk-menu-icon"><span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-tasks null" style="vertical-align: middle;"><g><path d="m22.9 31.4h14.2v-2.8h-14.2v2.8z m-8.6-11.4h22.8v-2.9h-22.8v2.9z m14.3-11.4h8.5v-2.9h-8.5v2.9z m11.4 18.5v5.8q0 0.5-0.4 1t-1 0.4h-37.2q-0.6 0-1-0.4t-0.4-1v-5.8q0-0.5 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z m0-11.4v5.7q0 0.6-0.4 1t-1 0.5h-37.2q-0.6 0-1-0.5t-0.4-1v-5.7q0-0.6 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z m0-11.4v5.7q0 0.6-0.4 1t-1 0.4h-37.2q-0.6 0-1-0.4t-0.4-1v-5.7q0-0.6 0.4-1t1-0.4h37.2q0.5 0 1 0.4t0.4 1z"/></g></svg></span></span><span class="submenu-title-3_q"><a href="https://coding.net/u/asirlu/p/Topbook/milestone" target="_blank" rel="noopener">任务</a></span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down submenu-title-caret" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div><ul class="cuk-sub-menu-list cuk-sub-menu-list-theme-dark"><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/milestone" target="_blank" rel="noopener"><span>里程碑</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/tasks?status=1&amp;owner=1298265" target="_blank" rel="noopener"><span>任务列表</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/tasks/board" target="_blank" rel="noopener"><span>任务看板</span></a></li></ul></li><li class="cuk-sub-menu cuk-sub-menu-with-icon submenu-19b"><div class="cuk-sub-menu-title cuk-sub-menu-title-outer"><span class="cuk-menu-icon"><span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code null" style="vertical-align: middle;"><g><path d="m12.8 30.4l-1 1.1q-0.2 0.2-0.5 0.2t-0.5-0.2l-9.7-9.7q-0.2-0.2-0.2-0.5t0.2-0.4l9.7-9.7q0.2-0.2 0.5-0.2t0.5 0.2l1 1q0.2 0.2 0.2 0.5t-0.2 0.5l-8.1 8.1 8.1 8.2q0.2 0.2 0.2 0.5t-0.2 0.4z m12.3-22.1l-7.8 26.8q0 0.3-0.3 0.4t-0.5 0.1l-1.3-0.4q-0.2-0.1-0.4-0.3t0-0.5l7.7-26.8q0.1-0.3 0.4-0.4t0.4-0.1l1.3 0.4q0.3 0 0.4 0.3t0.1 0.5z m13.6 13.5l-9.7 9.7q-0.2 0.2-0.4 0.2t-0.5-0.2l-1-1.1q-0.3-0.2-0.3-0.4t0.3-0.5l8.1-8.2-8.1-8.1q-0.3-0.2-0.3-0.5t0.3-0.5l1-1q0.2-0.2 0.5-0.2t0.4 0.2l9.7 9.7q0.2 0.2 0.2 0.4t-0.2 0.5z"/></g></svg></span></span><span class="submenu-title-3_q"><a href="https://coding.net/u/asirlu/p/Topbook/git" target="_blank" rel="noopener">代码</a></span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down submenu-title-caret" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div><ul class="cuk-sub-menu-list cuk-sub-menu-list-theme-dark"><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git" target="_blank" rel="noopener"><span>代码浏览</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/branches" target="_blank" rel="noopener"><span>分支管理</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/releases" target="_blank" rel="noopener"><span>发布管理</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/compare" target="_blank" rel="noopener"><span>版本对比</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/merges?creator=asirlu&amp;page=1" target="_blank" rel="noopener"><span>合并请求</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/plot" target="_blank" rel="noopener"><span>项目网络</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/git/pages" target="_blank" rel="noopener"><span>Pages 服务</span></a></li></ul></li><li class="cuk-sub-menu cuk-sub-menu-with-icon submenu-19b"><div class="cuk-sub-menu-title cuk-sub-menu-title-outer"><span class="cuk-menu-icon"><span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-file null" style="vertical-align: middle;"><g><path d="m25.9 11.4v-10.5q0.4 0.3 0.8 0.6l9.1 9.1q0.3 0.3 0.6 0.8h-10.5z m-2.9 0.7q0 0.9 0.6 1.6t1.5 0.6h12.2v23.6q0 0.9-0.6 1.5t-1.6 0.6h-30q-0.8 0-1.5-0.6t-0.6-1.5v-35.8q0-0.8 0.6-1.5t1.5-0.6h17.9v12.1z"/></g></svg></span></span><span class="submenu-title-3_q"><a href="https://coding.net/u/asirlu/p/Topbook/attachment" target="_blank" rel="noopener">文件</a></span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down submenu-title-caret" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div><ul class="cuk-sub-menu-list cuk-sub-menu-list-theme-dark"><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/attachment" target="_blank" rel="noopener"><span>所有文件</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/attachment/share" target="_blank" rel="noopener"><span>分享中</span></a></li></ul></li><li class="cuk-menu-item cuk-menu-item-outer"><span class="cuk-menu-icon"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-file-word-o null" style="vertical-align: middle;"><g><path d="m35.8 8.5q0.6 0.6 1 1.7t0.5 1.9v25.8q0 0.8-0.6 1.5t-1.6 0.6h-30q-0.9 0-1.5-0.6t-0.6-1.5v-35.8q0-0.8 0.6-1.5t1.5-0.6h20q0.9 0 2 0.4t1.7 1.1z m-9.9-5.5v8.4h8.4q-0.3-0.6-0.5-0.9l-7-7q-0.3-0.2-0.9-0.5z m8.5 34.1v-22.8h-9.3q-0.9 0-1.5-0.6t-0.6-1.6v-9.2h-17.1v34.2h28.5z m-26.2-20v2.4h1.6l3.6 14.8h3.6l2.8-10.8q0.2-0.5 0.3-1.1 0-0.3 0-0.5h0.1l0.1 0.5q0 0.1 0 0.5t0.2 0.6l2.8 10.8h3.6l3.6-14.8h1.6v-2.4h-6.7v2.4h2l-2.2 9.8q-0.1 0.5-0.2 1l0 0.5h-0.1l-0.1-0.5q0-0.1-0.1-0.4t-0.1-0.6l-3.2-12.2h-2.5l-3.2 12.2q-0.1 0.2-0.1 0.6t-0.1 0.4l-0.1 0.5h-0.1l0-0.5q-0.1-0.5-0.2-1l-2.2-9.8h2v-2.4h-6.7z"/></g></svg></span><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/wiki" target="_blank" rel="noopener"><span>Wiki</span></a></li><li class="cuk-menu-item cuk-menu-item-outer"><span class="cuk-menu-icon"><img src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/infinity.3fa45c39.svg" style="margin-left: -2px;"></span><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/ci" target="_blank" rel="noopener"><span>持续集成</span></a></li><li class="cuk-sub-menu cuk-sub-menu-with-icon submenu-19b"><div class="cuk-sub-menu-title cuk-sub-menu-title-outer"><span class="cuk-menu-icon"><span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-cogs null" style="vertical-align: middle;"><g><path d="m18.6 20q0-2.2-1.6-3.8t-3.7-1.5-3.8 1.5-1.5 3.8 1.5 3.8 3.8 1.5 3.7-1.5 1.6-3.8z m16 10.6q0-1-0.8-1.8t-1.9-0.8-1.9 0.8-0.8 1.8q0 1.1 0.8 1.9t1.9 0.8 1.9-0.8 0.8-1.9z m0-21.2q0-1.1-0.8-1.9t-1.9-0.8-1.9 0.8-0.8 1.9q0 1.1 0.8 1.8t1.9 0.8 1.9-0.8 0.8-1.8z m-8 8.7v3.9q0 0.2-0.2 0.4t-0.3 0.2l-3.2 0.5q-0.2 0.7-0.7 1.6 0.7 0.9 1.9 2.3 0.1 0.2 0.1 0.5 0 0.2-0.1 0.3-0.5 0.7-1.7 1.9t-1.7 1.2q-0.2 0-0.4-0.1l-2.4-1.9q-0.7 0.4-1.6 0.7-0.2 2.2-0.5 3.2-0.1 0.5-0.6 0.5h-3.8q-0.3 0-0.5-0.2t-0.2-0.3l-0.4-3.2q-0.7-0.2-1.6-0.7l-2.4 1.9q-0.2 0.1-0.5 0.1-0.2 0-0.4-0.1-3-2.8-3-3.3 0-0.2 0.2-0.4 0.2-0.3 0.8-1.1t1-1.3q-0.5-0.9-0.7-1.7l-3.2-0.5q-0.2 0-0.4-0.2t-0.1-0.4v-3.9q0-0.2 0.1-0.4t0.4-0.2l3.2-0.5q0.2-0.7 0.7-1.6-0.7-0.9-1.9-2.3-0.2-0.3-0.2-0.5 0-0.2 0.2-0.4 0.4-0.6 1.7-1.8t1.6-1.2q0.3 0 0.5 0.1l2.4 1.9q0.7-0.4 1.6-0.7 0.2-2.2 0.4-3.2 0.2-0.5 0.7-0.5h3.8q0.2 0 0.4 0.2t0.2 0.3l0.5 3.2q0.7 0.2 1.6 0.7l2.4-1.9q0.2-0.1 0.4-0.1 0.3 0 0.5 0.1 3 2.8 3 3.3 0 0.2-0.2 0.4-0.2 0.4-0.8 1.2t-1 1.2q0.5 1 0.7 1.7l3.2 0.5q0.2 0 0.3 0.2t0.2 0.4z m13.3 11.1v2.9q0 0.3-3.1 0.6-0.3 0.6-0.6 1.1 1 2.4 1 2.9 0 0.1-0.1 0.1-2.5 1.5-2.5 1.5-0.2 0-1-1t-1.1-1.4q-0.4 0-0.6 0t-0.6 0q-0.3 0.4-1.1 1.4t-1 1q0 0-2.5-1.5-0.1 0-0.1-0.1 0-0.5 1-2.9-0.3-0.5-0.6-1.1-3.1-0.3-3.1-0.6v-2.9q0-0.4 3.1-0.7 0.3-0.6 0.6-1-1-2.4-1-2.9 0-0.1 0.1-0.2 0 0 0.7-0.4t1.2-0.7 0.6-0.3q0.2 0 1 1t1.1 1.4q0.4-0.1 0.6-0.1t0.6 0.1q1.1-1.5 1.9-2.4l0.2 0q0 0 2.5 1.4 0.1 0.1 0.1 0.2 0 0.5-1.1 2.9 0.4 0.4 0.7 1 3.1 0.3 3.1 0.7z m0-21.3v2.9q0 0.4-3.1 0.7-0.3 0.5-0.6 1 1 2.4 1 2.9 0 0.1-0.1 0.2-2.5 1.4-2.5 1.4-0.2 0-1-0.9t-1.1-1.5q-0.4 0.1-0.6 0.1t-0.6-0.1q-0.3 0.5-1.1 1.5t-1 0.9q0 0-2.5-1.4-0.1-0.1-0.1-0.2 0-0.5 1-2.9-0.3-0.5-0.6-1-3.1-0.3-3.1-0.7v-2.9q0-0.3 3.1-0.6 0.3-0.6 0.6-1.1-1-2.4-1-2.9 0-0.1 0.1-0.1 0-0.1 0.7-0.4t1.2-0.7 0.6-0.4q0.2 0 1 1t1.1 1.4q0.4 0 0.6 0t0.6 0q1.1-1.5 1.9-2.3l0.2-0.1q0 0 2.5 1.5 0.1 0 0.1 0.1 0 0.5-1.1 2.9 0.4 0.5 0.7 1.1 3.1 0.3 3.1 0.6z"/></g></svg></span></span><span class="submenu-title-3_q"><a href="https://coding.net/u/asirlu/p/Topbook/setting/summary" target="_blank" rel="noopener">设置</a></span><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down submenu-title-caret" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div><ul class="cuk-sub-menu-list cuk-sub-menu-list-theme-dark"><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/summary" target="_blank" rel="noopener"><span>项目概览</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/notice" target="_blank" rel="noopener"><span>项目公告</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/member" target="_blank" rel="noopener"><span>成员管理</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/label" target="_blank" rel="noopener"><span>分类标签</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting" target="_blank" rel="noopener"><span>项目设置</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/depot" target="_blank" rel="noopener"><span>仓库设置</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/webhook" target="_blank" rel="noopener"><span>WebHook</span></a></li><li class="cuk-menu-item"><a class="item-link-3DE" href="https://coding.net/u/asirlu/p/Topbook/setting/deploy_key" target="_blank" rel="noopener"><span>部署公钥</span></a></li></ul></li></ul></div><a class="expanded-toggle-1pr" style="width: 240px; text-align: left; padding-left: 30px;"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-angle-double-left null" style="vertical-align: middle;"><g><path d="m22 30.7q0 0.3-0.2 0.5l-1.1 1.1q-0.3 0.3-0.6 0.3t-0.5-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l10.4-10.4q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.3 0.2 0.5t-0.2 0.6l-8.8 8.7 8.8 8.8q0.2 0.2 0.2 0.5z m8.6 0q0 0.3-0.3 0.5l-1.1 1.1q-0.2 0.3-0.5 0.3t-0.5-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l10.4-10.4q0.2-0.2 0.5-0.2t0.5 0.2l1.1 1.1q0.3 0.3 0.3 0.5t-0.3 0.6l-8.7 8.7 8.7 8.8q0.3 0.2 0.3 0.5z"/></g></svg><span style="padding-left: 10px;">收起</span></a></div><div id="menu-popup-container" style="position: fixed; top: 60px; left: 0px; bottom: 0px; z-index: 1100;"></div><aside class="cuk-layout-content"><div class="inner" style="padding-left: 240px;"><div class="git-container-eIS" id="git-container"><div><div class="container-1Wp"><div class="left"><a class="item" href="https://coding.net/u/asirlu/p/Topbook/git/commits/advance-interface/" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-history null" style="vertical-align: middle;"><g><path d="m37.3 20q0 3.5-1.4 6.7t-3.6 5.4-5.5 3.7-6.7 1.3q-3.8 0-7.3-1.6t-5.8-4.5q-0.2-0.3-0.2-0.5t0.2-0.5l3.1-3.1q0.2-0.2 0.5-0.2 0.4 0.1 0.5 0.3 1.7 2.1 4 3.3t5 1.1q2.4 0 4.5-0.9t3.6-2.4 2.5-3.7 0.9-4.4-0.9-4.4-2.5-3.7-3.6-2.4-4.5-0.9q-2.1 0-4.2 0.8t-3.5 2.2l3 3.1q0.7 0.7 0.3 1.6-0.3 0.8-1.3 0.8h-10q-0.5 0-1-0.4t-0.4-1v-10q0-0.9 0.9-1.3 0.9-0.4 1.5 0.3l2.9 2.9q2.4-2.3 5.5-3.5t6.3-1.2q3.5 0 6.7 1.3t5.5 3.7 3.6 5.4 1.4 6.7z m-14.3-6.4v10q0 0.3-0.2 0.5t-0.5 0.2h-7.2q-0.3 0-0.5-0.2t-0.2-0.5v-1.5q0-0.3 0.2-0.5t0.5-0.2h5v-7.8q0-0.3 0.2-0.5t0.6-0.2h1.4q0.3 0 0.5 0.2t0.2 0.5z"/></g></svg><!-- react-text: 4015 -->提交历史<!-- /react-text --></a><a class="item" href="https://coding.net/u/asirlu/p/Topbook/git/branches" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><!-- react-text: 4020 -->分支 <!-- /react-text --><!-- react-text: 4021 -->7<!-- /react-text --></a><a class="item" href="https://coding.net/u/asirlu/p/Topbook/git/releases" target="_blank" rel="noopener"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-tag null" style="vertical-align: middle;"><g><path d="m13 10q0-1.2-0.8-2t-2.1-0.9-2 0.9-0.8 2 0.8 2 2 0.9 2.1-0.9 0.8-2z m23.8 12.9q0 1.1-0.8 2l-11 10.9q-0.8 0.9-2 0.9-1.2 0-2-0.9l-16-15.9q-0.8-0.9-1.4-2.3t-0.6-2.6v-9.3q0-1.1 0.8-2t2.1-0.8h9.2q1.2 0 2.7 0.5t2.2 1.5l16 15.9q0.8 0.9 0.8 2.1z"/></g></svg><!-- react-text: 4026 -->发布版本 <!-- /react-text --><!-- react-text: 4027 --><!-- /react-text --></a></div><div class="right"><div class="clonePane"><div tabindex="0" class="cuk-dropdown borderless cuk-dropdown-size-medium"><div class="cuk-dropdown-trigger-container"><div class="cuk-dropdown-trigger"><div class="cuk-dropdown-trigger-value">HTTPS</div><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down cuk-dropdown-trigger-caret" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div></div><div class="cuk-dropdown-menu-container cuk-hide"><ul class="cuk-dropdown-menu"><li class="cuk-dropdown-menu-item cuk-dropdown-menu-item-select"><span>HTTPS</span></li><li class="cuk-dropdown-menu-item"><span>SSH</span></li></ul></div></div><div class="cuk-input cuk-input-borderless"><input type="text" class="cuk-input-control cuk-input-size-medium" value="https://git.coding.net/asirlu/Topbook.git" readonly></div><div class="clipboard"><div class="container-231"><div class="cuk-tooltip cuk-tooltip-top tooltip-bji"><div class="cuk-tooltip-arrow"></div><div class="cuk-tooltip-inner">已复制</div></div><div class="button-3jd copy"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-clipboard icon-2er" style="vertical-align: middle;"><g><path d="m17.1 37.1h20v-14.2h-9.2q-0.9 0-1.6-0.7t-0.6-1.5v-9.3h-8.6v25.7z m5.8-32.1v-1.4q0-0.3-0.3-0.5t-0.5-0.2h-15.7q-0.3 0-0.5 0.2t-0.2 0.5v1.4q0 0.3 0.2 0.5t0.5 0.2h15.7q0.3 0 0.5-0.2t0.3-0.5z m5.7 15h6.6l-6.6-6.7v6.7z m11.4 2.9v15q0 0.9-0.6 1.5t-1.5 0.6h-21.5q-0.9 0-1.5-0.6t-0.6-1.5v-3.6h-12.2q-0.9 0-1.5-0.6t-0.6-1.6v-30q0-0.8 0.6-1.5t1.5-0.6h24.3q0.9 0 1.5 0.6t0.7 1.5v7.4q0.4 0.3 0.8 0.6l9.1 9.1q0.6 0.6 1.1 1.7t0.4 2z"/></g></svg></div></div></div></div></div></div><div class="container-3Pk"><div tabindex="0" class="cuk-dropdown dropdown-2m- dropdown-31p cuk-dropdown-size-default"><div class="cuk-dropdown-trigger-container"><div class="trigger-34G trigger-3I3 cuk-dropdown-trigger"><div class="trigger-value"><!-- react-text: 4205 --><!-- /react-text --><!-- react-text: 4206 -->advance-interface<!-- /react-text --></div><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-caret-down null" style="vertical-align: middle;"><g><path d="m31.4 15.7q0 0.6-0.5 1l-10 10q-0.4 0.4-1 0.4t-1-0.4l-10-10q-0.4-0.4-0.4-1t0.4-1 1-0.4h20q0.6 0 1 0.4t0.5 1z"/></g></svg></div></div><div class="cuk-dropdown-menu-container cuk-hide"><div><div class="cuk-search"><div class="cuk-input cuk-search-input"><div class="cuk-input-icon"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-search null" style="vertical-align: middle; font-size: 1em;"><g><path d="m27.2 18.6q0-4.2-2.9-7.1t-7.1-2.9-7 2.9-3 7.1 2.9 7 7.1 3 7.1-3 2.9-7z m11.4 18.5q0 1.2-0.8 2.1t-2 0.8q-1.2 0-2-0.8l-7.7-7.7q-4 2.8-8.9 2.8-3.2 0-6.1-1.3t-5-3.3-3.4-5-1.2-6.1 1.2-6.1 3.4-5.1 5-3.3 6.1-1.2 6.1 1.2 5 3.3 3.4 5.1 1.2 6.1q0 4.9-2.7 8.9l7.6 7.6q0.8 0.9 0.8 2z"/></g></svg></div><input type="text" class="cuk-input-control" value="" placeholder="「分支、标签、修订版本号...」"></div></div></div><div class="tabs-Q2I"><div class="cuk-tab"><div class="cuk-tab-bar-nav"><div class="cuk-tab-bar cuk-tab-bar-active">分支</div><div class="cuk-tab-bar">修订版本</div></div><div class="cuk-tab-panes"><div class="cuk-tab-pane"><ul class="cuk-dropdown-menu"><li class="cuk-dropdown-menu-item cuk-dropdown-menu-item-select"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">advance-interface</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">dev</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">lo-dev</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">lo-test</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">master</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">oauth-test</div></div></li><li class="cuk-dropdown-menu-item"><div class="branch-item-2aD"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-code-fork null" style="vertical-align: middle;"><g><path d="m14.9 32.9q0-0.9-0.6-1.6t-1.5-0.6-1.5 0.6-0.7 1.6 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m0-25.8q0-0.8-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.6 1.5 0.6 1.5-0.6 0.6-1.6z m14.3 2.9q0-0.9-0.6-1.5t-1.5-0.6-1.5 0.6-0.7 1.5 0.7 1.5 1.5 0.6 1.5-0.6 0.6-1.5z m2.2 0q0 1.2-0.6 2.2t-1.6 1.5q0 6.4-5 9.2-1.6 0.9-4.6 1.9-2.8 0.8-3.7 1.5t-1 2.3v0.5q1 0.6 1.6 1.6t0.6 2.2q0 1.7-1.3 3t-3 1.2-3.1-1.2-1.2-3q0-1.2 0.6-2.2t1.5-1.5v-18.4q-0.9-0.5-1.5-1.5t-0.6-2.2q0-1.7 1.3-3t3-1.2 3 1.2 1.3 3q0 1.2-0.6 2.2t-1.6 1.5v11.1q1.2-0.5 3.5-1.2 1.2-0.4 1.9-0.7t1.6-0.7 1.3-0.9 0.9-1.1 0.6-1.6 0.2-2q-1-0.6-1.5-1.5t-0.6-2.2q0-1.8 1.2-3t3.1-1.3 3 1.3 1.3 3z"/></g></svg><div class="branch-text-eQ8">zhaoxu-dev</div></div></li><li class="cuk-dropdown-menu-item"><!-- react-empty: 4270 --></li></ul></div></div></div></div></div></div><div class="btn-group-1pI"><a href="https://coding.net/u/asirlu/p/Topbook/git/find/advance-interface" target="_blank" rel="noopener"><button class="cuk-button cuk-button-empty-default" type="button"><!-- react-text: 4128 -->寻找文件<!-- /react-text --></button></a><a class="copy-path-VcI"><div class="cuk-tooltip cuk-tooltip-bottom tooltip-1Kf"><div class="cuk-tooltip-arrow"></div><div class="cuk-tooltip-inner">已复制</div></div><button class="cuk-button cuk-button-empty-default" type="button"><!-- react-text: 4276 -->复制路径<!-- /react-text --></button></a></div><span class="breadcrumb-xZB"><span><span class="repo-root-1I6"><a href="https://coding.net/u/asirlu/p/Topbook/git/tree/advance-interface" target="_blank" rel="noopener">Topbook</a></span><span class="separator-1RH">/</span></span><span><span><a href="https://coding.net/u/asirlu/p/Topbook/git/tree/advance-interface/sbin" target="_blank" rel="noopener">sbin</a></span><span class="separator-1RH">/</span></span><span><strong>kill.py</strong></span></span></div><div class="container-3wn"><div class="commit-tease-1Jj"><span class="time-3NM"><!-- react-text: 4291 -->最后提交 <!-- /react-text --><a href="https://coding.net/u/asirlu/p/Topbook/git/commit/4ab8b6da8c40f79ad1f4587e4217971e81239d6f" target="_blank" rel="noopener">4ab8b6da8c</a><!-- react-text: 4293 --> <!-- /react-text --><!-- react-text: 4294 -->于 <!-- /react-text --><time title="2019年2月1日星期五 11:08">3 天前</time></span><span class="committor-_ap"><a class="avatar-link-2Xz" href="https://coding.net/u/asirlu" target="_blank" rel="noopener"><img class="cuk-avatar cuk-avatar-circle cuk-avatar-small avatar-3ji" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/Fruit-12.png"></a><a class="name-kFO" href="https://coding.net/u/asirlu" target="_blank" rel="noopener">asirlu</a></span><a class="message-247" href="https://coding.net/u/asirlu/p/Topbook/git/commit/4ab8b6da8c40f79ad1f4587e4217971e81239d6f" target="_blank" rel="noopener"><div>update
+</div></a></div><div class="container-2cW"><div class="file-actions-286"><a class="delete-FGk" href="https://coding.net/u/asirlu/p/Topbook/git/delete/advance-interface/sbin/kill.py" target="_blank" rel="noopener"><button class="cuk-button cuk-button-size-small cuk-button-empty-danger" type="button"><!-- react-text: 4306 -->删除<!-- /react-text --></button></a><div class="btn-group-38w"><a href="https://coding.net/u/asirlu/p/Topbook/git/edit/advance-interface/sbin/kill.py" target="_blank" rel="noopener"><button class="cuk-button cuk-button-size-small cuk-button-empty-default" type="button"><!-- react-text: 4310 -->编辑<!-- /react-text --></button></a><a target="_blank" href="https://coding.net/u/asirlu/p/Topbook/git/raw/advance-interface/sbin/kill.py"><button class="cuk-button cuk-button-size-small cuk-button-empty-default" type="button"><!-- react-text: 4313 -->原始数据<!-- /react-text --></button></a><a href="https://coding.net/u/asirlu/p/Topbook/git/blame/advance-interface/sbin/kill.py" target="_blank" rel="noopener"><button class="cuk-button cuk-button-size-small cuk-button-empty-default" type="button"><!-- react-text: 4316 -->按行查看<!-- /react-text --></button></a><a href="https://coding.net/u/asirlu/p/Topbook/git/commits/advance-interface/sbin/kill.py" target="_blank" rel="noopener"><button class="cuk-button cuk-button-size-small cuk-button-empty-default" type="button"><!-- react-text: 4319 -->提交历史<!-- /react-text --></button></a></div></div><div class="info-2lN"><svg fill="currentColor" preserveaspectratio="xMidYMid meet" height="1em" width="1em" viewbox="0 0 40 40" class="cuk-icon cuk-icon-file-text-o file-icon-Ecm" style="vertical-align: middle;"><g><path d="m35.8 8.5q0.6 0.6 1 1.7t0.5 1.9v25.8q0 0.8-0.6 1.5t-1.6 0.6h-30q-0.9 0-1.5-0.6t-0.6-1.5v-35.8q0-0.8 0.6-1.5t1.5-0.6h20q0.9 0 2 0.4t1.7 1.1z m-9.9-5.5v8.4h8.4q-0.3-0.6-0.5-0.9l-7-7q-0.3-0.2-0.9-0.5z m8.5 34.1v-22.8h-9.3q-0.9 0-1.5-0.6t-0.6-1.6v-9.2h-17.1v34.2h28.5z m-22.8-19.2q0-0.4 0.2-0.6t0.5-0.2h15.7q0.3 0 0.5 0.2t0.2 0.6v1.4q0 0.3-0.2 0.5t-0.5 0.2h-15.7q-0.3 0-0.5-0.2t-0.2-0.5v-1.4z m16.4 5q0.3 0 0.5 0.2t0.2 0.5v1.4q0 0.3-0.2 0.5t-0.5 0.2h-15.7q-0.3 0-0.5-0.2t-0.2-0.5v-1.4q0-0.3 0.2-0.5t0.5-0.2h15.7z m0 5.7q0.3 0 0.5 0.2t0.2 0.5v1.4q0 0.3-0.2 0.5t-0.5 0.2h-15.7q-0.3 0-0.5-0.2t-0.2-0.5v-1.4q0-0.3 0.2-0.5t0.5-0.2h15.7z"/></g></svg><!-- react-text: 4324 -->file<!-- /react-text --><!-- react-text: 4325 --> |<!-- /react-text --><!-- react-text: 4326 --> <!-- /react-text --><!-- react-text: 4327 -->589 Bytes<!-- /react-text --></div></div><div class="codemirror-3TF read-only-2Bl" style="width: 100%; height: auto;"><div><div class="CodeMirror cm-s-default CodeMirror-overlayscroll"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 418px; left: 34px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-overlayscroll-horizontal" cm-not-content="true" style="display: none;"><div></div></div><div class="CodeMirror-overlayscroll-vertical" cm-not-content="true" style="display: none;"><div></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -8px; border-right-width: 22px; min-height: 440px; min-width: 541.516px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"><div class="CodeMirror-selected" style="position: absolute; left: 4px; top: 0px; width: 1092px; height: 18px;"></div><div class="CodeMirror-selected" style="position: absolute; left: 4px; top: 414px; width: 0px; height: 18px;"></div><div class="CodeMirror-selected" style="position: absolute; left: 4px; top: 18px; width: 1092px; height: 396px;"></div></div><div class="CodeMirror-cursors" style=""></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># -*- coding:utf-8 -*-</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">time</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">conf</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">from</span> <span class="cm-variable">helper</span> <span class="cm-keyword">import</span> <span class="cm-variable">run</span>, <span class="cm-variable">gunicorn_pids</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">def</span> <span class="cm-def">main</span>():</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-variable">pids</span> <span class="cm-operator">=</span> <span class="cm-variable">gunicorn_pids</span>(<span class="cm-variable">conf</span>.<span class="cm-property">MODULE_WSGI</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-comment"># exit if pids exists</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-keyword">if</span> <span class="cm-keyword">not</span> <span class="cm-builtin">len</span>(<span class="cm-variable">pids</span>):</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">        <span class="cm-keyword">return</span> <span class="cm-string">"[%s] not exists"</span> <span class="cm-operator">%</span> <span class="cm-variable">conf</span>.<span class="cm-property">MODULE_WSGI</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-comment"># kill all</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-keyword">for</span> <span class="cm-variable">pid</span> <span class="cm-keyword">in</span> <span class="cm-variable">pids</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">        <span class="cm-variable">run</span>(<span class="cm-string">"kill -s QUIT %s"</span> <span class="cm-operator">%</span> <span class="cm-variable">pid</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-variable">time</span>.<span class="cm-property">sleep</span>(<span class="cm-number">1</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-variable">pids</span> <span class="cm-operator">=</span> <span class="cm-variable">gunicorn_pids</span>(<span class="cm-variable">conf</span>.<span class="cm-property">MODULE_WSGI</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-keyword">if</span> <span class="cm-keyword">not</span> <span class="cm-builtin">len</span>(<span class="cm-variable">pids</span>):</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">        <span class="cm-keyword">return</span> <span class="cm-string">"[%s] kill success"</span> <span class="cm-operator">%</span> <span class="cm-variable">conf</span>.<span class="cm-property">MODULE_WSGI</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-keyword">return</span> <span class="cm-string">"[%s] kill failed, pids = [%s]"</span> <span class="cm-operator">%</span> (<span class="cm-variable">conf</span>.<span class="cm-property">MOUDLE_WSGI</span>, <span class="cm-builtin">str</span>(<span class="cm-variable">pids</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">if</span> <span class="cm-variable">__name__</span> <span class="cm-operator">==</span> <span class="cm-string">"__main__"</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-variable">resp</span> <span class="cm-operator">=</span> <span class="cm-variable">main</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">23</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-builtin">print</span>(<span class="cm-variable">resp</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">24</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 22px; width: 1px; border-bottom: 0px solid transparent; top: 440px;"></div><div class="CodeMirror-gutters" style="height: 462px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div></div></div></div></div></div></aside></div></div></div></div><script type="text/javascript" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/runtime_index.6cce93ce.js"></script><script type="text/javascript" src="./sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu_files/index.a5cba985.chunk.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body></html>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&text="><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&is_video=false&description="><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&body=Check out this article: http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&title="><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/&name=&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Arthur Lu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
