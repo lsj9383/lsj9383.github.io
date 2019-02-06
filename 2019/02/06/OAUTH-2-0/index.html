@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ouath原理剖析">
-<meta property="og:url" content="http://github.com/lsj9383/2018/10/19/ouath原理剖析/index.html">
+<meta property="og:title" content="OAUTH 2.0">
+<meta property="og:url" content="http://github.com/lsj9383/2019/02/06/OAUTH-2-0/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
-<meta property="og:updated_time" content="2018-11-14T14:55:13.423Z">
+<meta property="og:updated_time" content="2019-02-06T06:09:57.356Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ouath原理剖析">
+<meta name="twitter:title" content="OAUTH 2.0">
 <meta name="twitter:description" content="一、背景二、角色1.user2.user-agent用户代理，通常指浏览器 3.resource-server资源服务器 4.authorize-server授权服务器 5.clientclient代表使用oauth获得用户权限的主体，互联网中通常是第三方服务提供商。client还可以细分为:  client-web client-server  三、授权码模式工作流程四、Token模式工作流程五">
     
     
@@ -35,7 +35,7 @@
         
     
     <!-- title -->
-    <title>ouath原理剖析</title>
+    <title>OAUTH 2.0</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -67,10 +67,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/11/14/跨域问题及解决方案/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2018/08/16/UNIX指令/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/06/Flask-Basic/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -83,16 +81,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/10/19/ouath原理剖析/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&text=ouath原理剖析"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&is_video=false&description=ouath原理剖析"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=ouath原理剖析&body=Check out this article: http://github.com/lsj9383/2018/10/19/ouath原理剖析/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&name=ouath原理剖析&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&text=OAUTH 2.0"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&is_video=false&description=OAUTH 2.0"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OAUTH 2.0&body=Check out this article: http://github.com/lsj9383/2019/02/06/OAUTH-2-0/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&name=OAUTH 2.0&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -109,7 +107,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        ouath原理剖析
+        OAUTH 2.0
     </h1>
 
 
@@ -120,7 +118,7 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2018-10-19T15:27:16.000Z" itemprop="datePublished">2018-10-19</time>
+        <time datetime="2019-02-06T06:09:53.000Z" itemprop="datePublished">2019-02-06</time>
     </div>
 
 
@@ -174,16 +172,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/10/19/ouath原理剖析/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&text=ouath原理剖析"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&is_video=false&description=ouath原理剖析"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=ouath原理剖析&body=Check out this article: http://github.com/lsj9383/2018/10/19/ouath原理剖析/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&title=ouath原理剖析"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/10/19/ouath原理剖析/&name=ouath原理剖析&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&text=OAUTH 2.0"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&is_video=false&description=OAUTH 2.0"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OAUTH 2.0&body=Check out this article: http://github.com/lsj9383/2019/02/06/OAUTH-2-0/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&title=OAUTH 2.0"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/OAUTH-2-0/&name=OAUTH 2.0&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
