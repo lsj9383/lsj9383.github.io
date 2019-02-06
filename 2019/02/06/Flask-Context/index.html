@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="一、表象1.全局对象Flask具有多种全局数据，包括:  flask.request，可以获取请求中的相关数据 flask.session，可以获取session中的相关数据 flask.g，用于缓存请求中的数据 flask.current_app，可以获取web应用的数据  2.上下文众所周知，全局数据是线程共享的，然而flask通过协程级别的隔离，支持多线程/协程中安全的使用全局数据。全局数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Flask上下文解析">
-<meta property="og:url" content="http://github.com/lsj9383/2018/10/14/Flask上下文解析/index.html">
+<meta property="og:title" content="Flask Context">
+<meta property="og:url" content="http://github.com/lsj9383/2019/02/06/Flask-Context/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="一、表象1.全局对象Flask具有多种全局数据，包括:  flask.request，可以获取请求中的相关数据 flask.session，可以获取session中的相关数据 flask.g，用于缓存请求中的数据 flask.current_app，可以获取web应用的数据  2.上下文众所周知，全局数据是线程共享的，然而flask通过协程级别的隔离，支持多线程/协程中安全的使用全局数据。全局数据">
-<meta property="og:updated_time" content="2018-10-13T16:21:26.128Z">
+<meta property="og:updated_time" content="2019-02-06T05:59:45.983Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Flask上下文解析">
+<meta name="twitter:title" content="Flask Context">
 <meta name="twitter:description" content="一、表象1.全局对象Flask具有多种全局数据，包括:  flask.request，可以获取请求中的相关数据 flask.session，可以获取session中的相关数据 flask.g，用于缓存请求中的数据 flask.current_app，可以获取web应用的数据  2.上下文众所周知，全局数据是线程共享的，然而flask通过协程级别的隔离，支持多线程/协程中安全的使用全局数据。全局数据">
     
     
@@ -35,7 +35,7 @@
         
     
     <!-- title -->
-    <title>Flask上下文解析</title>
+    <title>Flask Context</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -67,10 +67,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/10/19/ouath原理剖析/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2018/08/16/UNIX指令/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/04/Git-Story/sbin_kill.py - advance-interface - 代码浏览 - Topbook - asirlu/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -83,16 +81,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/10/14/Flask上下文解析/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&text=Flask上下文解析"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&is_video=false&description=Flask上下文解析"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Flask上下文解析&body=Check out this article: http://github.com/lsj9383/2018/10/14/Flask上下文解析/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&name=Flask上下文解析&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Flask-Context/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&text=Flask Context"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&is_video=false&description=Flask Context"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flask Context&body=Check out this article: http://github.com/lsj9383/2019/02/06/Flask-Context/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&name=Flask Context&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -109,7 +107,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Flask上下文解析
+        Flask Context
     </h1>
 
 
@@ -120,7 +118,7 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2018-10-13T16:20:48.000Z" itemprop="datePublished">2018-10-14</time>
+        <time datetime="2019-02-06T05:59:36.000Z" itemprop="datePublished">2019-02-06</time>
     </div>
 
 
@@ -189,16 +187,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2018/10/14/Flask上下文解析/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&text=Flask上下文解析"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&is_video=false&description=Flask上下文解析"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Flask上下文解析&body=Check out this article: http://github.com/lsj9383/2018/10/14/Flask上下文解析/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&title=Flask上下文解析"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2018/10/14/Flask上下文解析/&name=Flask上下文解析&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Flask-Context/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&text=Flask Context"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&is_video=false&description=Flask Context"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flask Context&body=Check out this article: http://github.com/lsj9383/2019/02/06/Flask-Context/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&title=Flask Context"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Flask-Context/&name=Flask Context&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
