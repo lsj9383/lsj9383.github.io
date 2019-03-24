@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://github.com/lsj9383/2018/08/16/UNIX指令/index.html">
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
-<meta property="og:updated_time" content="2019-02-27T16:25:33.959Z">
+<meta property="og:updated_time" content="2019-03-23T14:26:49.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX指令">
 <meta name="twitter:description" content="用于记录和总结UNIX系统常用指令，对于一些不常用的使用不会给出，不定期更新。 零、简单工具1.find/locatefind &amp;lt;base-dir&amp;gt; &amp;lt;option&amp;gt; &amp;lt;name&amp;gt; &amp;lt;action&amp;gt;，对于&amp;lt;option&amp;gt;:  不加&amp;lt;option&amp;gt;默认搜索当前目录及其子目录中路径中包含了&amp;lt;name&amp;gt;的文件和目录 -">
@@ -295,7 +295,69 @@
 <li>怀疑内存存在瓶颈, <code>sar -B(查询附加的缓存使用情况)</code>, <code>sar -r(类似free，查看物理内存使用情况)</code> 和 <code>sar -W(查看交换页情况)</code> 可以进行查看。</li>
 <li>怀疑IO存在瓶颈, <code>sar -b</code>, <code>sar -u(CPU利用率)</code> 和 <code>sar -d(报告磁盘使用情况)</code> 可以进行查看。</li>
 </ul>
-<h3 id="5-vmstat"><a href="#5-vmstat" class="headerlink" title="5.vmstat"></a>5.<em>vmstat</em></h3><h3 id="6-iostat"><a href="#6-iostat" class="headerlink" title="6.iostat"></a>6.<em>iostat</em></h3><h3 id="7-ifstat"><a href="#7-ifstat" class="headerlink" title="7.ifstat"></a>7.<em>ifstat</em></h3><h2 id="四、网络工具"><a href="#四、网络工具" class="headerlink" title="四、网络工具"></a>四、网络工具</h2><h3 id="1-curl"><a href="#1-curl" class="headerlink" title="1.curl"></a>1.<em>curl</em></h3><p>curl用以模拟http请求，可以用来测试和制作爬虫。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl &lt;options&gt; <span class="string">"&lt;url&gt;"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="5-vmstat"><a href="#5-vmstat" class="headerlink" title="5.vmstat"></a>5.<em>vmstat</em></h3><p>vmstat可以观察到当前时刻的进程队列、内存、swap、磁盘io、系统终端和上下文切换、CPU时间占比等信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vmstat [-a] [seconds]</span><br></pre></td></tr></table></figure></p>
+<p>-a表示是否显示活跃内存大小和非活跃内存大小。参数seconds，表示多久采集一次进行显示。</p>
+<ul>
+<li>Process<ul>
+<li>r: 进程就绪 等待执行的数量</li>
+<li>b: 等待IO的进程数</li>
+</ul>
+</li>
+<li>Memory<ul>
+<li>swapd: 已使用的swap空间大小</li>
+<li>free: 空闲内存大小</li>
+<li>buff: 已用的buff大小，对块设备的读写进行缓冲(free不够的时候，buff会部分被释放给free使用)</li>
+<li>cache: 已用的cache大小，文件系统的cache(free不够的时候，cache会部分释放给free使用)</li>
+<li>inact: 非活跃内存大小，即被标明可回收的内存</li>
+<li>active: 活跃的内存大小</li>
+</ul>
+</li>
+<li>Swap<ul>
+<li>si: 每秒从交换区写入内存的大小(Kb/s)</li>
+<li>so: 每秒从内存写到交换区的大小(Kb/s)</li>
+</ul>
+</li>
+<li>IO<ul>
+<li>bi: 每秒读取的块数（读磁盘）</li>
+<li>bo: 每秒写入的块数（写磁盘），不同的电脑上块大小可能设置的不一样，通常为4096字节或1024字节。</li>
+</ul>
+</li>
+<li>System, 这两个值越大，会看到由内核消耗的cpu时间会越多<ul>
+<li>in: 每秒中断数，包括时钟中断</li>
+<li>cs: 每秒上下文切换数，调用系统函数，就要进行上下文切换。</li>
+</ul>
+</li>
+<li>CPU<ul>
+<li>us: 用户态执行消耗cpu时间</li>
+<li>sy: 内核态执行消耗的cpu时间</li>
+<li>id: 空闲时间(包括IO等待时间)</li>
+<li>wa: 等待IO时间, sa过高时，说明io等待比较严重，这可能是由于磁盘大量随机访问造成的，也有可能是磁盘的带宽出现瓶颈。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-iostat"><a href="#6-iostat" class="headerlink" title="6.iostat"></a>6.<em>iostat</em></h3><p>iostat可以观察当前时刻磁盘io读写速度和cpu时间占比相关信息.</p>
+<p>输出说明:</p>
+<ul>
+<li>CPU信息<ul>
+<li>%user：CPU处在用户模式下的时间百分比。</li>
+<li>%nice：CPU处在带NICE值的用户模式下的时间百分比。</li>
+<li>%system：CPU处在系统模式下的时间百分比。</li>
+<li>%iowait：CPU等待输入输出完成时间的百分比。</li>
+<li>%steal：管理程序维护另一个虚拟处理器时，虚拟CPU的无意识等待时间百分比。</li>
+<li>%idle：CPU空闲时间百分比。</li>
+</ul>
+</li>
+<li>磁盘信息:<ul>
+<li>tps：该设备每秒的传输次数</li>
+<li>kB_read/s：每秒从设备（drive expressed）读取的数据量；</li>
+<li>kB_wrtn/s：每秒向设备（drive expressed）写入的数据量；</li>
+<li>kB_read：  读取的总数据量；</li>
+<li>kB_wrtn：写入的总数量数据量；</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-ifstat"><a href="#7-ifstat" class="headerlink" title="7.ifstat"></a>7.<em>ifstat</em></h3><p>可以简单的监测系统流量情况。</p>
+<h2 id="四、网络工具"><a href="#四、网络工具" class="headerlink" title="四、网络工具"></a>四、网络工具</h2><h3 id="1-curl"><a href="#1-curl" class="headerlink" title="1.curl"></a>1.<em>curl</em></h3><p>curl用以模拟http请求，可以用来测试和制作爬虫。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl &lt;options&gt; <span class="string">"&lt;url&gt;"</span></span><br></pre></td></tr></table></figure></p>
 <p><code>options</code>在下面列出常用的选项:</p>
 <ul>
 <li>-d 设置请求body，并将请求设置为POST请求</li>
