@@ -13,7 +13,8 @@
 <meta property="og:site_name" content="小记">
 <meta property="og:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Handler, 负责处理日志信息，输出到指定的位置。 Formatter, 负责格式化LogRecord对象。 Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。 LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有">
 <meta property="og:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/logger-frame.png">
-<meta property="og:updated_time" content="2019-03-24T17:24:28.944Z">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/log_handler_uml.png">
+<meta property="og:updated_time" content="2019-03-25T16:11:45.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python Log">
 <meta name="twitter:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Handler, 负责处理日志信息，输出到指定的位置。 Formatter, 负责格式化LogRecord对象。 Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。 LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有">
@@ -150,27 +151,41 @@
 </ul>
 <h2 id="2-Log系统等级"><a href="#2-Log系统等级" class="headerlink" title="2.Log系统等级"></a>2.Log系统等级</h2><p>Python的Log等级在logging模块中有定义:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">CRITICAL = <span class="number">50</span></span><br><span class="line">FATAL = CRITICAL</span><br><span class="line">ERROR = <span class="number">40</span></span><br><span class="line">WARNING = <span class="number">30</span></span><br><span class="line">WARN = WARNING</span><br><span class="line">INFO = <span class="number">20</span></span><br><span class="line">DEBUG = <span class="number">10</span></span><br><span class="line">NOTSET = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">_levelToName = &#123;</span><br><span class="line">    CRITICAL: <span class="string">'CRITICAL'</span>,</span><br><span class="line">    ERROR: <span class="string">'ERROR'</span>,</span><br><span class="line">    WARNING: <span class="string">'WARNING'</span>,</span><br><span class="line">    INFO: <span class="string">'INFO'</span>,</span><br><span class="line">    DEBUG: <span class="string">'DEBUG'</span>,</span><br><span class="line">    NOTSET: <span class="string">'NOTSET'</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">_nameToLevel = &#123;</span><br><span class="line">    <span class="string">'CRITICAL'</span>: CRITICAL,</span><br><span class="line">    <span class="string">'FATAL'</span>: FATAL,</span><br><span class="line">    <span class="string">'ERROR'</span>: ERROR,</span><br><span class="line">    <span class="string">'WARN'</span>: WARNING,</span><br><span class="line">    <span class="string">'WARNING'</span>: WARNING,</span><br><span class="line">    <span class="string">'INFO'</span>: INFO,</span><br><span class="line">    <span class="string">'DEBUG'</span>: DEBUG,</span><br><span class="line">    <span class="string">'NOTSET'</span>: NOTSET,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="二、Logger接口"><a href="#二、Logger接口" class="headerlink" title="二、Logger接口"></a>二、Logger接口</h1><p>继承关系链:<br><img src="" alt=""></p>
-<p>可以看出Logger继承了Filterer，该类主要是提供了添加filter、删除filte以及进行过滤的方法，Handler需要这些方法，因为Handler支持对内容进行过滤器筛选。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Filterer</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""主要是给logger和handler提供公共的方法，这些方法用于filter功能</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.filters = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addFilter</span><span class="params">(self, filter)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> (filter <span class="keyword">in</span> self.filters):</span><br><span class="line">            self.filters.append(filter)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeFilter</span><span class="params">(self, filter)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> filter <span class="keyword">in</span> self.filters:</span><br><span class="line">            self.filters.remove(filter)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">filter</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        rv = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> f <span class="keyword">in</span> self.filters:</span><br><span class="line">            <span class="keyword">if</span> hasattr(f, <span class="string">'filter'</span>):</span><br><span class="line">                result = f.filter(record)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result = f(record) <span class="comment"># assume callable - will raise if not</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> result:</span><br><span class="line">                rv = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure></p>
-<h1 id="三、Handler接口"><a href="#三、Handler接口" class="headerlink" title="三、Handler接口"></a>三、Handler接口</h1><p>loggin模块提供的<code>StreamHandler</code>和<code>FileHandler</code>是最简单的处理器类，并且他们是线程安全的，它们都会在写日志的时候加独占锁。继承关系链:<br><img src="" alt=""></p>
-<p>可以看出Handler继承了Filterer，该类主要是提供了添加filter、删除filte以及进行过滤的方法，Handler需要这些方法，因为Handler支持对内容进行过滤器筛选。</p>
+<p>可以看出Logger继承了Filterer，该类主要是提供了添加filter、删除filte以及进行过滤的方法，Handler需要这些方法，因为Handler支持对内容进行过滤器筛选。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Filterer</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""主要是给logger和handler提供公共的方法，这些方法用于filter功能</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.filters = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addFilter</span><span class="params">(self, filter)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> (filter <span class="keyword">in</span> self.filters):</span><br><span class="line">            self.filters.append(filter)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeFilter</span><span class="params">(self, filter)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> filter <span class="keyword">in</span> self.filters:</span><br><span class="line">            self.filters.remove(filter)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 迭代式进行过滤器判断</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">filter</span><span class="params">(self, record)</span>:</span></span><br><span class="line">        rv = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> f <span class="keyword">in</span> self.filters:</span><br><span class="line">            <span class="keyword">if</span> hasattr(f, <span class="string">'filter'</span>):</span><br><span class="line">                result = f.filter(record)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result = f(record) <span class="comment"># assume callable - will raise if not</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> result:</span><br><span class="line">                rv = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure></p>
+<h1 id="三、Handler接口"><a href="#三、Handler接口" class="headerlink" title="三、Handler接口"></a>三、Handler接口</h1><p>loggin模块提供的<code>StreamHandler</code>和<code>FileHandler</code>是最简单的处理器类，并且他们是线程安全的，它们都会在写日志的时候加独占锁。继承关系链:<br><img src="log_handler_uml.png" alt=""></p>
+<p>每个类的职责:</p>
+<ul>
+<li>Filterer, 提供过滤器相关控制方法(增删过滤器, 判断record是否需要过滤)</li>
+<li>Handler, 提供基本的handle方法, 主要是获取和释放锁, IO异常处理, 提供record的格式化方案等。</li>
+<li>StreamHandler, 提供了最基本的将record输出到Stream的方法。</li>
+<li>FileHandler, 提供了将record输出到File的方法。本质上就是StreamHandler, 因为文件的控制形式和流类似。</li>
+<li>RotatingFileHandler, 提供日志文件根据文件大小翻滚的功能</li>
+<li>TimedRotatingFileHandler, 提供日志文件根据时间定期翻滚的功能</li>
+<li>WatchedFileHandler, 监听文件是否被修改, 如果被改动则重新生成一个文件进行日志记录</li>
+<li>SocketHandler, 基于TCP连接的日志输出</li>
+<li>DatagramHandler, 基于UDP连接的日志输出</li>
+<li>SMTPHandler, 发送邮件日志</li>
+<li>HTTPHandler, 基于http日志输出</li>
+</ul>
+<p>Handler提供的通用方法:</p>
 <ul>
 <li>外部方法:<ul>
-<li>get_name</li>
-<li>set_name</li>
-<li>setFormatter</li>
-<li>setLevel</li>
-<li>format</li>
-<li>handle</li>
-<li>flush</li>
-<li>close</li>
+<li>get_name, 获得handlers的名称</li>
+<li>set_name, 设置名字, 会获得进行全局加锁(因为会对全局的handlers字典进行操作, 从中更新自己的名字)</li>
+<li>setFormatter, 设置格式化处理方案</li>
+<li>setLevel, 设置级别</li>
+<li>format, 将record进行格式化</li>
+<li>handle, 会将record交给filters进行判断, 通过后会调用<code>emit</code>方法, 将内容输出到磁盘</li>
+<li>flush, 主要是对流进行flush, 将缓存区中的内容输出到磁盘</li>
+<li>close, 关闭handler</li>
 </ul>
 </li>
 <li>内部方法:<ul>
-<li>emit</li>
-<li>createLock</li>
-<li>acquire</li>
-<li>release</li>
-<li>handleError</li>
+<li>emit, 将record输出到文件中, 会调用<code>format</code>方法将record格式化后进行输出。</li>
+<li>createLock, 创建handler的锁, 该锁用于将IO操作(emit)串行化, 可见不同handler之间的锁锁独立的。</li>
+<li>acquire, 获取锁。</li>
+<li>release, 释放锁。</li>
+<li>handleError, 处理emit时的的异常。</li>
 </ul>
 </li>
 </ul>
