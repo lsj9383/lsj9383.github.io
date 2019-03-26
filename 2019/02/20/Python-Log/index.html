@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Handler, 负责处理日志信息，输出到指定的位置。 Formatter, 负责格式化LogRecord对象。 Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。 LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有">
+    <meta name="description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Logger可以配置链式的Filter。全部都通过后交给handler 可以配置多个Handler。会将通过filter的日志交给所有的handler进行落盘 Logger有父子关系，当前Logger处理完日志后，会把日志叫个父Logger进行处理，直至祖先。父子关系通过Logger名字来确定。 Logg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python Log">
 <meta property="og:url" content="http://github.com/lsj9383/2019/02/20/Python-Log/index.html">
 <meta property="og:site_name" content="小记">
-<meta property="og:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Handler, 负责处理日志信息，输出到指定的位置。 Formatter, 负责格式化LogRecord对象。 Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。 LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有">
-<meta property="og:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/logger-frame.png">
+<meta property="og:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Logger可以配置链式的Filter。全部都通过后交给handler 可以配置多个Handler。会将通过filter的日志交给所有的handler进行落盘 Logger有父子关系，当前Logger处理完日志后，会把日志叫个父Logger进行处理，直至祖先。父子关系通过Logger名字来确定。 Logg">
+<meta property="og:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/logger-struct.png">
 <meta property="og:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/log_handler_uml.png">
-<meta property="og:updated_time" content="2019-03-25T16:11:45.248Z">
+<meta property="og:updated_time" content="2019-03-26T16:49:49.255Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python Log">
-<meta name="twitter:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Handler, 负责处理日志信息，输出到指定的位置。 Formatter, 负责格式化LogRecord对象。 Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。 LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有">
-<meta name="twitter:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/logger-frame.png">
+<meta name="twitter:description" content="一、概述1.Log系统框架  日志系统角色 Logger, 用户通过Logger对象写日志。 Logger可以配置链式的Filter。全部都通过后交给handler 可以配置多个Handler。会将通过filter的日志交给所有的handler进行落盘 Logger有父子关系，当前Logger处理完日志后，会把日志叫个父Logger进行处理，直至祖先。父子关系通过Logger名字来确定。 Logg">
+<meta name="twitter:image" content="http://github.com/lsj9383/2019/02/20/Python-Log/logger-struct.png">
     
     
         
@@ -132,11 +132,23 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h2 id="1-Log系统框架"><a href="#1-Log系统框架" class="headerlink" title="1.Log系统框架"></a>1.Log系统框架</h2><p><img src="logger-frame.png" alt=""></p>
+    <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h2 id="1-Log系统框架"><a href="#1-Log系统框架" class="headerlink" title="1.Log系统框架"></a>1.Log系统框架</h2><p><img src="logger-struct.png" alt=""></p>
 <ul>
 <li>日志系统角色<ul>
-<li>Logger, 用户通过Logger对象写日志。</li>
-<li>Handler, 负责处理日志信息，输出到指定的位置。</li>
+<li>Logger, 用户通过Logger对象写日志。<ul>
+<li>Logger可以配置链式的Filter。全部都通过后交给handler</li>
+<li>可以配置多个Handler。会将通过filter的日志交给所有的handler进行落盘</li>
+<li>Logger有父子关系，当前Logger处理完日志后，会把日志叫个父Logger进行处理，直至祖先。父子关系通过Logger名字来确定。</li>
+<li>Logger具有日志级别，达到了日志级别的日志才交给Handler</li>
+</ul>
+</li>
+<li>Handler, 负责处理日志信息，输出到指定的位置。<ul>
+<li>Handler可以配置链式Filter，每个Filter</li>
+<li>Handler具有日志级别，达到了日志级别的才会落盘</li>
+<li>Handler具有Formatter，负责对日志进行格式化</li>
+<li>Handler默认采用StreamHandler，该处理器是把日志输出到stderr上，其他的处理器会输出到其他的设备上。</li>
+</ul>
+</li>
 <li>Formatter, 负责格式化LogRecord对象。</li>
 <li>Filter, 过滤器将不满足条件的日志信息过滤掉，不输出至日志。</li>
 <li>LogRecord, 这个对象通常不由用户直接调用, 每条日志都会生成LogRecord对象, 该对象里面除了日志信息外还有额外的辅助信息，例如时间。</li>
