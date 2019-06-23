@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、安装 二、入门 1.文档 2.索引(index) 3.检索   三、分布式集群 1.集群 1).节点 2).分片 3).客户端请求   3.故障转移 4.横向扩展   四、数据存储 1.文档 2.文档存储 3.检索文档 4.更新文档   五、搜索 六、映射与分析 1.数据类型 2.分析器 3.映射 1).es的索引基本类型 2).JSON文档的对应的es数据类型 3).自定义映射">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elastic search learning">
+<meta property="og:url" content="http://github.com/lsj9383/2019/06/23/elastic-search-learning/index.html">
+<meta property="og:site_name" content="小记">
+<meta property="og:description" content="一、安装 二、入门 1.文档 2.索引(index) 3.检索   三、分布式集群 1.集群 1).节点 2).分片 3).客户端请求   3.故障转移 4.横向扩展   四、数据存储 1.文档 2.文档存储 3.检索文档 4.更新文档   五、搜索 六、映射与分析 1.数据类型 2.分析器 3.映射 1).es的索引基本类型 2).JSON文档的对应的es数据类型 3).自定义映射">
+<meta property="og:updated_time" content="2019-06-23T09:21:15.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elastic search learning">
+<meta name="twitter:description" content="一、安装 二、入门 1.文档 2.索引(index) 3.检索   三、分布式集群 1.集群 1).节点 2).分片 3).客户端请求   3.故障转移 4.横向扩展   四、数据存储 1.文档 2.文档存储 3.检索文档 4.更新文档   五、搜索 六、映射与分析 1.数据类型 2.分析器 3.映射 1).es的索引基本类型 2).JSON文档的对应的es数据类型 3).自定义映射">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>elastic search learning</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</head>
+
+<body>
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/02/20/Python-Log/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/06/23/elastic-search-learning/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&text=elastic search learning"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&is_video=false&description=elastic search learning"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic search learning&body=Check out this article: http://github.com/lsj9383/2019/06/23/elastic-search-learning/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&name=elastic search learning&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、安装"><span class="toc-number">1.</span> <span class="toc-text">一、安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、入门"><span class="toc-number">2.</span> <span class="toc-text">二、入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-文档"><span class="toc-number">2.1.</span> <span class="toc-text">1.文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-索引-index"><span class="toc-number">2.2.</span> <span class="toc-text">2.索引(index)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-检索"><span class="toc-number">2.3.</span> <span class="toc-text">3.检索</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、分布式集群"><span class="toc-number">3.</span> <span class="toc-text">三、分布式集群</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集群"><span class="toc-number">3.1.</span> <span class="toc-text">1.集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-节点"><span class="toc-number">3.1.1.</span> <span class="toc-text">1).节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-分片"><span class="toc-number">3.1.2.</span> <span class="toc-text">2).分片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-客户端请求"><span class="toc-number">3.1.3.</span> <span class="toc-text">3).客户端请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-故障转移"><span class="toc-number">3.2.</span> <span class="toc-text">3.故障转移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-横向扩展"><span class="toc-number">3.3.</span> <span class="toc-text">4.横向扩展</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、数据存储"><span class="toc-number">4.</span> <span class="toc-text">四、数据存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-文档-1"><span class="toc-number">4.1.</span> <span class="toc-text">1.文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-文档存储"><span class="toc-number">4.2.</span> <span class="toc-text">2.文档存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-检索文档"><span class="toc-number">4.3.</span> <span class="toc-text">3.检索文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-更新文档"><span class="toc-number">4.4.</span> <span class="toc-text">4.更新文档</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、搜索"><span class="toc-number">5.</span> <span class="toc-text">五、搜索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、映射与分析"><span class="toc-number">6.</span> <span class="toc-text">六、映射与分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据类型"><span class="toc-number">6.1.</span> <span class="toc-text">1.数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-分析器"><span class="toc-number">6.2.</span> <span class="toc-text">2.分析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-映射"><span class="toc-number">6.3.</span> <span class="toc-text">3.映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-es的索引基本类型"><span class="toc-number">6.3.1.</span> <span class="toc-text">1).es的索引基本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON文档的对应的es数据类型"><span class="toc-number">6.3.2.</span> <span class="toc-text">2).JSON文档的对应的es数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-自定义映射"><span class="toc-number">6.3.3.</span> <span class="toc-text">3).自定义映射</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、结构化查询"><span class="toc-number">7.</span> <span class="toc-text">七、结构化查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Query-DSL"><span class="toc-number">7.1.</span> <span class="toc-text">1.Query DSL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-常用的查询子句"><span class="toc-number">7.2.</span> <span class="toc-text">2.常用的查询子句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-term"><span class="toc-number">7.2.1.</span> <span class="toc-text">1).term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-terms"><span class="toc-number">7.2.2.</span> <span class="toc-text">2).terms</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-range"><span class="toc-number">7.2.3.</span> <span class="toc-text">3).range</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-exists和missing"><span class="toc-number">7.2.4.</span> <span class="toc-text">4).exists和missing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-match"><span class="toc-number">7.2.5.</span> <span class="toc-text">5).match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-match-phrase"><span class="toc-number">7.2.6.</span> <span class="toc-text">6).match_phrase</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-multi-match"><span class="toc-number">7.2.7.</span> <span class="toc-text">7).multi_match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-bool复合子句"><span class="toc-number">7.2.8.</span> <span class="toc-text">8).bool复合子句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-验证查询"><span class="toc-number">7.3.</span> <span class="toc-text">3.验证查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录、常用命令"><span class="toc-number">8.</span> <span class="toc-text">附录、常用命令</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        elastic search learning
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">小记</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-06-23T09:21:11.000Z" itemprop="datePublished">2019-06-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!-- TOC -->
+<ul>
+<li><a href="#一安装">一、安装</a></li>
+<li><a href="#二入门">二、入门</a><ul>
+<li><a href="#1文档">1.文档</a></li>
+<li><a href="#2索引index">2.索引(index)</a></li>
+<li><a href="#3检索">3.检索</a></li>
+</ul>
+</li>
+<li><a href="#三分布式集群">三、分布式集群</a><ul>
+<li><a href="#1集群">1.集群</a><ul>
+<li><a href="#1节点">1).<em>节点</em></a></li>
+<li><a href="#2分片">2).<em>分片</em></a></li>
+<li><a href="#3客户端请求">3).<em>客户端请求</em></a></li>
+</ul>
+</li>
+<li><a href="#3故障转移">3.故障转移</a></li>
+<li><a href="#4横向扩展">4.横向扩展</a></li>
+</ul>
+</li>
+<li><a href="#四数据存储">四、数据存储</a><ul>
+<li><a href="#1文档-1">1.文档</a></li>
+<li><a href="#2文档存储">2.文档存储</a></li>
+<li><a href="#3检索文档">3.检索文档</a></li>
+<li><a href="#4更新文档">4.更新文档</a></li>
+</ul>
+</li>
+<li><a href="#五搜索">五、搜索</a></li>
+<li><a href="#六映射与分析">六、映射与分析</a><ul>
+<li><a href="#1数据类型">1.数据类型</a></li>
+<li><a href="#2分析器">2.分析器</a></li>
+<li><a href="#3映射">3.映射</a><ul>
+<li><a href="#1es的索引基本类型">1).es的索引基本类型</a></li>
+<li><a href="#2json文档的对应的es数据类型">2).<em>JSON文档的对应的es数据类型</em></a></li>
+<li><a href="#3自定义映射">3).<em>自定义映射</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#七结构化查询">七、结构化查询</a><ul>
+<li><a href="#1query-dsl">1.Query DSL</a></li>
+<li><a href="#2常用的查询子句">2.常用的查询子句</a><ul>
+<li><a href="#1term">1).<em>term</em></a></li>
+<li><a href="#2terms">2).<em>terms</em></a></li>
+<li><a href="#3range">3).<em>range</em></a></li>
+<li><a href="#4exists和missing">4).<em>exists和missing</em></a></li>
+<li><a href="#5match">5).<em>match</em></a></li>
+<li><a href="#6match_phrase">6).<em>match_phrase</em></a></li>
+<li><a href="#7multi_match">7).<em>multi_match</em></a></li>
+<li><a href="#8bool复合子句">8).<em>bool复合子句</em></a></li>
+</ul>
+</li>
+<li><a href="#3验证查询">3.验证查询</a></li>
+</ul>
+</li>
+<li><a href="#附录常用命令">附录、常用命令</a></li>
+</ul>
+<!-- /TOC -->
+<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>ElasticSearch的安装依赖Java，因此需要先安装Java并配置JAVA_HOME的环境变量，本文档默认已经安装好了JAVA，并且JAVA和ElasticSearch对应以下版本:</p>
+<ul>
+<li>jdk 8.181</li>
+<li>es 6.4.2</li>
+</ul>
+<p>在获取到elasticsearch的安装包后, 进行解压, 直接允许es进程即可启动。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前台启动</span></span><br><span class="line">$ ./elasticsearch-6.4.2/bin/elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台启动(守护进程)</span></span><br><span class="line">$ ./elasticsearch-6.4.2/bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p>
+<p>启动后默认只能监听localhost的9200端口，可以在<code>./elasticsearch-6.4.2/config/elasticsearch.yml</code>配置es服务器信息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: my-application</span><br><span class="line">node.name: node-1</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br></pre></td></tr></table></figure></p>
+<p>es的启动可能会遇到一些错误情况, 以下是常见错误情况及解决:</p>
+<ul>
+<li>max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]<ul>
+<li>原因, 操作系统支持的最大文件描述符太少</li>
+<li>解决, <code>vi /etc/security/limits.conf</code><ul>
+<li>soft nofile 65536</li>
+<li>hard nofile 65536</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>max number of threads [3818] for user [es] is too low, increase to at least [4096]<ul>
+<li>原因, 操作系统配置的最大线程个数太少</li>
+<li>解决, <code>vim etc/security/limits.conf</code><ul>
+<li>soft nproc 4096</li>
+<li>hard nproc 4096</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk<ul>
+<li>原因, 因为Centos6不支持SecComp，而ES5.2.1默认bootstrap.system_call_filter为true进行检测，所以导致检测失败，失败后直接导致ES不能启动</li>
+<li>解决, <code>vim elasticsearch.yml</code><ul>
+<li>bootstrap.memory_lock: false</li>
+<li>bootstrap.system_call_filter: false</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]<ul>
+<li>原因, 虚拟存储区域太小</li>
+<li>解决, <code>vim /etc/sysctl.conf</code><ul>
+<li>vm.max_map_count=262144</li>
+<li>sysctl -p</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>已杀死<ul>
+<li>原因, es是由Java启动的，通常是非配给Java的内存不足导致的。</li>
+<li>解决, <code>vim config/jvm.options</code><ul>
+<li>-Xms512m, Xms是JVM初始化时的内存大小</li>
+<li>-Xmx512m, Xmx是JVM最大可用内存, 和Xms分别表示JVM的最小和最大地址。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、入门"><a href="#二、入门" class="headerlink" title="二、入门"></a>二、入门</h1><h2 id="1-文档"><a href="#1-文档" class="headerlink" title="1.文档"></a>1.文档</h2><p>一个文档就是一个对象，有多个字段，并且有对应的数据。es存储文档，并通过value建立反向索引，并通过value来查询文档。在es中，一个文档本质上就是一个JSON对象:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"email"</span>:      <span class="string">"john@smith.com"</span>,</span><br><span class="line">    <span class="attr">"first_name"</span>: <span class="string">"John"</span>,</span><br><span class="line">    <span class="attr">"last_name"</span>:  <span class="string">"Smith"</span>,</span><br><span class="line">    <span class="attr">"info"</span>: &#123;</span><br><span class="line">        <span class="attr">"bio"</span>:         <span class="string">"Eco-warrior and defender of the weak"</span>,</span><br><span class="line">        <span class="attr">"age"</span>:         <span class="number">25</span>,</span><br><span class="line">        <span class="attr">"interests"</span>: [ <span class="string">"dolphins"</span>, <span class="string">"whales"</span> ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"join_date"</span>: <span class="string">"2014/05/01"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-索引-index"><a href="#2-索引-index" class="headerlink" title="2.索引(index)"></a>2.索引(index)</h2><p>es集群中包含多个index(dbs), 每个index包含了多个type(tables), 每个type包含了多个documents(rows)。<code>索引</code>一词在es中存在两种含义:</p>
+<ul>
+<li>动词 indexing: 表示把一个文档存储到es中。以便它可以被检索或者查询。这很像SQL中的INSERT关键字。如果文档已经存在，新的文档将覆盖旧的文档。默认情况下，文档中的所有字段都会被索引，只有这样他们才是可被搜索的。</li>
+<li>名次 index: 一个索引(index)就像是传统关系数据库中的数据库，它是相关文档存储的地方</li>
+</ul>
+<p>可以在一次存储中指定index, type, documents, 但凡有一个不存在, 就会创建。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下面这个数据中 索引名为:megacorp, 类型名为:employee, 文档名为:1</span></span><br><span class="line">curl -XPUT -H <span class="string">"Content-Type:application/json"</span>  <span class="string">"http://localhost:9200/megacorp/employee/1"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "first_name" : "John",</span></span><br><span class="line"><span class="string">    "last_name" :  "Smith",</span></span><br><span class="line"><span class="string">    "age" :        25,</span></span><br><span class="line"><span class="string">    "about" :      "I love to go rock climbing",</span></span><br><span class="line"><span class="string">    "interests": [ "sports", "music" ]</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3-检索"><a href="#3-检索" class="headerlink" title="3.检索"></a>3.检索</h2><p>最简单的检索是通过index, type, document的名称将文档查询出来，类似mysql中通过主键来进行查询。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检索指定的文档</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/employee/1"</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;doc&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检索type下的所有文档, 默认返回十个</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/employee/_search"</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/_search"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检索index下的所有文档, 默认返回十个</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/_search"</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/_search"</span></span><br></pre></td></tr></table></figure></p>
+<p>其实通过这个方式, 也可以实现简单的全文检索:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对index下面的数据进行全文检索</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/employee/_search?q=last_name:Smith"</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/type/_search?q=&lt;field&gt;:&lt;value&gt;"</span></span><br></pre></td></tr></table></figure></p>
+<p>最常用和强大的是通过DSL来进行查询:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全文检索</span></span><br><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/megacorp/employee/_search"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query" : &#123;</span></span><br><span class="line"><span class="string">        "match" : &#123;</span></span><br><span class="line"><span class="string">            "about" : "rock climbing"</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 短语检索</span></span><br><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/megacorp/employee/_search"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query" : &#123;</span></span><br><span class="line"><span class="string">        "match_phrase" : &#123;</span></span><br><span class="line"><span class="string">            "about" : "rock climbing"</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>这里需要强调以下两种搜索:</p>
+<ul>
+<li>全文检索, 使用match, 会对短语进行拆分(中文句子也会拆分), 然后进行全文检索。</li>
+<li>短语检索, 使用match_phrase, 是不会对短语进行拆分的，类似sql中的<code>SELECT * FROM tbl WHERE field like &#39;%term%s&#39;</code></li>
+</ul>
+<h1 id="三、分布式集群"><a href="#三、分布式集群" class="headerlink" title="三、分布式集群"></a>三、分布式集群</h1><p>es可以横向扩展来分摊负载并增加可用性。</p>
+<h2 id="1-集群"><a href="#1-集群" class="headerlink" title="1.集群"></a>1.集群</h2><h3 id="1-节点"><a href="#1-节点" class="headerlink" title="1).节点"></a>1).<em>节点</em></h3><p>一个es进程就是一个es实例，也是es节点。一个es集群则是由多个es节点组成。</p>
+<ul>
+<li>主节点: 集群中任何节点都可能会被选举为主节点(master),它将临时管理集群级别的一些变更，例如新建或删除索引、增加或移除节点等。</li>
+<li>空节点: 一个节点上没有存储任何的</li>
+<li>空集群: 一个集群只有空节点</li>
+</ul>
+<h3 id="2-分片"><a href="#2-分片" class="headerlink" title="2).分片"></a>2).<em>分片</em></h3><p>数据都是存储在索引中的，其实索引只是一个逻辑命名空间, 实际的文档数据都是存储在分片中的。一个分片就是一个<code>Lucene实例</code>。es将一个索引的数据划分为多个分片，多个分片均摊的分布在多个节点上。分片分为两种:</p>
+<ul>
+<li>主分片(primary shard), 主分片的存储量完全受硬件和操作系统限制。主分片的个数是可以配置的, 主分片多则可以对数据进行更大的分摊。</li>
+<li>复制分片(replica shard), 复制分片只是主分片的一个副本，它可以防止硬件故障导致的数据丢失，同时可以提供读请求，比如搜索或者从别的shard取回文档。</li>
+</ul>
+<h3 id="3-客户端请求"><a href="#3-客户端请求" class="headerlink" title="3).客户端请求"></a>3).<em>客户端请求</em></h3><p>每个节点都知道每一个文档在集群中存储于哪个节点，因此客户端访问集群中的任何节点均可, 收到客户端请求的节点负责收集客户端所需要的数据并返回给客户端。换而言之，任何节点都是客户端的访问代理。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询集群健康</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/_cluster/health"</span></span><br><span class="line"><span class="comment"># 以下字段需要关注:</span></span><br><span class="line"><span class="comment"># "status" : "yellow", 节点状况状态</span></span><br><span class="line"><span class="comment"># "number_of_nodes" : 1, (节点个数)</span></span><br><span class="line"><span class="comment"># "number_of_data_nodes" : 1,</span></span><br><span class="line"><span class="comment"># "active_primary_shards" : 5, (活动的主分片个数)</span></span><br><span class="line"><span class="comment"># "active_shards" : 5, (活动的复制分片个数)</span></span><br><span class="line"><span class="comment"># "unassigned_shards" : 5,</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置一个索引的分片信息</span></span><br><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/megacorp"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">   "settings" : &#123;</span></span><br><span class="line"><span class="string">      "number_of_shards" : 10,</span></span><br><span class="line"><span class="string">      "number_of_replicas" : 0</span></span><br><span class="line"><span class="string">   &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>集群健康的status状态:</p>
+<ul>
+<li>green, 所有主要分片和复制分片都可用</li>
+<li>yellow, 所有主要分片可用，但不是所有复制分片都可用</li>
+<li>red, 不是所有的主要分片都可用</li>
+</ul>
+<h2 id="3-故障转移"><a href="#3-故障转移" class="headerlink" title="3.故障转移"></a>3.故障转移</h2><h2 id="4-横向扩展"><a href="#4-横向扩展" class="headerlink" title="4.横向扩展"></a>4.横向扩展</h2><h1 id="四、数据存储"><a href="#四、数据存储" class="headerlink" title="四、数据存储"></a>四、数据存储</h1><h2 id="1-文档-1"><a href="#1-文档-1" class="headerlink" title="1.文档"></a>1.文档</h2><p>在Elasticsearch中, 文档(document)这个术语有着特殊含义。它特指最顶层结构或者根对象(root object)序列化成的JSON数据(以唯一ID标识并存储于Elasticsearch中)。文档包含以下元数据:<br>元数据|描述<br>-|-<br>_index|文档存储的地方, 类似于SQL中的DB<br>_type|文档代表的对象的类, 对象的分类。类似于SQL中的TABLE，一个TABLE中的对象的含义和构造往往是相同的。<br>_id|文档的唯一标识，仅仅是一个字符串，它与_index和_type组合时，就可以在Elasticsearch中唯一标识一个文档。当创建一个文档，你可以自定义_id，也可以让Elasticsearch帮你自动生成。</p>
+<h2 id="2-文档存储"><a href="#2-文档存储" class="headerlink" title="2.文档存储"></a>2.文档存储</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定一个文档的id进行存储</span></span><br><span class="line">curl -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&#123;index&#125;/&#123;type&#125;/&#123;id&#125;"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "field": "value",</span></span><br><span class="line"><span class="string">  ...</span></span><br><span class="line"><span class="string">&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># es分配id, 分配的id在该请求的响应中</span></span><br><span class="line">curl -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&#123;index&#125;/&#123;type&#125;"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "field": "value",</span></span><br><span class="line"><span class="string">  ...</span></span><br><span class="line"><span class="string">&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显式的创建文档, 若文档已经存在会返回失败</span></span><br><span class="line">curl -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;/_create"</span> -d <span class="string">'&#123; ... &#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除文档</span></span><br><span class="line">curl -XDELETE <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;"</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-检索文档"><a href="#3-检索文档" class="headerlink" title="3.检索文档"></a>3.检索文档</h2><p>这里只给出如何在已知index, type, id时如何读取文档和过滤某些字段。全文检索参考其他章节信息。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -i -XGET <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选出文档需要返回的字段</span></span><br><span class="line">curl -i -XGET <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;?_source=&lt;field1&gt;,&lt;field2&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查文档是否存在</span></span><br><span class="line">curl -i -XHEAD <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="4-更新文档"><a href="#4-更新文档" class="headerlink" title="4.更新文档"></a>4.更新文档</h2><p>文档在Elasticsearch中是不可变的。如果需要更新已存在的文档，可以使用index API 重建索引(reindex) 或者替换掉它。一次变更，文档的version会递增。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># REQUEST:</span></span><br><span class="line">curl -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "field": &lt;field&gt;,</span></span><br><span class="line"><span class="string">    ...</span></span><br><span class="line"><span class="string">&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># RESPONSE:</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"_index"</span> :   &lt;index&gt;,</span><br><span class="line">    <span class="string">"_type"</span> :    &lt;<span class="built_in">type</span>&gt;,</span><br><span class="line">    <span class="string">"_id"</span> :      &lt;id&gt;,</span><br><span class="line">    <span class="string">"_version"</span> : 2,                 <span class="comment"># 版本号递增</span></span><br><span class="line">    <span class="string">"created"</span>:   <span class="literal">false</span>              <span class="comment"># 是否为新创建</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本号的更新, 若es中文档的version不一致，不会更新成功</span></span><br><span class="line">curl -XPUT -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/&lt;id&gt;?version=&lt;version&gt;"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "title": "My first blog entry",</span></span><br><span class="line"><span class="string">  "text":  "Starting to get the hang of this..."</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>在内部，Elasticsearch已经标记旧文档为删除并添加了一个完整的新文档。旧版本文档不会立即消失，但你也不能去访问它。Elasticsearch会在你继续索引更多数据时清理被删除的文档。</p>
+<h1 id="五、搜索"><a href="#五、搜索" class="headerlink" title="五、搜索"></a>五、搜索</h1><p>搜索分为两种:</p>
+<ul>
+<li>结构化搜索, 类似MySQL, 直接对字段进行搜索精确的搜索</li>
+<li>全文搜索, 对任意字段进行关键词搜索, 根据评分返回结果</li>
+</ul>
+<p>搜索涉及三种概念和技术:<br>概念|描述<br>-|-<br>映射(Mapping)|数据在每个字段中的解释说明<br>分析(Analysis)|全文是如何处理的可以被搜索的<br>领域特定语言查询(Query DSL)|Elasticsearch使用的灵活的、强大的查询语言</p>
+<p>空搜索是不指定任何的搜索条件:</p>
+<ul>
+<li>如果对集群执行空搜索, 会返回集群中的所有文档, <code>curl &quot;http://localhost:9200/_search&quot;</code></li>
+<li>如果对index执行空搜索, 会返回index中的所有文档, <code>curl &quot;http://localhost:9200/index/_search&quot;</code></li>
+<li>如果对type执行空搜索, 会返回type中的所有文档, <code>curl &quot;http://localhost:9200/index/type/_search&quot;</code></li>
+<li>如果对id执行空搜索, 会返回指定id的文档, <code>curl &quot;http://localhost:9200/index/type/id_search&quot;</code></li>
+</ul>
+<p>响应中需要关注的字段:</p>
+<ul>
+<li>hits, 返回了指定目标中的所有文档个数, 以及其中的前十个文档, 每个文档都有个相关性得分, 得分搞的排在前面，对于空搜素，所有的得分都是1.0.</li>
+<li>took, 搜索花的时间</li>
+<li>shards, 参与查询的分片个数</li>
+<li>timeout, 查询超时与否, 在查询中指定<code>?timeout=10ms</code>, es将会返回在超时时间内可以收集到的结果。</li>
+</ul>
+<p>在进行空搜索时，我们可以通过逗号分割以及通配符的方式来指定多个索引和多个类型, 例如<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对g和u开头的index进行空搜索</span></span><br><span class="line">GET /g*,u*/_search</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对gb和us的index进行空搜索</span></span><br><span class="line">GET /gb,us/_search</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对gb和us的index以及user,tweet的type进行空搜索</span></span><br><span class="line">GET /gb,us/user,tweet/_search</span><br></pre></td></tr></table></figure></p>
+<p>搜索中常用的查询字符串参数:</p>
+<ul>
+<li>空搜索参数<ul>
+<li>timeout, es将会返回在超时时间内可以收集到的结果。</li>
+<li>from, 查询偏移, 用于分页</li>
+<li>size, 查询个数, 用于分页</li>
+</ul>
+</li>
+<li>简易查询参数(更长用的是JSON BODY的方式)<ul>
+<li>q, 简易搜索条件<code>?q=&lt;expression&gt;</code><ul>
+<li><code>&lt;expression&gt;</code>可以是一个单纯的值, 会对指定index/type下的文档的所有字段搜索包含值value的文档。 <code>?q=value</code></li>
+<li><code>&lt;expression&gt;</code>可以是一个k:v, 会对指定index/type下的所有文档的k字段搜索value文档。<code>?q=k:v</code></li>
+<li><code>&lt;expression&gt;</code>可以是一批k:v, 并且包含+-前缀。<ul>
+<li>+前缀, 表示必须满足的k:v条件</li>
+<li>-前缀, 表示必须不满足的k:v条件</li>
+<li>不带前缀, 表示k:v条件可选, 若满足增加评分</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注意: <ul>
+<li>这个搜索是会进行分词的! </li>
+<li>若有中文需要进行urlencode!</li>
+<li>对于?q=v的形式, 其实es是把所有字段的信息都统一存放到了一个_all字段, 这个字段对于用户而言是透明的, 当使用这种搜索的时候, 就是查询的_all字段</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>几个Demo<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/megacorp/employee/_search?q=last_name:adyen"</span></span><br><span class="line"></span><br><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/megacorp/employee/_search?q=last_name:%e5%be%ae%e4%bf%a1"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="六、映射与分析"><a href="#六、映射与分析" class="headerlink" title="六、映射与分析"></a>六、映射与分析</h1><ul>
+<li>映射(mapping)机制用于进行字段类型确认，将每个字段匹配为一种确定的数据类型(string, number, booleans, date等)</li>
+<li>分析(analysis)机制用于进行全文文本(Full Text)的分词，以建立供搜索用的反向索引。</li>
+</ul>
+<h2 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1.数据类型"></a>1.数据类型</h2><p>存储在文档中的字段有数据类型的概念, 我们需谨慎对待, 否则查询不出我们需要的结果, 甚至还会存储文档失败。字段的数据类型由mapping机制进行管理<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 会查询出指定index下所有type的所有字段映射</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/_mapping"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 会查询出指定type下所有字段映射</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/&lt;index&gt;/&lt;type&gt;/_mapping"</span></span><br></pre></td></tr></table></figure></p>
+<p>对于_all字段是不会显示的, 该字段是string类型。</p>
+<h2 id="2-分析器"><a href="#2-分析器" class="headerlink" title="2.分析器"></a>2.分析器</h2><p>一个分析器由三种组件：</p>
+<ul>
+<li>字符过滤器(character filter), 字符过滤器能够去除HTML标记，或者转换”&amp;”为”and”。</li>
+<li>分词器(tokenizer), 判断如何将一句话划分为多个token</li>
+<li>标记过滤(token filters), 将大小写、同义词、同根词等进行统一处理，并且也会去掉停顿次, 例如 a/and/the 等等。</li>
+</ul>
+<p>一个es内建了几种分析器:</p>
+<ul>
+<li>标准分析器, 标准分析器是Elasticsearch默认使用的分析器。对于文本分析，它对于任何语言都是最佳选择。根据Unicode Consortium的定义的单词边界(word boundaries)来切分文本，然后去掉大部分标点符号。最后，把所有词转为小写。</li>
+<li>简单分析器, 非字母作为分隔符, 分割出来的单词转化为小写。</li>
+<li>空格分析器, 依据空格对文本进行拆分, 不做大小写转化。</li>
+</ul>
+<p>测试分析器对于某个单词的分析，可以利用analyze API来查看。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试分析器</span></span><br><span class="line">curl -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_analyze?pretty"</span> -d <span class="string">'&#123;"analyzer": "standard", "text": "中华人民共和国"&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>其中analyzer参数选项如下:<br>分析器|符号|描述<br>-|-|-<br>standard analyzer|standard|标准分析器<br>simple analyzer|simple|简单分析器, 转换为小写, 会通过非字母进行分割<br>keyword analyzer|keyword|不分词，内容整体作为一个token(not_analyzed)</p>
+<h2 id="3-映射"><a href="#3-映射" class="headerlink" title="3.映射"></a>3.映射</h2><p>映射用于管理和记录文档每个字段的类型。众所周知，一个type类似于mysql中的表，一个type中的document的结构应该是一样的，因此每个type都由一个映射管理。当往一个type中添加document时，若新的doc的结构(主要是字段类型)和type的映射冲突, 则添加doc会失败。</p>
+<h3 id="1-es的索引基本类型"><a href="#1-es的索引基本类型" class="headerlink" title="1).es的索引基本类型"></a>1).es的索引基本类型</h3><p>es的可以通过_mapping api来查询字段的映射, 映射结果中的type记录着数据类型。存在以下的数据类型:<br>类型|表示的数据类型<br>-|-<br>会分析的String|text<br>不分析的String|keyword<br>Whole number|byte, short, integer, long<br>Floating point|float, double<br>Boolean|boolean<br>Date|date</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询一个type的映射</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/employee/_mapping"</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-JSON文档的对应的es数据类型"><a href="#2-JSON文档的对应的es数据类型" class="headerlink" title="2).JSON文档的对应的es数据类型"></a>2).<em>JSON文档的对应的es数据类型</em></h3><table>
+<thead>
+<tr>
+<th>JSON type</th>
+<th>ElasticSearch Field type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boolean: true or false</td>
+<td>“boolean”</td>
+</tr>
+<tr>
+<td>Whole number: 123</td>
+<td>“long”</td>
+</tr>
+<tr>
+<td>Floating point: 123.45</td>
+<td>“double”</td>
+</tr>
+<tr>
+<td>String, valid date: “2014-09-15”</td>
+<td>“date”</td>
+</tr>
+<tr>
+<td>String: “foo bar”</td>
+<td>“text”</td>
+</tr>
+</tbody>
+</table>
+<p>如果映射中某个字段是long, 新增的文档该字段是text, 会进行string to long, 若失败则抛出异常。若新增的文档中有新增的字段, 则在映射中会添加该字段。</p>
+<h3 id="3-自定义映射"><a href="#3-自定义映射" class="headerlink" title="3).自定义映射"></a>3).<em>自定义映射</em></h3><p>映射中除了包含字段的类型信息，还包括了字段的索引信息:</p>
+<ul>
+<li>index, 参数控制字符串以何种方式被索引<ul>
+<li>true, 首先分析这个字符串，然后索引。换言之，以全文形式索引此字段。</li>
+<li>false, 该字段不进行索引</li>
+</ul>
+</li>
+<li>analyzer, 只有当index为analyzed时才有效, 指定该字段的分析方式。默认是standard</li>
+<li>type, 若为keyword, 则该字段不进行分词</li>
+</ul>
+<p>可以在第一次创建索引的时候指定映射的类型。此外，你也可以晚些时候为新类型添加映射。但是已经存在的映射不能变更。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给一个【新的索引】配置type的映射</span></span><br><span class="line">curl -XPUT -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/&lt;index&gt;"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "mappings": &#123;</span></span><br><span class="line"><span class="string">    "&lt;type&gt;" : &#123;</span></span><br><span class="line"><span class="string">      "properties" : &#123;</span></span><br><span class="line"><span class="string">        "&lt;field-1&gt;" : &#123;</span></span><br><span class="line"><span class="string">          "type" :    "string",</span></span><br><span class="line"><span class="string">          "analyzer": "simple"</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        "&lt;field-2&gt;" : &#123;</span></span><br><span class="line"><span class="string">          "type" :   "date"</span></span><br><span class="line"><span class="string">          "index": "false"</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 给一个type添加一个字段映射</span></span><br><span class="line">q</span><br><span class="line"><span class="comment"># 以指定字段映射的分析器来分析文本</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/megacorp/_mapping/_analyze?field=tag&amp;text=Black-cats"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="七、结构化查询"><a href="#七、结构化查询" class="headerlink" title="七、结构化查询"></a>七、结构化查询</h1><p>通过在查询请求中携带body, 可以更好的描述查询行为, 明确查询参数。需要注意, 查询通常是GET请求, 这需要在GET请求中携带body, RFC并没有规定GET请求中不能携带body, 所以这是可以的。但是get请求中携带body并不被很多http库广泛支持, 所以查询用POST请求也是可以的。请求体查询允许我们使用结构化查询Query DSL(Query Domain Specific Language)。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个分页的body</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"from"</span>: 30,</span><br><span class="line">  <span class="string">"size"</span>: 10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-Query-DSL"><a href="#1-Query-DSL" class="headerlink" title="1.Query DSL"></a>1.Query DSL</h2><p>Query DSL主要是在body的query中编写具体的查询条件:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost/&lt;index&gt;/&lt;type&gt;/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &lt;QUERY_EXPRESSION&gt;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>其中<code>&lt;QUERY_EXPRESSION&gt;</code>可以有很多查询子句构成, 如:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"query"</span>: &#123;</span><br><span class="line">        <span class="attr">"QUERY_NAME"</span>: &#123;</span><br><span class="line">            <span class="attr">"FIELD"</span>: VALUE,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面json中的<code>QUERY_NAME</code>就是查询子句的名称。一个query里面只能有一个查询子句, 但是多个查询子句可以组合为一个查询子句.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个查询子句</span></span><br><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "match": &#123;"last_name": "adyen"&#125;,</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>子句分为两种:</p>
+<ul>
+<li>叶子子句: 用以在将查询字符串与一个字段(或多字段)进行比较, 例如match子句</li>
+<li>复合子句: 可以将其他叶子子句和复合子句进行复合，得到一个查询子句。</li>
+</ul>
+<h2 id="2-常用的查询子句"><a href="#2-常用的查询子句" class="headerlink" title="2.常用的查询子句"></a>2.常用的查询子句</h2><p>下面介绍常用的查询子句, 这些都是<code>叶子子句</code></p>
+<h3 id="1-term"><a href="#1-term" class="headerlink" title="1).term"></a>1).<em>term</em></h3><p>term主要用于精确匹配哪些值，比如数字，日期，布尔值或not_analyzed的字符串。对于analyzed的字符串最好别用term, 否则会有未定义行为。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "term": &#123;"age": 25&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-terms"><a href="#2-terms" class="headerlink" title="2).terms"></a>2).<em>terms</em></h3><p>terms 跟 term 有点类似，但 terms 允许指定多个匹配条件。 如果某个字段指定了多个值，那么文档需要一起去做匹配。对于analyzed的字符串最好别用term, 否则会有未定义行为。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "terms": &#123;"age": ["25", "26"]&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="3-range"><a href="#3-range" class="headerlink" title="3).range"></a>3).<em>range</em></h3><p>适用于字段类型为数字的, 查询出字段处于某个范围的文档。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "range": &#123;"age": &#123;"gte": "20", "lte":"30"&#125;&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="4-exists和missing"><a href="#4-exists和missing" class="headerlink" title="4).exists和missing"></a>4).<em>exists和missing</em></h3><p>用于查询出某个字段存在或不存在的文档。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "exists": &#123;"field": "last_name"&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="5-match"><a href="#5-match" class="headerlink" title="5).match"></a>5).<em>match</em></h3><p>match查询是一个标准查询，不管你需要全文本查询还是精确查询基本上都要用到它。<br>如果你使用 match 查询一个全文本字段，它会在真正查询之前用分析器先分析match一下查询字符<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "match": &#123;"last_name": "adyen"&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="6-match-phrase"><a href="#6-match-phrase" class="headerlink" title="6).match_phrase"></a>6).<em>match_phrase</em></h3><p>相比于match查询, match_phrase【不会】对查询的字符串分词。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "match_phrase": &#123;"last_name": "adyen"&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="7-multi-match"><a href="#7-multi-match" class="headerlink" title="7).multi_match"></a>7).<em>multi_match</em></h3><p>对多个字段执行match请求<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "multi_match": &#123;</span></span><br><span class="line"><span class="string">            "query": "adyen",</span></span><br><span class="line"><span class="string">            "fields": ["first_name", "last_name"]</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="8-bool复合子句"><a href="#8-bool复合子句" class="headerlink" title="8).bool复合子句"></a>8).<em>bool复合子句</em></h3><p>上述的叶子节点都类似于SQL命令中的WHERE语句中的单一条件，bool可以将那些单一的条件通过OR和AND进行组合。bool可以支持的子查询语句有:</p>
+<ul>
+<li>must, 对叶子查询语句提供了AND的功能</li>
+<li>must_not, 对叶子查询语句提供了 AND NOT 功能</li>
+<li>should, 对叶子查询语句提供了OR功能</li>
+</ul>
+<p>bool通过must,must_not和should, 将这些AND和OR的复合语句进一步复合, 交给query。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_search"</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "query": &#123;</span></span><br><span class="line"><span class="string">        "bool": &#123;</span></span><br><span class="line"><span class="string">            "must": [</span></span><br><span class="line"><span class="string">                &#123;"match": &#123;"last_name": "adyen"&#125;&#125;,</span></span><br><span class="line"><span class="string">                &#123;"term": &#123;"age":  25&#125;&#125;</span></span><br><span class="line"><span class="string">            ],</span></span><br><span class="line"><span class="string">            "should":[</span></span><br><span class="line"><span class="string">                &#123;"match": &#123;"first_name": "hello"&#125;&#125;</span></span><br><span class="line"><span class="string">            ]</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>must/must_not/should通过数组来进行AND和OR的组合。</p>
+<h2 id="3-验证查询"><a href="#3-验证查询" class="headerlink" title="3.验证查询"></a>3.验证查询</h2><p>通过验证查询API，可以知道一个查询的BODY是否合法，并且会给出若不合法的原因。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET -H <span class="string">"Content-Type:application/json"</span> <span class="string">"http://localhost:9200/_validate/query?explain"</span> -d <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">   "query": &#123;</span></span><br><span class="line"><span class="string">      "match" : &#123;</span></span><br><span class="line"><span class="string">         "last_name" : "微小"</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">   &#125;</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>如果是合法语句的话，使用 explain 参数可以返回一个带有查询语句的可阅读描述， 可以帮助了解查询语句在ES中是如何执行的。</p>
+<h1 id="附录、常用命令"><a href="#附录、常用命令" class="headerlink" title="附录、常用命令"></a>附录、常用命令</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询健康状况</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/_cat/heath?v"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建索引</span></span><br><span class="line">$ curl -XPUT -d <span class="string">'&#123;"settings" : &#123;"number_of_shards" : 3,"number_of_replicas" : 1&#125;&#125;'</span> <span class="string">"http://localhost:9200/&lt;index&gt;/?pretty"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全部索引</span></span><br><span class="line">$ curl <span class="string">"http://localhost:9200/_cat/indices?v"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看一个索引的信息</span></span><br><span class="line">$ curl -XGET <span class="string">"http://localhost:9200/&lt;index&gt;?pretty"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试分词器</span></span><br><span class="line">$ curl -H <span class="string">"Content-Type:application/json"</span> -XPOST -d <span class="string">'&#123;"analyzer": "ik_smart","text": "中华人民共和国"&#125;'</span> <span class="string">"http://localhost:9200/_analyze?pretty"</span></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、安装"><span class="toc-number">1.</span> <span class="toc-text">一、安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、入门"><span class="toc-number">2.</span> <span class="toc-text">二、入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-文档"><span class="toc-number">2.1.</span> <span class="toc-text">1.文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-索引-index"><span class="toc-number">2.2.</span> <span class="toc-text">2.索引(index)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-检索"><span class="toc-number">2.3.</span> <span class="toc-text">3.检索</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、分布式集群"><span class="toc-number">3.</span> <span class="toc-text">三、分布式集群</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-集群"><span class="toc-number">3.1.</span> <span class="toc-text">1.集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-节点"><span class="toc-number">3.1.1.</span> <span class="toc-text">1).节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-分片"><span class="toc-number">3.1.2.</span> <span class="toc-text">2).分片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-客户端请求"><span class="toc-number">3.1.3.</span> <span class="toc-text">3).客户端请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-故障转移"><span class="toc-number">3.2.</span> <span class="toc-text">3.故障转移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-横向扩展"><span class="toc-number">3.3.</span> <span class="toc-text">4.横向扩展</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、数据存储"><span class="toc-number">4.</span> <span class="toc-text">四、数据存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-文档-1"><span class="toc-number">4.1.</span> <span class="toc-text">1.文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-文档存储"><span class="toc-number">4.2.</span> <span class="toc-text">2.文档存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-检索文档"><span class="toc-number">4.3.</span> <span class="toc-text">3.检索文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-更新文档"><span class="toc-number">4.4.</span> <span class="toc-text">4.更新文档</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、搜索"><span class="toc-number">5.</span> <span class="toc-text">五、搜索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、映射与分析"><span class="toc-number">6.</span> <span class="toc-text">六、映射与分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据类型"><span class="toc-number">6.1.</span> <span class="toc-text">1.数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-分析器"><span class="toc-number">6.2.</span> <span class="toc-text">2.分析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-映射"><span class="toc-number">6.3.</span> <span class="toc-text">3.映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-es的索引基本类型"><span class="toc-number">6.3.1.</span> <span class="toc-text">1).es的索引基本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON文档的对应的es数据类型"><span class="toc-number">6.3.2.</span> <span class="toc-text">2).JSON文档的对应的es数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-自定义映射"><span class="toc-number">6.3.3.</span> <span class="toc-text">3).自定义映射</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、结构化查询"><span class="toc-number">7.</span> <span class="toc-text">七、结构化查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Query-DSL"><span class="toc-number">7.1.</span> <span class="toc-text">1.Query DSL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-常用的查询子句"><span class="toc-number">7.2.</span> <span class="toc-text">2.常用的查询子句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-term"><span class="toc-number">7.2.1.</span> <span class="toc-text">1).term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-terms"><span class="toc-number">7.2.2.</span> <span class="toc-text">2).terms</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-range"><span class="toc-number">7.2.3.</span> <span class="toc-text">3).range</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-exists和missing"><span class="toc-number">7.2.4.</span> <span class="toc-text">4).exists和missing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-match"><span class="toc-number">7.2.5.</span> <span class="toc-text">5).match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-match-phrase"><span class="toc-number">7.2.6.</span> <span class="toc-text">6).match_phrase</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-multi-match"><span class="toc-number">7.2.7.</span> <span class="toc-text">7).multi_match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-bool复合子句"><span class="toc-number">7.2.8.</span> <span class="toc-text">8).bool复合子句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-验证查询"><span class="toc-number">7.3.</span> <span class="toc-text">3.验证查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录、常用命令"><span class="toc-number">8.</span> <span class="toc-text">附录、常用命令</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/06/23/elastic-search-learning/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&text=elastic search learning"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&is_video=false&description=elastic search learning"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic search learning&body=Check out this article: http://github.com/lsj9383/2019/06/23/elastic-search-learning/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&title=elastic search learning"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/06/23/elastic-search-learning/&name=elastic search learning&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Arthur Lu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/lsj9383">GitHub</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
