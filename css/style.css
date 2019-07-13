@@ -942,7 +942,7 @@ header label {
   background: #f8f5ec;
 }
 .dark-theme .post-content code {
-  color: #fffe28;
+  color: #111;
   background: #787575;
 }
 .post-content figure.highlight {
