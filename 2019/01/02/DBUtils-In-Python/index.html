@@ -1,171 +1,262 @@
 <!DOCTYPE html>
-<html lang="null">
-
+<html lang="en">
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>DBUtils In Python | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
 
     
-      <link rel="icon" href="/favicon.ico" />
     
-
-    <title>
         
-          DBUtils In Python - 小记
-        
-    </title>
-
-    <!-- Spectre.css framework (v0.5.8) -->
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-
-    <!-- Noto Sans TC -->
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
-
-    <!-- theme css & js -->
-    <link rel="stylesheet" href="/css/spectre_custom.css">
-    <link rel="stylesheet" href="/css/book.css">
-    <script src="/js/book.js"></script>
-
-    <!-- tocbot -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-
-    <!-- highlight.js -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
     
-    <!-- katex -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    
+
 </head>
-
 <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
-  <div class="book-container">
-    <div class="columns">
-      <div class="column col-2 hide-lg">
-        <div class="book-sidebar">
-  <h4 class="site-meta">
-    <a href="/">小记</a>
-  </h4>
-  <div class="sidebar-content">
-    
-  </div>
-</div>
-
-<script src="/js/book-sidebar.js"></script>
-      </div>
-
-      <div class="column col-8 col-lg-12">
-        <div class="book-content">
-          <div class="book-navbar">
-  <header class="navbar">
-  <section class="navbar-section">
-    <img class="navbar-icon" src="/favicon.ico">
-  </section>
-  <section class="navbar-center">
-    小记
-  </section>
-  <section class="navbar-section">
-    <label class="accordion-header c-hand" for="accordion-sidebar">
-      <i class="icon icon-menu"></i>
-    </label>
-  </section>
-</header>
-
-<div class="accordion">
-  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
-  <div class="accordion-body">
-    
-  </div>
-</div>
-</div>
-
-<div class="book-post">
-  <p>在更新<a href="https://github.com/lsj9383/how-to-use-mysql-in-python/blob/master/README.md">How to Use MySQL in Python</a>一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。</p>
-<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>DBUtils是一套工具，提供了稳定持久的数据库连接包装类，以及数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。</p>
-<h1 id="二、如何使用"><a href="#二、如何使用" class="headerlink" title="二、如何使用"></a>二、如何使用</h1><h2 id="1-初始化及使用Demo"><a href="#1-初始化及使用Demo" class="headerlink" title="1.初始化及使用Demo"></a>1.初始化及使用Demo</h2><h2 id="2-参数详解"><a href="#2-参数详解" class="headerlink" title="2.参数详解"></a>2.参数详解</h2><h2 id="3-可用接口"><a href="#3-可用接口" class="headerlink" title="3.可用接口"></a>3.可用接口</h2><h1 id="三、关键工作原理"><a href="#三、关键工作原理" class="headerlink" title="三、关键工作原理"></a>三、关键工作原理</h1><h2 id="1-池类工作原理"><a href="#1-池类工作原理" class="headerlink" title="1.池类工作原理"></a>1.<em>池类工作原理</em></h2><h3 id="1-dedicated机制"><a href="#1-dedicated机制" class="headerlink" title="1).dedicated机制"></a>1).dedicated机制</h3><h3 id="2-shared机制"><a href="#2-shared机制" class="headerlink" title="2).shared机制"></a>2).shared机制</h3><h2 id="2-稳定连接机制"><a href="#2-稳定连接机制" class="headerlink" title="2.稳定连接机制"></a>2.<em>稳定连接机制</em></h2><h1 id="四、池类关键源码剖析"><a href="#四、池类关键源码剖析" class="headerlink" title="四、池类关键源码剖析"></a>四、池类关键源码剖析</h1><h1 id="五、包装类关键源码剖析"><a href="#五、包装类关键源码剖析" class="headerlink" title="五、包装类关键源码剖析"></a>五、包装类关键源码剖析</h1><h1 id="五、性能问题"><a href="#五、性能问题" class="headerlink" title="五、性能问题"></a>五、性能问题</h1>
-</div>
-
-
-  <div class="book-comments">
-    
-
-
-  </div>
-
-
-<script src="/js/book-post.js"></script>
         </div>
-      </div>
+    </nav>
 
-      <div class="column col-2 hide-lg">
-        <div class="book-toc">
-  <div class="book-tocbot">
-  </div>
-  <div class="book-tocbot-menu">
-    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
-    <a onclick="go_top()">Back to top</a>
-    <a onclick="go_bottom()">Go to bottom</a>
-  </div>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
 
 <script>
-tocbot.init({
-  tocSelector: '.book-tocbot',
-  contentSelector: '.book-post',
-  headingSelector: 'h1, h2, h3, h4, h5',
-  collapseDepth: 2,
-  orderedList: false,
-  scrollSmooth: false,
-});
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
 
-function expand_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 6,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "collapse_toc()");
-  b.innerHTML = "Collapse all"
-}
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
 
-function collapse_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 2,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "expand_toc()");
-  b.innerHTML = "Expand all"
-}
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
 
-function go_top() {
-  window.scrollTo(0, 0);
-}
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
 
-function go_bottom() {
-  window.scrollTo(0, document.body.scrollHeight);
-}
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
 
 </script>
-      </div>
-    </div>
-  </div>
-</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
 
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">DBUtils In Python</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 2, 2019&nbsp;&nbsp;17:34:49</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>在更新<a href="https://github.com/lsj9383/how-to-use-mysql-in-python/blob/master/README.md">How to Use MySQL in Python</a>一文时，阅读了DButils相关源码，在这里对其做一个较为全面的总结。</p>
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>DBUtils是一套工具，提供了稳定持久的数据库连接包装类，以及数据库连接池，可用于多线程环境。DBUtils支持符合DB-API 2的数据库接口和经典的PyGreSQL接口。</p>
+<h1 id="二、如何使用"><a href="#二、如何使用" class="headerlink" title="二、如何使用"></a>二、如何使用</h1><h2 id="1-初始化及使用Demo"><a href="#1-初始化及使用Demo" class="headerlink" title="1.初始化及使用Demo"></a>1.初始化及使用Demo</h2><h2 id="2-参数详解"><a href="#2-参数详解" class="headerlink" title="2.参数详解"></a>2.参数详解</h2><h2 id="3-可用接口"><a href="#3-可用接口" class="headerlink" title="3.可用接口"></a>3.可用接口</h2><h1 id="三、关键工作原理"><a href="#三、关键工作原理" class="headerlink" title="三、关键工作原理"></a>三、关键工作原理</h1><h2 id="1-池类工作原理"><a href="#1-池类工作原理" class="headerlink" title="1.池类工作原理"></a>1.<em>池类工作原理</em></h2><h3 id="1-dedicated机制"><a href="#1-dedicated机制" class="headerlink" title="1).dedicated机制"></a>1).dedicated机制</h3><h3 id="2-shared机制"><a href="#2-shared机制" class="headerlink" title="2).shared机制"></a>2).shared机制</h3><h2 id="2-稳定连接机制"><a href="#2-稳定连接机制" class="headerlink" title="2.稳定连接机制"></a>2.<em>稳定连接机制</em></h2><h1 id="四、池类关键源码剖析"><a href="#四、池类关键源码剖析" class="headerlink" title="四、池类关键源码剖析"></a>四、池类关键源码剖析</h1><h1 id="五、包装类关键源码剖析"><a href="#五、包装类关键源码剖析" class="headerlink" title="五、包装类关键源码剖析"></a>五、包装类关键源码剖析</h1><h1 id="五、性能问题"><a href="#五、性能问题" class="headerlink" title="五、性能问题"></a>五、性能问题</h1>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2019/01/02/DBUtils-In-Python/">http://github.com/lsj9383/2019/01/02/DBUtils-In-Python/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/02/06/Flask-Context/">Flask Context</a>
+            
+            
+            <a class="next" rel="next" href="/2018/12/10/Git-Story/">Git Story</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

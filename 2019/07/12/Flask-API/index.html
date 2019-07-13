@@ -1,93 +1,196 @@
 <!DOCTYPE html>
-<html lang="null">
-
+<html lang="en">
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>Flask API | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
 
     
-      <link rel="icon" href="/favicon.ico" />
     
-
-    <title>
         
-          Flask API - 小记
-        
-    </title>
-
-    <!-- Spectre.css framework (v0.5.8) -->
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-
-    <!-- Noto Sans TC -->
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
-
-    <!-- theme css & js -->
-    <link rel="stylesheet" href="/css/spectre_custom.css">
-    <link rel="stylesheet" href="/css/book.css">
-    <script src="/js/book.js"></script>
-
-    <!-- tocbot -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-
-    <!-- highlight.js -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
     
-    <!-- katex -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    
+
 </head>
-
 <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
-  <div class="book-container">
-    <div class="columns">
-      <div class="column col-2 hide-lg">
-        <div class="book-sidebar">
-  <h4 class="site-meta">
-    <a href="/">小记</a>
-  </h4>
-  <div class="sidebar-content">
+        </div>
+    </nav>
+
     
-  </div>
-</div>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
 
-<script src="/js/book-sidebar.js"></script>
-      </div>
-
-      <div class="column col-8 col-lg-12">
-        <div class="book-content">
-          <div class="book-navbar">
-  <header class="navbar">
-  <section class="navbar-section">
-    <img class="navbar-icon" src="/favicon.ico">
-  </section>
-  <section class="navbar-center">
-    小记
-  </section>
-  <section class="navbar-section">
-    <label class="accordion-header c-hand" for="accordion-sidebar">
-      <i class="icon icon-menu"></i>
-    </label>
-  </section>
 </header>
-
-<div class="accordion">
-  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
-  <div class="accordion-body">
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
     
-  </div>
-</div>
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
 
-<div class="book-post">
-  <p>这个内容涵盖了Flask的所有类和接口(翻译自参考文献1), 对于Flask依赖的外部, 这部分会给出其中最重要的部分以及相关链接。</p>
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Flask API</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 12, 2019&nbsp;&nbsp;00:05:40</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>这个内容涵盖了Flask的所有类和接口(翻译自参考文献1), 对于Flask依赖的外部, 这部分会给出其中最重要的部分以及相关链接。</p>
 <h2 id="一、Application-Object"><a href="#一、Application-Object" class="headerlink" title="一、Application Object"></a>一、Application Object</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">flask</span>.<span class="title">Flask</span><span class="params">(import_name,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_url_path=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_folder=<span class="string">'static'</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_host=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  host_matching=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  subdomain_matching=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  template_folder=<span class="string">'templates'</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                  instance_path=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  instance_relative_config=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  root_path=None)</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"># 生成<span class="title">flask</span>对象实例</span></span><br><span class="line">app = flask.Flask(...)</span><br></pre></td></tr></table></figure>
 <p>Flask实现了<code>__call__</code>函数, 并且满足WSGI接口, 因此flask实例app是一个WSGI应用。flask实例用于管理路由、模版以及静态页面等。</p>
 <h3 id="1-Flask构造接口"><a href="#1-Flask构造接口" class="headerlink" title="1.Flask构造接口"></a>1.Flask构造接口</h3><table>
@@ -148,82 +251,68 @@
 <li>1 <a href="http://flask.pocoo.org/docs/1.0/api/" target="_blank" rel="noopener">Flask API doc</a></li>
 </ul>
 
-</div>
-
-
-  <div class="book-comments">
-    
-
-
-  </div>
-
-
-<script src="/js/book-post.js"></script>
         </div>
-      </div>
 
-      <div class="column col-2 hide-lg">
-        <div class="book-toc">
-  <div class="book-tocbot">
-  </div>
-  <div class="book-tocbot-menu">
-    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
-    <a onclick="go_top()">Back to top</a>
-    <a onclick="go_bottom()">Go to bottom</a>
-  </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2019/07/12/Flask-API/">http://github.com/lsj9383/2019/07/12/Flask-API/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/06/30/Pythoon小记/">Pythoon小记</a>
+            
+        </section>
+
+
+    </article>
 </div>
 
-<script>
-tocbot.init({
-  tocSelector: '.book-tocbot',
-  contentSelector: '.book-post',
-  headingSelector: 'h1, h2, h3, h4, h5',
-  collapseDepth: 2,
-  orderedList: false,
-  scrollSmooth: false,
-});
-
-function expand_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 6,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "collapse_toc()");
-  b.innerHTML = "Collapse all"
-}
-
-function collapse_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 2,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "expand_toc()");
-  b.innerHTML = "Expand all"
-}
-
-function go_top() {
-  window.scrollTo(0, 0);
-}
-
-function go_bottom() {
-  window.scrollTo(0, document.body.scrollHeight);
-}
-
-</script>
-      </div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
     </div>
-  </div>
-</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</footer>
 
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

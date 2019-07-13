@@ -1,93 +1,196 @@
 <!DOCTYPE html>
-<html lang="null">
-
+<html lang="en">
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>Flask Context | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
 
     
-      <link rel="icon" href="/favicon.ico" />
     
-
-    <title>
         
-          Flask Context - 小记
-        
-    </title>
-
-    <!-- Spectre.css framework (v0.5.8) -->
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-
-    <!-- Noto Sans TC -->
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
-
-    <!-- theme css & js -->
-    <link rel="stylesheet" href="/css/spectre_custom.css">
-    <link rel="stylesheet" href="/css/book.css">
-    <script src="/js/book.js"></script>
-
-    <!-- tocbot -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-
-    <!-- highlight.js -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
     
-    <!-- katex -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-    
+
 </head>
-
 <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
-  <div class="book-container">
-    <div class="columns">
-      <div class="column col-2 hide-lg">
-        <div class="book-sidebar">
-  <h4 class="site-meta">
-    <a href="/">小记</a>
-  </h4>
-  <div class="sidebar-content">
+        </div>
+    </nav>
+
     
-  </div>
-</div>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
 
-<script src="/js/book-sidebar.js"></script>
-      </div>
-
-      <div class="column col-8 col-lg-12">
-        <div class="book-content">
-          <div class="book-navbar">
-  <header class="navbar">
-  <section class="navbar-section">
-    <img class="navbar-icon" src="/favicon.ico">
-  </section>
-  <section class="navbar-center">
-    小记
-  </section>
-  <section class="navbar-section">
-    <label class="accordion-header c-hand" for="accordion-sidebar">
-      <i class="icon icon-menu"></i>
-    </label>
-  </section>
 </header>
-
-<div class="accordion">
-  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
-  <div class="accordion-body">
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
     
-  </div>
-</div>
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
 
-<div class="book-post">
-  <h1 id="一、表象"><a href="#一、表象" class="headerlink" title="一、表象"></a>一、表象</h1><h2 id="1-全局对象"><a href="#1-全局对象" class="headerlink" title="1.全局对象"></a>1.<em>全局对象</em></h2><p>Flask具有多种全局数据，包括:</p>
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Flask Context</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">February 6, 2019&nbsp;&nbsp;13:59:36</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、表象"><a href="#一、表象" class="headerlink" title="一、表象"></a>一、表象</h1><h2 id="1-全局对象"><a href="#1-全局对象" class="headerlink" title="1.全局对象"></a>1.<em>全局对象</em></h2><p>Flask具有多种全局数据，包括:</p>
 <ul>
 <li>flask.request，可以获取请求中的相关数据</li>
 <li>flask.session，可以获取session中的相关数据</li>
@@ -115,82 +218,70 @@
 <h2 id="4-LocalManager"><a href="#4-LocalManager" class="headerlink" title="4.LocalManager"></a>4.<em>LocalManager</em></h2><h1 id="三、触发构造"><a href="#三、触发构造" class="headerlink" title="三、触发构造"></a>三、触发构造</h1><h2 id="1-请求上下文"><a href="#1-请求上下文" class="headerlink" title="1.请求上下文"></a>1.请求上下文</h2><p>在接收到请求时，将会构造当前环境(线程/协程)的请求上下文，接收请求的代码位于<code>flask/app.py</code>中:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">    <span class="comment"># 构造请求上下文</span></span><br><span class="line">    ctx = self.request_context(environ)</span><br><span class="line">        error = <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 将请求上下文入栈(push到_request_ctx_stack中)</span></span><br><span class="line">                <span class="comment"># 后续关于这个请求所处环境的数据(session, request等)，都是从该上下文中获取</span></span><br><span class="line">                ctx.push()</span><br><span class="line">                response = self.full_dispatch_request()</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                error = e</span><br><span class="line">                response = self.handle_exception(e)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                error = sys.exc_info()[<span class="number">1</span>]</span><br><span class="line">                <span class="keyword">raise</span></span><br><span class="line">            <span class="keyword">return</span> response(environ, start_response)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">if</span> self.should_ignore_error(error):</span><br><span class="line">                error = <span class="keyword">None</span></span><br><span class="line">            ctx.auto_pop(error)</span><br></pre></td></tr></table></figure></p>
 <h2 id="2-应用上下文"><a href="#2-应用上下文" class="headerlink" title="2.应用上下文"></a>2.应用上下文</h2><p>应用上下文并非在请求建立时构建的，同请求上下文一样，是在接收到请求后，开启新环境的时候进行构建的，甚至应用上下文的构建流程是包含在请求上下文的构建之中的。应用上下文中主要是包含的应用的相关数据，这些数据同样经过了线程级的数据隔离。应用上下文的构建代码位于<code>flask/ctx.py</code>中。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestContext</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 请求上下文构建完成，进行入栈的时候调用</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self)</span>:</span></span><br><span class="line">        top = _request_ctx_stack.top</span><br><span class="line">        <span class="keyword">if</span> top <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> top.preserved:</span><br><span class="line">            top.pop(top._preserved_exc)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 判断当前的请求上下文构建时，是否存在应用上下文，若不存在应用上下文，先进行应用上下文的构建</span></span><br><span class="line">        app_ctx = _app_ctx_stack.top</span><br><span class="line">        <span class="keyword">if</span> app_ctx <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> app_ctx.app != self.app:</span><br><span class="line">            app_ctx = self.app.app_context()</span><br><span class="line">            <span class="comment"># 应用上下文入栈，执行完成后就可以使用应用上下文的相关数据了</span></span><br><span class="line">            app_ctx.push()</span><br><span class="line">            self._implicit_app_ctx_stack.append(app_ctx)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._implicit_app_ctx_stack.append(<span class="keyword">None</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> hasattr(sys, <span class="string">'exc_clear'</span>):</span><br><span class="line">            sys.exc_clear()</span><br><span class="line">        <span class="comment"># 请求上下文入栈</span></span><br><span class="line">        _request_ctx_stack.push(self)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
 
-</div>
-
-
-  <div class="book-comments">
-    
-
-
-  </div>
-
-
-<script src="/js/book-post.js"></script>
         </div>
-      </div>
 
-      <div class="column col-2 hide-lg">
-        <div class="book-toc">
-  <div class="book-tocbot">
-  </div>
-  <div class="book-tocbot-menu">
-    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
-    <a onclick="go_top()">Back to top</a>
-    <a onclick="go_bottom()">Go to bottom</a>
-  </div>
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2019/02/06/Flask-Context/">http://github.com/lsj9383/2019/02/06/Flask-Context/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/02/06/MVC-in-QT/">MVC in QT</a>
+            
+            
+            <a class="next" rel="next" href="/2019/01/02/DBUtils-In-Python/">DBUtils In Python</a>
+            
+        </section>
+
+
+    </article>
 </div>
 
-<script>
-tocbot.init({
-  tocSelector: '.book-tocbot',
-  contentSelector: '.book-post',
-  headingSelector: 'h1, h2, h3, h4, h5',
-  collapseDepth: 2,
-  orderedList: false,
-  scrollSmooth: false,
-});
-
-function expand_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 6,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "collapse_toc()");
-  b.innerHTML = "Collapse all"
-}
-
-function collapse_toc(){
-  var b = document.querySelector(".book-toc-expand");
-  tocbot.init({
-    tocSelector: '.book-tocbot',
-    contentSelector: '.book-post',
-    headingSelector: 'h1, h2, h3, h4, h5',
-    collapseDepth: 2,
-    orderedList: false,
-    scrollSmooth: false,
-  });
-  b.setAttribute("onclick", "expand_toc()");
-  b.innerHTML = "Expand all"
-}
-
-function go_top() {
-  window.scrollTo(0, 0);
-}
-
-function go_bottom() {
-  window.scrollTo(0, document.body.scrollHeight);
-}
-
-</script>
-      </div>
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
     </div>
-  </div>
-</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</footer>
 
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
