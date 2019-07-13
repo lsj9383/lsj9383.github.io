@@ -1229,7 +1229,7 @@ header label {
 }
 .highlight {
   color: #657b83;
-  background: #fff;
+  background: #111;
 }
 .highlight .code .comment,
 .highlight .code .quote {
