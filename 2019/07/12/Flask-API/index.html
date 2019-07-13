@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="null">
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/favicon.ico" />
+    
+
+    <title>
+        
+          Flask API - 小记
+        
+    </title>
+
+    <!-- Spectre.css framework (v0.5.8) -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+
+    <!-- theme css & js -->
+    <link rel="stylesheet" href="/css/spectre_custom.css">
+    <link rel="stylesheet" href="/css/book.css">
+    <script src="/js/book.js"></script>
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
+  <div class="book-container">
+    <div class="columns">
+      <div class="column col-2 hide-lg">
+        <div class="book-sidebar">
+  <h4 class="site-meta">
+    <a href="/">小记</a>
+  </h4>
+  <div class="sidebar-content">
+    
+  </div>
+</div>
+
+<script src="/js/book-sidebar.js"></script>
+      </div>
+
+      <div class="column col-8 col-lg-12">
+        <div class="book-content">
+          <div class="book-navbar">
+  <header class="navbar">
+  <section class="navbar-section">
+    <img class="navbar-icon" src="/favicon.ico">
+  </section>
+  <section class="navbar-center">
+    小记
+  </section>
+  <section class="navbar-section">
+    <label class="accordion-header c-hand" for="accordion-sidebar">
+      <i class="icon icon-menu"></i>
+    </label>
+  </section>
+</header>
+
+<div class="accordion">
+  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
+  <div class="accordion-body">
+    
+  </div>
+</div>
+</div>
+
+<div class="book-post">
+  <p>这个内容涵盖了Flask的所有类和接口(翻译自参考文献1), 对于Flask依赖的外部, 这部分会给出其中最重要的部分以及相关链接。</p>
+<h2 id="一、Application-Object"><a href="#一、Application-Object" class="headerlink" title="一、Application Object"></a>一、Application Object</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">flask</span>.<span class="title">Flask</span><span class="params">(import_name,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_url_path=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_folder=<span class="string">'static'</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                  static_host=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  host_matching=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  subdomain_matching=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  template_folder=<span class="string">'templates'</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                  instance_path=None,</span></span></span><br><span class="line"><span class="class"><span class="params">                  instance_relative_config=False,</span></span></span><br><span class="line"><span class="class"><span class="params">                  root_path=None)</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"># 生成<span class="title">flask</span>对象实例</span></span><br><span class="line">app = flask.Flask(...)</span><br></pre></td></tr></table></figure>
+<p>Flask实现了<code>__call__</code>函数, 并且满足WSGI接口, 因此flask实例app是一个WSGI应用。flask实例用于管理路由、模版以及静态页面等。</p>
+<h3 id="1-Flask构造接口"><a href="#1-Flask构造接口" class="headerlink" title="1.Flask构造接口"></a>1.Flask构造接口</h3><table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>import_name</td>
+<td>flask实例application package的名称</td>
+</tr>
+<tr>
+<td>static_url_path</td>
+<td>can be used to specify a different path for the static files on the web. Defaults to the name of the static_folder folder.</td>
+</tr>
+<tr>
+<td>static_folder</td>
+<td>静态文件目录, 是相对于应用程序根目录的(即相对于root_path的)。 默认为<code>static</code>。</td>
+</tr>
+<tr>
+<td>static_host</td>
+<td>the host to use when adding the static route. Defaults to None. Required when using host_matching=True with a static_folder configured.</td>
+</tr>
+<tr>
+<td>host_matching</td>
+<td>设置url_map.host_matching属性. 默认为False.</td>
+</tr>
+<tr>
+<td>subdomain_matching</td>
+<td>consider the subdomain relative to SERVER_NAME when matching routes. Defaults to False.</td>
+</tr>
+<tr>
+<td>template_folder</td>
+<td>应用程序使用的模版相对目录(相对于root_pat), 默认为<code>templates</code>。</td>
+</tr>
+<tr>
+<td>instance_path</td>
+<td>An alternative instance path for the application. By default the folder ‘instance’ next to the package or module is assumed to be the instance path.</td>
+</tr>
+<tr>
+<td>instance_relative_config</td>
+<td>if set to True relative filenames for loading the config are assumed to be relative to the instance path instead of the application root.</td>
+</tr>
+<tr>
+<td>root_path</td>
+<td>一般不填, python会自动的根据import_name计算root_path。import为模块所在的路径，或包的路径。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-Flask实例方法"><a href="#2-Flask实例方法" class="headerlink" title="2.Flask实例方法"></a>2.Flask实例方法</h3><h4 id="1-add-template-filter"><a href="#1-add-template-filter" class="headerlink" title="1) add_template_filter"></a>1) add_template_filter</h4><h4 id="2-add-template-global"><a href="#2-add-template-global" class="headerlink" title="2) add_template_global"></a>2) add_template_global</h4><h4 id="3-add-template-test"><a href="#3-add-template-test" class="headerlink" title="3) add_template_test"></a>3) add_template_test</h4><h4 id="4-add-url-rule-rule-endpoint-None-view-func-None-provide-automatic-options-None-options"><a href="#4-add-url-rule-rule-endpoint-None-view-func-None-provide-automatic-options-None-options" class="headerlink" title="4) add_url_rule(rule, endpoint=None, view_func=None, provide_automatic_options=None, **options)"></a>4) add_url_rule(rule, endpoint=None, view_func=None, provide_automatic_options=None, **options)</h4><p>配置url规则, 和route装饰器类似。参数如下:<br>parameter | description<br>-|-<br>rule | 匹配的url<br>endpoint | 匹配的url所指向的endpoint<br>view_func | endpoint所指向的视图函数<br>provide_automatic_options | controls whether the OPTIONS method should be added automatically. This can also be controlled by setting the view_func.provide_automatic_options = False before adding the rule.<br>options | the options to be forwarded to the underlying Rule object. A change to Werkzeug is handling of method options. methods is a list of methods this rule should be limited to (GET, POST etc.). By default a rule just listens for GET (and implicitly HEAD). Starting with Flask 0.6, OPTIONS is implicitly added and handled by the standard request handling.</p>
+<p>需要注意的是, Flask并非匹配到url后直接跳转到view_func对应的函数进行处理。Flask接收到请求后，从url解析到endopoint, 再通过endpoint找到对应的view_func。之所以不从url直接跳到view_func进行执行，添加一个endpoint中间层，是为了方便<code>url_for</code>和<code>blue_print</code>的使用。蓝图可以将视图函数分组管理, 不同组之间可以存在相同名称的view_func。url_for是通过名称来找到对应的url。如果不引入endpoint, 只使用view_func, 由于不同视图之间的函数名可以重合，因此url_for对于一个函数名，并不知道其真正的url是什么。引入endpoint后，对于blue_print管理下的view_func，其endpoint会有蓝图前缀进行隔离。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 等价于</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">app.add_url_rule(<span class="string">'/'</span>, <span class="string">'index'</span>, index)</span><br></pre></td></tr></table></figure>
+<h4 id="5-after-request-f"><a href="#5-after-request-f" class="headerlink" title="5) after_request(f)"></a>5) after_request(f)</h4><p>装饰器，将一个函数f注册为after_request, 即每个请求执行完后都会调用该函数。f必须接受一个response_class参数, 并返回一个response_class参数。如果view_func抛出了未处理的异常, 则函数f不会执行。</p>
+<h2 id="附录、Python标准库"><a href="#附录、Python标准库" class="headerlink" title="附录、Python标准库"></a>附录、Python标准库</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>1 <a href="http://flask.pocoo.org/docs/1.0/api/" target="_blank" rel="noopener">Flask API doc</a></li>
+</ul>
+
+</div>
+
+
+  <div class="book-comments">
+    
+
+
+  </div>
+
+
+<script src="/js/book-post.js"></script>
+        </div>
+      </div>
+
+      <div class="column col-2 hide-lg">
+        <div class="book-toc">
+  <div class="book-tocbot">
+  </div>
+  <div class="book-tocbot-menu">
+    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+    <a onclick="go_top()">Back to top</a>
+    <a onclick="go_bottom()">Go to bottom</a>
+  </div>
+</div>
+
+<script>
+tocbot.init({
+  tocSelector: '.book-tocbot',
+  contentSelector: '.book-post',
+  headingSelector: 'h1, h2, h3, h4, h5',
+  collapseDepth: 2,
+  orderedList: false,
+  scrollSmooth: false,
+});
+
+function expand_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 6,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "collapse_toc()");
+  b.innerHTML = "Collapse all"
+}
+
+function collapse_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 2,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "expand_toc()");
+  b.innerHTML = "Expand all"
+}
+
+function go_top() {
+  window.scrollTo(0, 0);
+}
+
+function go_bottom() {
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+</script>
+      </div>
+    </div>
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -1,137 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="null">
+
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Start Hexo">
-<meta property="og:url" content="http://github.com/lsj9383/2019/02/06/Start-Hexo/index.html">
-<meta property="og:site_name" content="小记">
-<meta property="og:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
-<meta property="og:updated_time" content="2019-02-06T06:06:17.533Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Start Hexo">
-<meta name="twitter:description" content="本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。Hexo是什么？借助Hexo官方中文文档的解释：  Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。  GitHub Pages是什么？借助GitHub Pages官网的解释：  GitHub Pages is designed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
     
+      <link rel="icon" href="/favicon.ico" />
     
+
+    <title>
         
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
+          Start Hexo - 小记
         
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
+    </title>
+
+    <!-- Spectre.css framework (v0.5.8) -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+
+    <!-- theme css & js -->
+    <link rel="stylesheet" href="/css/spectre_custom.css">
+    <link rel="stylesheet" href="/css/book.css">
+    <script src="/js/book.js"></script>
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     
-    <!-- title -->
-    <title>Start Hexo</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
     
 </head>
 
 <body>
-    
-      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
-  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2019/02/06/Flask-Basic/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="/2019/02/06/Macbook-Developer/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Start-Hexo/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&text=Start Hexo"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&is_video=false&description=Start Hexo"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Start Hexo&body=Check out this article: http://github.com/lsj9383/2019/02/06/Start-Hexo/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&name=Start Hexo&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
 
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、GitHub配置"><span class="toc-number">1.</span> <span class="toc-text">一、GitHub配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-创建仓库"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.创建仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-配置DNS"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2.配置DNS</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、Hexo安装"><span class="toc-number">2.</span> <span class="toc-text">二、Hexo安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Node-js"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">1.Node.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Hexo"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">2.Hexo</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Hexo使用"><span class="toc-number">3.</span> <span class="toc-text">三、Hexo使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-初始化"><span class="toc-number">3.1.</span> <span class="toc-text">1.初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-编写博客"><span class="toc-number">3.2.</span> <span class="toc-text">2.编写博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-主题"><span class="toc-number">3.3.</span> <span class="toc-text">3.主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-部署"><span class="toc-number">3.4.</span> <span class="toc-text">4.部署</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四-其他"><span class="toc-number">4.</span> <span class="toc-text">四.其他</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-自定义layout"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">1.自定义layout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-显示照片"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">2.显示照片</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、FAQ"><span class="toc-number">5.</span> <span class="toc-text">五、FAQ</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-hexo-server无响应"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">1.hexo server无响应</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-hexo-deploy无反应"><span class="toc-number">5.0.0.2.</span> <span class="toc-text">2.hexo deploy无反应</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
-  </span>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
+  <div class="book-container">
+    <div class="columns">
+      <div class="column col-2 hide-lg">
+        <div class="book-sidebar">
+  <h4 class="site-meta">
+    <a href="/">小记</a>
+  </h4>
+  <div class="sidebar-content">
+    
+  </div>
 </div>
 
+<script src="/js/book-sidebar.js"></script>
+      </div>
+
+      <div class="column col-8 col-lg-12">
+        <div class="book-content">
+          <div class="book-navbar">
+  <header class="navbar">
+  <section class="navbar-section">
+    <img class="navbar-icon" src="/favicon.ico">
+  </section>
+  <section class="navbar-center">
+    小记
+  </section>
+  <section class="navbar-section">
+    <label class="accordion-header c-hand" for="accordion-sidebar">
+      <i class="icon icon-menu"></i>
+    </label>
+  </section>
+</header>
+
+<div class="accordion">
+  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
+  <div class="accordion-body">
     
-    <div class="content index width mx-auto px2 my4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        Start Hexo
-    </h1>
+  </div>
+</div>
+</div>
 
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">小记</span>
-      </span>
-      
-    <div class="postdate">
-        <time datetime="2019-02-06T06:06:09.000Z" itemprop="datePublished">2019-02-06</time>
-    </div>
-
-
-      
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <p>本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。<br>Hexo是什么？借助<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo官方中文文档</a>的解释：</p>
+<div class="book-post">
+  <p>本文总结了在GitHub Pages上搭建和使用Hexo博客平台的经验。<br>Hexo是什么？借助<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo官方中文文档</a>的解释：</p>
 <blockquote>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 </blockquote>
@@ -165,7 +121,9 @@
 <li><p><em>GitHub</em><br>  博客希望分享给其他人以阅读，因此需要将博客上传至自己的服务器上。由于GitHub提供了一个简单的静态文件服务器，因此需要将博客上传至该服务器。<br>  在_config.yml中配置上传信息：</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">type: &lt;protocal&gt;  // 协议名，GitHub采用Git</span><br><span class="line">repo: &lt;server&gt;    // 服务器地址, 通常为GitHub仓库。</span><br><span class="line">branch: &lt;branch&gt;  // 分支名，个人博客通常为master</span><br></pre></td></tr></table></figure>
 <p>  下一步 通过下述指令，将博客生成并发布。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>  如果下载提示, 则使用如下命令:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="四-其他"><a href="#四-其他" class="headerlink" title="四.其他"></a>四.其他</h1><h4 id="1-自定义layout"><a href="#1-自定义layout" class="headerlink" title="1.自定义layout"></a>1.自定义layout</h4><p>一切自定义layout文件都和post的行为相同，在<code>source/_posts/&lt;title&gt;</code>中创建。<br>其实，当执行了<code>hexo new [layout] &lt;title&gt;</code>指令后，首先将会到<code>scaffolds</code>中寻找同名<code>[layout]文件</code>，找到以后将以该<code>[layout]文件</code>的内容创建博客文件。</p>
@@ -192,108 +150,82 @@
 </code></pre></li>
 </ul>
 
-  </div>
-</article>
+</div>
 
 
-
-    </div>
+  <div class="book-comments">
     
-      <div id="footer-post-container">
-  <div id="footer-post">
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、GitHub配置"><span class="toc-number">1.</span> <span class="toc-text">一、GitHub配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-创建仓库"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.创建仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-配置DNS"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2.配置DNS</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、Hexo安装"><span class="toc-number">2.</span> <span class="toc-text">二、Hexo安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Node-js"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">1.Node.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Hexo"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">2.Hexo</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Hexo使用"><span class="toc-number">3.</span> <span class="toc-text">三、Hexo使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-初始化"><span class="toc-number">3.1.</span> <span class="toc-text">1.初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-编写博客"><span class="toc-number">3.2.</span> <span class="toc-text">2.编写博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-主题"><span class="toc-number">3.3.</span> <span class="toc-text">3.主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-部署"><span class="toc-number">3.4.</span> <span class="toc-text">4.部署</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四-其他"><span class="toc-number">4.</span> <span class="toc-text">四.其他</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-自定义layout"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">1.自定义layout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-显示照片"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">2.显示照片</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、FAQ"><span class="toc-number">5.</span> <span class="toc-text">五、FAQ</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-hexo-server无响应"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">1.hexo server无响应</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-hexo-deploy无反应"><span class="toc-number">5.0.0.2.</span> <span class="toc-text">2.hexo deploy无反应</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
+  </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Start-Hexo/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&text=Start Hexo"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&is_video=false&description=Start Hexo"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Start Hexo&body=Check out this article: http://github.com/lsj9383/2019/02/06/Start-Hexo/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&title=Start Hexo"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Start-Hexo/&name=Start Hexo&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
 
-    </div>
+<script src="/js/book-post.js"></script>
+        </div>
+      </div>
 
-    <div id="actions-footer">
-      <ul>
-        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
-        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
-        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
-        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
-      </ul>
-    </div>
-
+      <div class="column col-2 hide-lg">
+        <div class="book-toc">
+  <div class="book-tocbot">
+  </div>
+  <div class="book-tocbot-menu">
+    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+    <a onclick="go_top()">Back to top</a>
+    <a onclick="go_bottom()">Go to bottom</a>
   </div>
 </div>
 
-    
-    <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2019 Arthur Lu
+<script>
+tocbot.init({
+  tocSelector: '.book-tocbot',
+  contentSelector: '.book-post',
+  headingSelector: 'h1, h2, h3, h4, h5',
+  collapseDepth: 2,
+  orderedList: false,
+  scrollSmooth: false,
+});
+
+function expand_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 6,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "collapse_toc()");
+  b.innerHTML = "Collapse all"
+}
+
+function collapse_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 2,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "expand_toc()");
+  b.innerHTML = "Expand all"
+}
+
+function go_top() {
+  window.scrollTo(0, 0);
+}
+
+function go_bottom() {
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+</script>
+      </div>
+    </div>
   </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </nav>
-  </div>
-</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>
-<!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
-<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
-
-<!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script type="text/javascript">
-        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-86660611-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-
-<!-- Disqus Comments -->
-
-

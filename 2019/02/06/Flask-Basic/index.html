@@ -1,137 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="null">
+
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Flask Basic">
-<meta property="og:url" content="http://github.com/lsj9383/2019/02/06/Flask-Basic/index.html">
-<meta property="og:site_name" content="小记">
-<meta property="og:description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
-<meta property="og:updated_time" content="2019-02-06T06:08:08.541Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Flask Basic">
-<meta name="twitter:description" content="一、请求中的数据请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过from flask import request来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。 1.GETGET请求会将参数以urlencode编码的形式放到URL的最后面，如:http://host?k1=v1&amp;amp;k2=v2。在Flask通过flask.">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
     
+      <link rel="icon" href="/favicon.ico" />
     
+
+    <title>
         
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
+          Flask Basic - 小记
         
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
+    </title>
+
+    <!-- Spectre.css framework (v0.5.8) -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+
+    <!-- theme css & js -->
+    <link rel="stylesheet" href="/css/spectre_custom.css">
+    <link rel="stylesheet" href="/css/book.css">
+    <script src="/js/book.js"></script>
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     
-    <!-- title -->
-    <title>Flask Basic</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
     
 </head>
 
 <body>
-    
-      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
-  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" href="/2019/02/06/OAUTH-2-0/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" href="/2019/02/06/Start-Hexo/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Flask-Basic/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&text=Flask Basic"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&is_video=false&description=Flask Basic"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Flask Basic&body=Check out this article: http://github.com/lsj9383/2019/02/06/Flask-Basic/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&name=Flask Basic&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
 
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、请求中的数据"><span class="toc-number">1.</span> <span class="toc-text">一、请求中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-GET"><span class="toc-number">1.1.</span> <span class="toc-text">1.GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-POST"><span class="toc-number">1.2.</span> <span class="toc-text">2.POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie"><span class="toc-number">1.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Headers"><span class="toc-number">1.4.</span> <span class="toc-text">4.Headers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-File"><span class="toc-number">1.5.</span> <span class="toc-text">5.File</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-urlencode-urldecode"><span class="toc-number">1.6.</span> <span class="toc-text">6.urlencode/urldecode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-POST的中文处理"><span class="toc-number">1.7.</span> <span class="toc-text">7.POST的中文处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Body中的数据"><span class="toc-number">1.8.</span> <span class="toc-text">7.Body中的数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、响应中的数据"><span class="toc-number">2.</span> <span class="toc-text">二、响应中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串"><span class="toc-number">2.1.</span> <span class="toc-text">1.字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON"><span class="toc-number">2.2.</span> <span class="toc-text">2.JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie-1"><span class="toc-number">2.3.</span> <span class="toc-text">3.Cookie</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、缓存中的数据"><span class="toc-number">3.</span> <span class="toc-text">三、缓存中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session"><span class="toc-number">3.1.</span> <span class="toc-text">1.Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SimpleCache"><span class="toc-number">3.2.</span> <span class="toc-text">2.SimpleCache</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-基本使用"><span class="toc-number">3.2.1.</span> <span class="toc-text">a) 基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-超时机制"><span class="toc-number">3.2.2.</span> <span class="toc-text">b) 超时机制</span></a></li></ol></li></ol></li></ol>
-    </div>
-  </span>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container">
+  <div class="book-container">
+    <div class="columns">
+      <div class="column col-2 hide-lg">
+        <div class="book-sidebar">
+  <h4 class="site-meta">
+    <a href="/">小记</a>
+  </h4>
+  <div class="sidebar-content">
+    
+  </div>
 </div>
 
+<script src="/js/book-sidebar.js"></script>
+      </div>
+
+      <div class="column col-8 col-lg-12">
+        <div class="book-content">
+          <div class="book-navbar">
+  <header class="navbar">
+  <section class="navbar-section">
+    <img class="navbar-icon" src="/favicon.ico">
+  </section>
+  <section class="navbar-center">
+    小记
+  </section>
+  <section class="navbar-section">
+    <label class="accordion-header c-hand" for="accordion-sidebar">
+      <i class="icon icon-menu"></i>
+    </label>
+  </section>
+</header>
+
+<div class="accordion">
+  <input type="checkbox" id="accordion-sidebar" name="accordion-checkbox" hidden>
+  <div class="accordion-body">
     
-    <div class="content index width mx-auto px2 my4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        Flask Basic
-    </h1>
+  </div>
+</div>
+</div>
 
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">小记</span>
-      </span>
-      
-    <div class="postdate">
-        <time datetime="2019-02-06T06:08:00.000Z" itemprop="datePublished">2019-02-06</time>
-    </div>
-
-
-      
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h2 id="一、请求中的数据"><a href="#一、请求中的数据" class="headerlink" title="一、请求中的数据"></a>一、请求中的数据</h2><p>请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过<code>from flask import request</code>来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。</p>
+<div class="book-post">
+  <h2 id="一、请求中的数据"><a href="#一、请求中的数据" class="headerlink" title="一、请求中的数据"></a>一、请求中的数据</h2><p>请求中的数据都需要以来flask.request对象，因此在获取请求中的数据时，需要通过<code>from flask import request</code>来引入请求对象，并且需要知道的时，flask.request是做了线程隔离的。</p>
 <h3 id="1-GET"><a href="#1-GET" class="headerlink" title="1.GET"></a>1.<em>GET</em></h3><p>GET请求会将参数以urlencode编码的形式放到URL的最后面，如:<code>http://host?k1=v1&amp;k2=v2</code>。在Flask通过flask.request.args可以将GET的参数提取出来。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.args.get(<span class="string">"k1"</span>, d=<span class="keyword">None</span>)  // 获取k1对应的值,若k1不存在则返回默认值<span class="keyword">None</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-POST"><a href="#2-POST" class="headerlink" title="2.POST"></a>2.<em>POST</em></h3><p>POST请求会将参数以urlencode编码的形式放到请求的请求体中。在Flask中通过flask.request.form来获取。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.form.get(<span class="string">"k1"</span>, <span class="keyword">None</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <h3 id="3-Cookie"><a href="#3-Cookie" class="headerlink" title="3.Cookie"></a>3.<em>Cookie</em></h3><p>客户端可以自行缓存一些数据，并在每次请求的时候将这些数据发送到服务器。通过将Cookie数据放入到请求行的<code>Cookie</code>请求行里，指定请求含Cookie。后台可以在不操作Headers的情况下，直接读取Cookie。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">form flask <span class="keyword">import</span> request</span><br><span class="line">...</span><br><span class="line">request.cookies.get(<span class="string">"k1"</span>, <span class="keyword">None</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
@@ -172,108 +128,82 @@
 <li>在每次get数据时，先检查key是否超时，超时则清除并返回None，否则返回缓存值。</li>
 </ul>
 
-  </div>
-</article>
+</div>
 
 
-
-    </div>
+  <div class="book-comments">
     
-      <div id="footer-post-container">
-  <div id="footer-post">
 
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、请求中的数据"><span class="toc-number">1.</span> <span class="toc-text">一、请求中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-GET"><span class="toc-number">1.1.</span> <span class="toc-text">1.GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-POST"><span class="toc-number">1.2.</span> <span class="toc-text">2.POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie"><span class="toc-number">1.3.</span> <span class="toc-text">3.Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Headers"><span class="toc-number">1.4.</span> <span class="toc-text">4.Headers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-File"><span class="toc-number">1.5.</span> <span class="toc-text">5.File</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-urlencode-urldecode"><span class="toc-number">1.6.</span> <span class="toc-text">6.urlencode/urldecode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-POST的中文处理"><span class="toc-number">1.7.</span> <span class="toc-text">7.POST的中文处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Body中的数据"><span class="toc-number">1.8.</span> <span class="toc-text">7.Body中的数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、响应中的数据"><span class="toc-number">2.</span> <span class="toc-text">二、响应中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串"><span class="toc-number">2.1.</span> <span class="toc-text">1.字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON"><span class="toc-number">2.2.</span> <span class="toc-text">2.JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Cookie-1"><span class="toc-number">2.3.</span> <span class="toc-text">3.Cookie</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、缓存中的数据"><span class="toc-number">3.</span> <span class="toc-text">三、缓存中的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session"><span class="toc-number">3.1.</span> <span class="toc-text">1.Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SimpleCache"><span class="toc-number">3.2.</span> <span class="toc-text">2.SimpleCache</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-基本使用"><span class="toc-number">3.2.1.</span> <span class="toc-text">a) 基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-超时机制"><span class="toc-number">3.2.2.</span> <span class="toc-text">b) 超时机制</span></a></li></ol></li></ol></li></ol>
-    </div>
+  </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://github.com/lsj9383/2019/02/06/Flask-Basic/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&text=Flask Basic"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&is_video=false&description=Flask Basic"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Flask Basic&body=Check out this article: http://github.com/lsj9383/2019/02/06/Flask-Basic/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&title=Flask Basic"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://github.com/lsj9383/2019/02/06/Flask-Basic/&name=Flask Basic&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
 
-    </div>
+<script src="/js/book-post.js"></script>
+        </div>
+      </div>
 
-    <div id="actions-footer">
-      <ul>
-        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
-        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
-        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
-        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
-      </ul>
-    </div>
-
+      <div class="column col-2 hide-lg">
+        <div class="book-toc">
+  <div class="book-tocbot">
+  </div>
+  <div class="book-tocbot-menu">
+    <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+    <a onclick="go_top()">Back to top</a>
+    <a onclick="go_bottom()">Go to bottom</a>
   </div>
 </div>
 
-    
-    <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2019 Arthur Lu
+<script>
+tocbot.init({
+  tocSelector: '.book-tocbot',
+  contentSelector: '.book-post',
+  headingSelector: 'h1, h2, h3, h4, h5',
+  collapseDepth: 2,
+  orderedList: false,
+  scrollSmooth: false,
+});
+
+function expand_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 6,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "collapse_toc()");
+  b.innerHTML = "Collapse all"
+}
+
+function collapse_toc(){
+  var b = document.querySelector(".book-toc-expand");
+  tocbot.init({
+    tocSelector: '.book-tocbot',
+    contentSelector: '.book-post',
+    headingSelector: 'h1, h2, h3, h4, h5',
+    collapseDepth: 2,
+    orderedList: false,
+    scrollSmooth: false,
+  });
+  b.setAttribute("onclick", "expand_toc()");
+  b.innerHTML = "Expand all"
+}
+
+function go_top() {
+  window.scrollTo(0, 0);
+}
+
+function go_bottom() {
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+</script>
+      </div>
+    </div>
   </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="https://github.com/lsj9383">GitHub</a></li>
-        
-      </ul>
-    </nav>
-  </div>
-</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>
-<!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
-<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
-
-<!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script type="text/javascript">
-        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-86660611-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-
-<!-- Disqus Comments -->
-
-
