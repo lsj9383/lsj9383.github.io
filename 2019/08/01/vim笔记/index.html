@@ -182,14 +182,33 @@
         </header>
 
         <div class="post-content">
-            <h1 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h1><p>四种模式:</p>
+            <h2 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h2><p>四种模式:</p>
 <ul>
 <li>Normal</li>
 <li>Insert</li>
 <li>Command</li>
 <li>Visual</li>
 </ul>
-<h1 id="二、Nomral模式"><a href="#二、Nomral模式" class="headerlink" title="二、Nomral模式"></a>二、Nomral模式</h1><p>Normal模式主要是用于阅读文本。<br>光标移动:</p>
+<p>基本结构:</p>
+<ul>
+<li>Buffer<ul>
+<li>vim打开一个文件，会把文件加载到缓冲区</li>
+<li>对文件的修改是针对缓冲区的</li>
+<li>当:w进行保存时会把缓冲区的内容输出到磁盘</li>
+</ul>
+</li>
+<li>Window, 可视化的分隔区域<ul>
+<li>一个buffer可以划分为多个window</li>
+<li>每个window都可以对应不同的buffer</li>
+</ul>
+</li>
+<li>Tab, 可以容纳一系列Window的容器<ul>
+<li>方便管理不同类型的Window</li>
+</ul>
+</li>
+</ul>
+<p>默认打开一个文件，使用一个Tag，其中只有一个Window，并使用了该文件的Buffer。</p>
+<h2 id="二、Nomral模式"><a href="#二、Nomral模式" class="headerlink" title="二、Nomral模式"></a>二、Nomral模式</h2><p>Normal模式主要是用于阅读文本。<br>光标移动:</p>
 <ul>
 <li>hjkl</li>
 <li>w/W, 移动到下一个word/WORD开头(word是指非字母作为word的分隔符, WORD代表以空格符作为word的分隔符)</li>
@@ -198,6 +217,7 @@
 <li>$, 快速移动到行尾</li>
 <li>0, 快速移动到行首</li>
 <li><code>ctrl + o</code>, 移动到光标上一个位置</li>
+<li><code>ctrl + u</code>, <code>ctrl+o</code>的反向操作</li>
 <li><code>ctrl + u</code>, 向上翻页</li>
 <li><code>ctrl + f</code>, 向下翻页</li>
 <li>gg, 移动到页首</li>
@@ -207,8 +227,40 @@
 <ul>
 <li>行内搜索:<code>f{char}</code>, 光标快速跳到匹配的字符。<code>;</code>移动到该行下一个匹配的字符 <code>,</code>移动到该行上一个匹配的字符。</li>
 <li>行内搜索:<code>F{char}</code>, 光标快速跳到上一个匹配的字符。<code>;</code>移动到该行下一个匹配的字符 <code>,</code>移动到该行上一个匹配的字符。</li>
+<li>/{word}, 正向搜索word n/N跳转下一个/上一个</li>
+<li>?{word}, 反向搜索word</li>
 </ul>
-<h1 id="三、Insert模式"><a href="#三、Insert模式" class="headerlink" title="三、Insert模式"></a>三、Insert模式</h1><p>从Normal切换到Insert模式的几种方式:</p>
+<p>快速删除:</p>
+<ul>
+<li>x, 删除一个字符</li>
+<li>dw, 删除一个单词</li>
+<li>dd, 删除一行</li>
+<li>dt{chr}, 删除当前光标掉符号chr内的内容</li>
+<li>d$, 快速删除当前光标到行尾</li>
+</ul>
+<p>快速替换:</p>
+<ul>
+<li>r{chr}, 替换当前光标的字符为chr</li>
+<li>s, 删除当前字符并进入编辑模式</li>
+<li>C, 删除当前光标到行尾并进入编辑</li>
+<li><code>:%s/origin/target/g</code>, 将全文中的origin替换为target</li>
+<li><code>:%s/origin/target/gc</code>, 将全文中的origin替换为target, 会进行提示</li>
+</ul>
+<h3 id="1-寄存器"><a href="#1-寄存器" class="headerlink" title="1.寄存器"></a>1.寄存器</h3><p>在Visual下通过y/x等进行复制/删除操作，都会将被操作的内容移到寄存器中，默认是无名寄存器。通过p可以将寄存器中的内容复制到光标所处的位置。</p>
+<p>通过<code>&quot;{register}</code>来使用寄存器,例如:<code>&quot;ayy</code>, 会将当前行全部复制到寄存器a中。<br><code>:reg {register}</code> 可以查看保存在寄存器register中的内容</p>
+<p>寄存器分类:</p>
+<ul>
+<li>无名寄存器, 默认采用该寄存器。被称为<code>unnamed</code></li>
+<li>普通寄存器.</li>
+<li>专用寄存器</li>
+<li>系统剪贴板, 需要通过<code>:echo has(&quot;clipboard&quot;)</code>来确定系统剪贴板是否存在。</li>
+</ul>
+<h3 id="2-宏操作"><a href="#2-宏操作" class="headerlink" title="2.宏操作"></a>2.宏操作</h3><h3 id="3-主题选择"><a href="#3-主题选择" class="headerlink" title="3.主题选择"></a>3.主题选择</h3><ul>
+<li><code>:colorscheme</code> 显示当前颜色主题</li>
+<li><code>:colorscheme &lt;ctrl+d&gt;</code> 显示所有可以选择的颜色主题</li>
+<li><code>:colorscheme &lt;scheme&gt;</code> 选择指定的颜色主题</li>
+</ul>
+<h2 id="三、Insert模式"><a href="#三、Insert模式" class="headerlink" title="三、Insert模式"></a>三、Insert模式</h2><p>从Normal切换到Insert模式的几种方式:</p>
 <ul>
 <li>i</li>
 <li>a</li>
@@ -217,6 +269,7 @@
 <li>A</li>
 <li>O</li>
 <li>gi</li>
+<li>s, 删除当前字符并进入编辑模式</li>
 </ul>
 <p>常用快捷键, 非常方便:</p>
 <ul>
@@ -230,6 +283,93 @@
 <li><code>ctrl + a</code> 光标快速移动到开头</li>
 <li><code>ctrl + e</code> 光标快速移动到结尾</li>
 </ul>
+<h3 id="1-插入补全"><a href="#1-插入补全" class="headerlink" title="1.插入补全"></a>1.插入补全</h3><p>在插入模式下可以对当前光标所处的单词后段进行补全，补全的命令为:</p>
+<ul>
+<li><code>ctrl + n/p</code> 普通补全, n代表下一个补全 p代表上一个补全</li>
+<li><code>&lt;ctrl + x&gt;&lt;ctrl + f&gt;</code> 通过目录补全路径名, 例如对 /var/ 可以进一步补全</li>
+<li><code>&lt;ctrl + x&gt;&lt;ctrl + o&gt;</code> 全能补全 需要插件支持</li>
+<li><code>:r! echo %</code> 获得当前文件名</li>
+<li><code>:r! echo %:p</code> 获得当前文件绝对路径</li>
+</ul>
+<h2 id="四、Visual模式"><a href="#四、Visual模式" class="headerlink" title="四、Visual模式"></a>四、Visual模式</h2><p>快速删除:</p>
+<h2 id="五、多文件"><a href="#五、多文件" class="headerlink" title="五、多文件"></a>五、多文件</h2><p>在第一章中提到了Buffer代表了一个文件的缓冲区，但是在一个Vim进程中是可以打开多个文件的，这样会加载多个文件的Buffer，在不同的Buffer间也可以进行跳转。</p>
+<p>多文件以及相关Buffer的相关命令·</p>
+<ul>
+<li><code>:e {filename}</code> 加载指定的文件到当前Buffer以及Window</li>
+<li><code>:ls</code> 查看所有的缓冲区</li>
+<li><code>:b {idx}</code> 跳转到指定缓冲区</li>
+<li><code>:bnext</code> 跳转下一个缓冲区</li>
+<li><code>:bprevious</code> 跳转上一个缓冲区</li>
+<li><code>:bd</code> 关闭当前buffer但是不退出window</li>
+</ul>
+<p>多文件及Window相关的命令</p>
+<ul>
+<li>一个buffer可以划分为多个window</li>
+<li>每个window都可以对应不同的buffer</li>
+<li><code>:sp {file}</code> 水平分割, <code>:vs {file}</code> 垂直分隔. {file}可以省略，若省略则默认使用原buffer。</li>
+<li><code>ctrl + w + 方向键</code>, 选择当前窗口, 光标会跳转到当前窗口.</li>
+<li><code>ctrl + w + 大写HJKL</code>, 将当前window进行上下左右移动</li>
+</ul>
+<p>多文件及Tab的相关命令</p>
+<ul>
+<li><code>:tabnew</code> 打开一个空白的标签页</li>
+<li><code>:tabe {file}</code> 在新标签中打开文件file</li>
+<li><code>ctrl + w + T</code> 将当前窗口移动到新的标签页</li>
+<li><code>:tabc</code> 关闭当前tab及其所有window</li>
+<li><code>:tabo</code> 关闭除当前tab外的所有tab</li>
+<li><code>:tabn</code> 切换到下一个标签页</li>
+<li><code>:tabp</code> 切换到上一个标签页</li>
+</ul>
+<h2 id="六、Text-Object"><a href="#六、Text-Object" class="headerlink" title="六、Text Object"></a>六、Text Object</h2><p>Vim中通常是操作文本对象来完成对文本的删除/变更/选中等。</p>
+<p>命令模版:<code>[number] &lt;command&gt; &lt;text object&gt;</code></p>
+<ul>
+<li>number, 操作个数, 可选, 默认为1</li>
+<li><code>&lt;command&gt;</code>, 操作模式<ul>
+<li>d, 删除文本对象</li>
+<li>c, 修改(删除后进入insert模式)</li>
+<li>y, 复制文本对象</li>
+<li>v, 选中文本对象</li>
+</ul>
+</li>
+<li><code>&lt;text object&gt;</code>, 文本对象<ul>
+<li>w, 删除当前光标到单词尾的内容</li>
+<li>iw, inner word, 当前光标所指的整个单词</li>
+<li>aw, around word, 包含单词周边空格</li>
+<li><code>i(</code>, 圆括号内的所有内容</li>
+<li><code>i[</code>, 方括号内的所有内容</li>
+<li><code>i{</code>, 大括号内的所有内容</li>
+<li><code>i&quot;</code>, 双引号内的所有内容</li>
+<li><code>i&#39;</code>, 单引号内的所有内容</li>
+</ul>
+</li>
+</ul>
+<h2 id="七、Vim配置"><a href="#七、Vim配置" class="headerlink" title="七、Vim配置"></a>七、Vim配置</h2><p>在vim中可以通过set xx和xxx on进行相关的配置，但是都只是在当前vim进程中有效，若希望在全局vim中有效可以配置<code>.vimrc</code>文件。</p>
+<p><code>vim ~/.vimrc</code>, 编辑vim配置文件, 常见配置请看附录部分。</p>
+<p>vimrc编辑后的生效方式:</p>
+<ul>
+<li><code>:source ~/.vimrc</code>, 通过source选择使用的vimrc文件即可生效。</li>
+<li>退出vim后重新进入(必须是<code>~/.vimrc</code>)</li>
+</ul>
+<h3 id="1-映射"><a href="#1-映射" class="headerlink" title="1.映射"></a>1.映射</h3><h2 id="附录一、常用配置和命令"><a href="#附录一、常用配置和命令" class="headerlink" title="附录一、常用配置和命令"></a>附录一、常用配置和命令</h2><p>需要知道, 基本上所有的配置开启和关闭都有等价形式:</p>
+<ul>
+<li>set xxx <-----> set noxxx</-----></li>
+<li>xxx on  <-----> xxx off</-----></li>
+</ul>
+<p>常用配置项:</p>
+<ul>
+<li>语法高亮: <code>:syntax on</code></li>
+<li>搜索高亮: <code>:set hls</code></li>
+<li>实时搜索: <code>:set incsearch</code></li>
+<li>显示行号: <code>:set nu</code></li>
+<li>自动缩进(即回车自动和上一行对齐): <code>:set autoindent</code></li>
+<li><code>:set paste</code></li>
+<li>设置颜色主题: <code>:colorscheme &lt;scheme&gt;</code></li>
+</ul>
+<p>常用命令:</p>
+<ul>
+<li>查看所有的配置: <code>:h option-list</code></li>
+</ul>
+<h2 id="附录二、常用vimrc"><a href="#附录二、常用vimrc" class="headerlink" title="附录二、常用vimrc"></a>附录二、常用vimrc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1.vim configuration</span><br><span class="line"></span><br><span class="line"># 2.vim map</span><br><span class="line"></span><br><span class="line"># 3.vim plugins</span><br><span class="line"></span><br><span class="line"># 4.vim scrpit</span><br></pre></td></tr></table></figure>
 
         </div>
 
