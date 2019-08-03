@@ -187,10 +187,7 @@
 <li>Normal</li>
 <li>Insert</li>
 <li>Command</li>
-<li>Visual</li>
-</ul>
-<p>基本结构:</p>
-<ul>
+<li>Visual<br>asdf<br>基本结构:</li>
 <li>Buffer<ul>
 <li>vim打开一个文件，会把文件加载到缓冲区</li>
 <li>对文件的修改是针对缓冲区的</li>
@@ -349,10 +346,45 @@
 <ul>
 <li><code>:source ~/.vimrc</code>, 通过source选择使用的vimrc文件即可生效。</li>
 <li>退出vim后重新进入(必须是<code>~/.vimrc</code>)</li>
+<li><code>:source %</code> 若当前已经在vimrc了可以直接通过该命令加载vimrc</li>
 </ul>
-<h3 id="1-映射"><a href="#1-映射" class="headerlink" title="1.映射"></a>1.映射</h3><h2 id="附录一、常用配置和命令"><a href="#附录一、常用配置和命令" class="headerlink" title="附录一、常用配置和命令"></a>附录一、常用配置和命令</h2><p>需要知道, 基本上所有的配置开启和关闭都有等价形式:</p>
+<h3 id="1-映射"><a href="#1-映射" class="headerlink" title="1.映射"></a>1.映射</h3><p>常用于设置快捷键</p>
+<p>基本映射(递归映射)，下面定义了不同模式下的映射:</p>
 <ul>
-<li>set xxx <-----> set noxxx</-----></li>
+<li><code>:map {origin} {target}</code> 将normal模式下的origin动作映射为taget动作</li>
+<li><code>:unmap {origin}</code> 将normal模式下的origin动作映射取消</li>
+<li><code>:[n/v/i]map {origin} {target}</code> 将normal/visual/insert模式下的origin动作映射到target</li>
+</ul>
+<p>上述的基本映射都是递归映射, 即当A映射到B, B映射到C时，就会导致A映射到C。为了避免此类递归映射，我们应该使用非递归映射，这也是基本所有人遵循的原则:</p>
+<ul>
+<li><code>:noremap {origin} {target}</code> 将normal模式下的origin动作映射为taget动作</li>
+<li><code>:unmap {origin}</code> 将normal模式下的origin动作映射取消</li>
+<li><code>:[n/v/i]noremap {origin} {target}</code> 将normal/visual/insert模式下的origin动作映射到target</li>
+</ul>
+<h3 id="2-特殊字符"><a href="#2-特殊字符" class="headerlink" title="2.特殊字符"></a>2.特殊字符</h3><ul>
+<li><code>&lt;space&gt;</code> 代表空格</li>
+<li><code>&lt;C-x&gt;</code> 代表ctrl + x</li>
+<li><code>&lt;Fx&gt;</code> 代表Fx, x代表一个数字, 例如F2</li>
+</ul>
+<h2 id="八、Vim插件"><a href="#八、Vim插件" class="headerlink" title="八、Vim插件"></a>八、Vim插件</h2><h3 id="1-插件管理vim-plugin"><a href="#1-插件管理vim-plugin" class="headerlink" title="1.插件管理vim-plugin"></a>1.插件管理vim-plugin</h3><p>在安装vim插件前，需要先配置插件管理工具.根据<a href="https://www.slant.co/" target="_blank" rel="noopener">slant</a>上的排名，<a href="https://github.com/junegunn/vim-plug">vim-plug</a>的推荐率最高，这里主要是介绍vim-plug的插件管理配置。</p>
+<ul>
+<li><p>下载插件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载插件</span></span><br><span class="line">curl -fLo ~/.vim/<span class="built_in">autoload</span>/plug.vim --create-dirs \</span><br><span class="line">    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置vimrc文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">call plug#begin(&apos;~/.vim/plugged&apos;)</span><br><span class="line"></span><br><span class="line">&quot; 添加插件(默认是在github中进行下载)</span><br><span class="line">Plug &apos;mhinz/vim-startify&apos;</span><br><span class="line"></span><br><span class="line">call plug#end()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活vimrc并进行安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">source</span> ~/.vimrc</span><br><span class="line">:PlugInstall</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-代码格式化"><a href="#2-代码格式化" class="headerlink" title="2.代码格式化"></a>2.代码格式化</h3><p>本人主要使用Python, 因此这里主要介绍vim中python代码的格式化.提前需要安装autopep8:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install autopep8</span><br></pre></td></tr></table></figure></p>
+<p>vim的插件使用newformat, 在通过vim-plug安装好了插件后, 通过<code>:Neoformat</code>即可自动进行格式化。</p>
+<h3 id="3-代码静态检查"><a href="#3-代码静态检查" class="headerlink" title="3.代码静态检查"></a>3.代码静态检查</h3><p>本人主要使用Python，因此这里主要介绍vim中的python代码静态检查.提前需要安装pylint:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pylint</span><br></pre></td></tr></table></figure></p>
+<p>vim的插件使用ale, 安装完成后即自动开启了代码检查</p>
+<h2 id="附录一、常用配置和命令"><a href="#附录一、常用配置和命令" class="headerlink" title="附录一、常用配置和命令"></a>附录一、常用配置和命令</h2><p>需要知道, 基本上所有的配置开启和关闭都有等价形式:</p>
+<ul>
+<li>set xxwx <-----> set noxxx</-----></li>
 <li>xxx on  <-----> xxx off</-----></li>
 </ul>
 <p>常用配置项:</p>
@@ -369,7 +401,20 @@
 <ul>
 <li>查看所有的配置: <code>:h option-list</code></li>
 </ul>
-<h2 id="附录二、常用vimrc"><a href="#附录二、常用vimrc" class="headerlink" title="附录二、常用vimrc"></a>附录二、常用vimrc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1.vim configuration</span><br><span class="line"></span><br><span class="line"># 2.vim map</span><br><span class="line"></span><br><span class="line"># 3.vim plugins</span><br><span class="line"></span><br><span class="line"># 4.vim scrpit</span><br></pre></td></tr></table></figure>
+<h2 id="附录二、常用vimrc"><a href="#附录二、常用vimrc" class="headerlink" title="附录二、常用vimrc"></a>附录二、常用vimrc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot; 1.vim configuration</span><br><span class="line"></span><br><span class="line">&quot; 2.vim map</span><br><span class="line">map &lt;space&gt;&lt;space&gt; viw</span><br><span class="line"></span><br><span class="line">noremap &lt;C-h&gt; &lt;C-w&gt;h</span><br><span class="line">noremap &lt;C-j&gt; &lt;C-w&gt;j</span><br><span class="line">noremap &lt;C-k&gt; &lt;C-w&gt;k</span><br><span class="line">noremap &lt;C-l&gt; &lt;C-w&gt;l</span><br><span class="line"></span><br><span class="line">&quot; 3.vim plugins</span><br><span class="line"></span><br><span class="line">&quot; 4.vim scrpit</span><br></pre></td></tr></table></figure>
+<h2 id="附录三、常用插件"><a href="#附录三、常用插件" class="headerlink" title="附录三、常用插件"></a>附录三、常用插件</h2><p>对于插件可以到<a href="https://vimawesome.com/" target="_blank" rel="noopener">awesome</a>网站上进行查找，该网站上对插件进行了排名和分类。</p>
+<ul>
+<li><a href="https://github.com/mhinz/vim-startify">mhinz/vim-startify</a>, 用于vim开屏帮助，显示最近打开的文件并进行快速打开。</li>
+<li><a href="">vim-airline/vim-airline</a>, 用于优化vim的状态栏，可以更好当前的模式，行号列号，文件编码模式等等。</li>
+<li><a href="">w0ng/vim-hybrid</a>, hybrid主题 </li>
+<li><a href="">scrooloose/nerdtree</a>, 提供目录树</li>
+</ul>
+<h2 id="附录四、参考文献"><a href="#附录四、参考文献" class="headerlink" title="附录四、参考文献"></a>附录四、参考文献</h2><ul>
+<li>vimtutor</li>
+<li><a href="https://www.imooc.com/learn/1129" target="_blank" rel="noopener">imooc 玩转Vim 从放弃到爱不释手</a></li>
+<li><a href="http://learnvimscriptthehardway.onefloweroneworld.com/" target="_blank" rel="noopener">笨方法学Vimscript</a></li>
+<li><a href="https://vim-adventures.com/" target="_blank" rel="noopener">vim-adventures</a></li>
+</ul>
 
         </div>
 
