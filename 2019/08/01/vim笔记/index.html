@@ -213,12 +213,15 @@
 <li>e/E, 移动到下一个word/WORD结尾</li>
 <li>$, 快速移动到行尾</li>
 <li>0, 快速移动到行首</li>
+<li>^, 快速移动到第一个非blank的字符</li>
+<li>g_, 快速移动到最后一个非blank的字符</li>
 <li><code>ctrl + o</code>, 移动到光标上一个位置</li>
 <li><code>ctrl + u</code>, <code>ctrl+o</code>的反向操作</li>
 <li><code>ctrl + u</code>, 向上翻页</li>
 <li><code>ctrl + f</code>, 向下翻页</li>
 <li>gg, 移动到页首</li>
 <li>G, 移动到页尾</li>
+<li>Ng, 移动到第N行, N是一个数字</li>
 </ul>
 <p>搜索:</p>
 <ul>
@@ -288,7 +291,21 @@
 <li><code>:r! echo %</code> 获得当前文件名</li>
 <li><code>:r! echo %:p</code> 获得当前文件绝对路径</li>
 </ul>
-<h2 id="四、Visual模式"><a href="#四、Visual模式" class="headerlink" title="四、Visual模式"></a>四、Visual模式</h2><p>快速删除:</p>
+<h2 id="四、Visual模式"><a href="#四、Visual模式" class="headerlink" title="四、Visual模式"></a>四、Visual模式</h2><p>Visual模式用于进行块选择，并对被选择的块进行操作。</p>
+<p>对多行的行首进行操作:</p>
+<ul>
+<li><code>&lt;C-v&gt;</code> 选择多行</li>
+<li><code>I</code> 跳到行首并进入Insert模式</li>
+<li>在行首进行各类操作</li>
+<li><code>Esc</code> 点击两次将会把操作应用到被选择的行</li>
+</ul>
+<p>对多行的行尾进行操作:</p>
+<ul>
+<li><code>&lt;C-v&gt;</code> 选择多行</li>
+<li><code>$A</code> 跳到行尾并进入Insert模式</li>
+<li>在行尾进行各类操作</li>
+<li><code>Esc</code> 点击两次会把操作应用到被选择的行</li>
+</ul>
 <h2 id="五、多文件"><a href="#五、多文件" class="headerlink" title="五、多文件"></a>五、多文件</h2><p>在第一章中提到了Buffer代表了一个文件的缓冲区，但是在一个Vim进程中是可以打开多个文件的，这样会加载多个文件的Buffer，在不同的Buffer间也可以进行跳转。</p>
 <p>多文件以及相关Buffer的相关命令·</p>
 <ul>
@@ -382,6 +399,19 @@
 <p>vim的插件使用newformat, 在通过vim-plug安装好了插件后, 通过<code>:Neoformat</code>即可自动进行格式化。</p>
 <h3 id="3-代码静态检查"><a href="#3-代码静态检查" class="headerlink" title="3.代码静态检查"></a>3.代码静态检查</h3><p>本人主要使用Python，因此这里主要介绍vim中的python代码静态检查.提前需要安装pylint:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pylint</span><br></pre></td></tr></table></figure></p>
 <p>vim的插件使用ale, 安装完成后即自动开启了代码检查</p>
+<h3 id="4-配合Git使用"><a href="#4-配合Git使用" class="headerlink" title="4.配合Git使用"></a>4.配合Git使用</h3><p>介绍几个相当方便的Git插件，方便在vim中直接使用Git相关功能.</p>
+<ul>
+<li>tpope/vim-fugitive<ul>
+<li><code>:Gblame</code> 可以查看每一行是谁写 以及对应的commit</li>
+<li><code>:Gdiff</code> 可以看当前文件的变动</li>
+<li><code>:Gcommit</code> 将当前暂存区的进行提交</li>
+</ul>
+</li>
+<li>airblade/vim-gitgutter, 不用输入git命令 直接看到当前文件的改变状态<ul>
+<li>需要进行配置<code>set updatetime=100</code> 表示100ms进行一次diff更新当前文件的变更状态</li>
+</ul>
+</li>
+</ul>
 <h2 id="附录一、常用配置和命令"><a href="#附录一、常用配置和命令" class="headerlink" title="附录一、常用配置和命令"></a>附录一、常用配置和命令</h2><p>需要知道, 基本上所有的配置开启和关闭都有等价形式:</p>
 <ul>
 <li>set xxwx <-----> set noxxx</-----></li>
