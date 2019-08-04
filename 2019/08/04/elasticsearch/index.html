@@ -10,7 +10,7 @@
 
 
 
-<title>小记</title>
+<title>elasticsearch | 小记</title>
 
 
 
@@ -164,7 +164,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">elasticsearch</h1>
             
                 <div class="post-meta">
                     
@@ -173,7 +173,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">June 23, 2019&nbsp;&nbsp;17:21:11</a>
+                        Date: <a href="#">August 4, 2019&nbsp;&nbsp;21:46:53</a>
                         </span>
                     
                     
@@ -182,82 +182,7 @@
         </header>
 
         <div class="post-content">
-            <!-- TOC -->
-<ul>
-<li><a href="#一安装">一、安装</a></li>
-<li><a href="#二入门">二、入门</a><ul>
-<li><a href="#1文档">1.文档</a></li>
-<li><a href="#2索引index">2.索引(index)</a></li>
-<li><a href="#3检索">3.检索</a></li>
-</ul>
-</li>
-<li><a href="#三分布式集群">三、分布式集群</a><ul>
-<li><a href="#1集群">1.集群</a><ul>
-<li><a href="#1节点">1).<em>节点</em></a></li>
-<li><a href="#2分片">2).<em>分片</em></a></li>
-<li><a href="#3客户端请求">3).<em>客户端请求</em></a></li>
-</ul>
-</li>
-<li><a href="#3故障转移">3.故障转移</a></li>
-<li><a href="#4横向扩展">4.横向扩展</a></li>
-</ul>
-</li>
-<li><a href="#四数据存储">四、数据存储</a><ul>
-<li><a href="#1文档-1">1.文档</a></li>
-<li><a href="#2文档存储">2.文档存储</a></li>
-<li><a href="#3检索文档">3.检索文档</a></li>
-<li><a href="#4更新文档">4.更新文档</a></li>
-</ul>
-</li>
-<li><a href="#五搜索">五、搜索</a></li>
-<li><a href="#六映射与分析">六、映射与分析</a><ul>
-<li><a href="#1数据类型">1.数据类型</a></li>
-<li><a href="#2分析器">2.分析器</a></li>
-<li><a href="#3映射">3.映射</a><ul>
-<li><a href="#1es的索引基本类型">1).es的索引基本类型</a></li>
-<li><a href="#2json文档的对应的es数据类型">2).<em>JSON文档的对应的es数据类型</em></a></li>
-<li><a href="#3自定义映射">3).<em>自定义映射</em></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#七结构化查询">七、结构化查询</a><ul>
-<li><a href="#1query-dsl">1.Query DSL</a></li>
-<li><a href="#2常用的查询子句">2.常用的查询子句</a><ul>
-<li><a href="#1term">1).<em>term</em></a></li>
-<li><a href="#2terms">2).<em>terms</em></a></li>
-<li><a href="#3range">3).<em>range</em></a></li>
-<li><a href="#4exists和missing">4).<em>exists和missing</em></a></li>
-<li><a href="#5match">5).<em>match</em></a></li>
-<li><a href="#6match_phrase">6).<em>match_phrase</em></a></li>
-<li><a href="#7multi_match">7).<em>multi_match</em></a></li>
-<li><a href="#8match_all">8).<em>match_all</em></a></li>
-<li><a href="#9bool复合子句">9).<em>bool复合子句</em></a></li>
-</ul>
-</li>
-<li><a href="#3验证查询">3.验证查询</a></li>
-</ul>
-</li>
-<li><a href="#八排序">八、排序</a><ul>
-<li><a href="#1排序">1.排序</a></li>
-<li><a href="#2相关性">2.相关性</a></li>
-</ul>
-</li>
-<li><a href="#九索引管理">九、索引管理</a></li>
-<li><a href="#十深入过滤器">十、深入过滤器</a><ul>
-<li><a href="#1查询准确值">1.查询准确值</a></li>
-</ul>
-</li>
-<li><a href="#十一深入搜索">十一、深入搜索</a><ul>
-<li><a href="#1单个查询子句">1.单个查询子句</a></li>
-<li><a href="#2组合查询子句">2.组合查询子句</a></li>
-<li><a href="#3控制查询语句得分">3.控制查询语句得分</a></li>
-</ul>
-</li>
-<li><a href="#附录常用命令">附录、常用命令</a></li>
-</ul>
-<!-- /TOC -->
-<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>ElasticSearch的安装依赖Java，因此需要先安装Java并配置JAVA_HOME的环境变量，本文档默认已经安装好了JAVA，并且JAVA和ElasticSearch对应以下版本:</p>
+            <h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>ElasticSearch的安装依赖Java，因此需要先安装Java并配置JAVA_HOME的环境变量，本文档默认已经安装好了JAVA，并且JAVA和ElasticSearch对应以下版本:</p>
 <ul>
 <li>jdk 8.181</li>
 <li>es 6.4.2</li>
@@ -563,6 +488,7 @@
 <li>boost和得分之间并非线性</li>
 </ul>
 <h1 id="附录、常用命令"><a href="#附录、常用命令" class="headerlink" title="附录、常用命令"></a>附录、常用命令</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询健康状况</span></span><br><span class="line">curl <span class="string">"http://localhost:9200/_cat/heath?v"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建索引</span></span><br><span class="line">$ curl -XPUT -d <span class="string">'&#123;"settings" : &#123;"number_of_shards" : 3,"number_of_replicas" : 1&#125;&#125;'</span> <span class="string">"http://localhost:9200/&lt;index&gt;/?pretty"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全部索引</span></span><br><span class="line">$ curl <span class="string">"http://localhost:9200/_cat/indices?v"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看一个索引的信息</span></span><br><span class="line">$ curl -XGET <span class="string">"http://localhost:9200/&lt;index&gt;?pretty"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试分词器</span></span><br><span class="line">$ curl -H <span class="string">"Content-Type:application/json"</span> -XPOST -d <span class="string">'&#123;"analyzer": "ik_smart","text": "中华人民共和国"&#125;'</span> <span class="string">"http://localhost:9200/_analyze?pretty"</span></span><br></pre></td></tr></table></figure>
+
         </div>
 
         
@@ -576,7 +502,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://github.com/lsj9383/2019/06/23/elastic-search-learning/">http://github.com/lsj9383/2019/06/23/elastic-search-learning/</a></span>
+                        <span><a href="http://github.com/lsj9383/2019/08/04/elasticsearch/">http://github.com/lsj9383/2019/08/04/elasticsearch/</a></span>
                     </p>
                 
                 <!-- 
@@ -609,10 +535,8 @@
         </section> -->
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2019/07/12/Flask-API/">Flask API</a>
             
-            
-            <a class="next" rel="next" href="/2019/02/20/Python-Log/">Python Log</a>
+            <a class="next" rel="next" href="/2019/08/04/Python小记/">Python小记</a>
             
         </section>
 
