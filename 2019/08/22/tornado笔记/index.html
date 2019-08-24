@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>tornado笔记 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">tornado笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 22, 2019&nbsp;&nbsp;23:46:42</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>工作中用Python2.7, 自己个人用Python3.6/3.7用。Tornado 5.1对Python2.7和Python3.x均支持的较好，因此本文主要参考Tornado 5.1</p>
+<h1 id="一、简述"><a href="#一、简述" class="headerlink" title="一、简述"></a>一、简述</h1><p>Tornado是一种Web框架以及异步网络库，最初由FriendFeed开发。通过使用非阻塞的网络IO, Tornado可以支持上万的链接，并且可以支持long polling、websockets以及其他要求长时间连接的应用。</p>
+<p>Tornado可以主要可以分为四个部分:</p>
+<ul>
+<li>web框架, 主要是包括RequestHandler类。</li>
+<li>http客户端和服务端，主要是包括HTTPServer和AsyncHTTPClient类</li>
+<li>异步的网络库, 包括IPLoop和IOStream。</li>
+<li>一个协程库, 可以便携异步代码，这种编程方式比回调链的形式具有更好的代码可读性。主要是由<code>tornado.gen</code>和<code>async def</code>实现。</li>
+</ul>
+<h1 id="二、异步和非阻塞IO"><a href="#二、异步和非阻塞IO" class="headerlink" title="二、异步和非阻塞IO"></a>二、异步和非阻塞IO</h1><p>实时WEB要求每个用户都能建立一个长期的有效链接，虽然这个链接可能大部分时间都是空闲着的。在其他的同步web server种，将会给每个用户的链接分配一个线程，这样会给系统带来极大的负担。</p>
+<p>为了最小化并发链接的代价，Tornado使用单线程事件池的模式。这意味着所有的应用代码都要求是异步和非组塞的，因为同一时间只能后一个操作在活动。</p>
+<p>异步和非组塞这两个名词是相关的，并且经常互换使用，但是他们两者实际上是不同的。</p>
+<h2 id="2-1-阻塞非阻塞"><a href="#2-1-阻塞非阻塞" class="headerlink" title="2.1 阻塞非阻塞"></a>2.1 阻塞非阻塞</h2><p>一个函数阻塞，在返回之前将会以等待一些完成。一个函数可能会有多个原因被阻塞, 网络IO，磁盘IO，锁等等。事实上，每个函数在运行和使用CPU时，或多或少都会被阻塞。</p>
+<p>一个函数可能被多方面的原因阻塞，在Tornado的上下文中，我们通常讨论的阻塞是中的网络IO。其他方面的阻塞认为耗时很短，不用考虑。</p>
+<h2 id="2-2-异步"><a href="#2-2-异步" class="headerlink" title="2.2 异步"></a>2.2 异步</h2><p>一个异步函数会在其操作完成之前返回，通常这些工作会在后台中运行。异步函数意味着，函数的实际工作会在返回值之后进行，同步函数意味着函数的实际工作会在返回值之前进行。有大量的异步接口:</p>
+<ul>
+<li>回调函数。</li>
+<li>返回一个占位符, 如Future。</li>
+<li>传递队列。</li>
+</ul>
+<p>Tornado的异步函数通常返回一个占位符Future，Futre通过await和yield关键词来返回其最终结果。</p>
+<p>Tornado的异步Demo:</p>
+<ul>
+<li>协程版:<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tornado.httpclient <span class="keyword">import</span> AsyncHTTPClient</span><br><span class="line"><span class="keyword">from</span> tornado <span class="keyword">import</span> gen</span><br><span class="line"></span><br><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">async_fun</span><span class="params">(url)</span>:</span></span><br><span class="line">    http_client = AsyncHTTPClient()</span><br><span class="line">    resp = <span class="keyword">yield</span> http_client.fetch(<span class="string">"https://topbook.cc/webapi/user/"</span>)</span><br><span class="line">    <span class="keyword">raise</span> gen.Return(response.body)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>因为有yield，所以<code>async_fun</code>将是个生成器。这里<code>http_client.fetch()</code>返回的是个future，该future通过yield交给上层调用者，上层调用者会给future添加回调，当有结果的时候，会触发该回调，回调函数做的工作上就是触发<code>async_fun.send(result)</code>, 将future的结果交给resp，然后继续执行生成器中的函数。</p>
+<ul>
+<li>回调版本:<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tornado.concurrent <span class="keyword">import</span> Future</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">async_fun2</span><span class="params">(url)</span>:</span></span><br><span class="line">    http_client = AsyncHTTPClient()</span><br><span class="line">    future = Future()</span><br><span class="line">    http_future = http_client.fetch(<span class="string">"https://topbook.cc/webapi/user/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_fetch</span><span class="params">(f)</span>:</span></span><br><span class="line">        future.set_result(f.result().body)</span><br><span class="line">    http_future.add_done_callback(on_fetch)</span><br><span class="line">    <span class="keyword">return</span> future</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="三、协程"><a href="#三、协程" class="headerlink" title="三、协程"></a>三、协程</h1><p>协程是Tornado中推荐的写异步代码的方式，通过python关键词await或yield可以挂起并恢复运行，以代替链式的回调。协程代码和同步代码几乎一直，并且不用多扩展任何线程，这让并发变得简单，并且减少了上下文切换。</p>
+<h2 id="1-Native和装饰器协程"><a href="#1-Native和装饰器协程" class="headerlink" title="1.Native和装饰器协程"></a>1.Native和装饰器协程</h2><p>Python3.5中引入了async和await关键词，从原生上直接支持协程，对于老版本的Python需要使用<code>tonrado.gen.coroutine</code>装饰器来支持协程。</p>
+<ul>
+<li><p>装饰器</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a</span><span class="params">()</span>:</span></span><br><span class="line">    b = <span class="keyword">yield</span> c()</span><br><span class="line">    <span class="keyword">raise</span> gen.Return(b)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原生</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">a</span><span class="params">()</span>:</span></span><br><span class="line">    b = <span class="keyword">await</span> c()</span><br><span class="line">    <span class="keyword">return</span> b</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在装饰器中使用raise来返回值的原因主要低版本Pythonn中不支持在生成器中使用return。由于装饰器的写法兼容性更好，这里主要讨论装饰器的方式。</p>
+<h2 id="2-使用协程"><a href="#2-使用协程" class="headerlink" title="2.使用协程"></a>2.使用协程</h2><p>一个函数如果包含`了yield关键词，则是generator，所有的generator都是异步的。当调用generator()，将会返回一个generator对象而不是运行这个generator。</p>
+<h3 id="2-1-启动协程"><a href="#2-1-启动协程" class="headerlink" title="2.1 启动协程"></a>2.1 启动协程</h3><p>需要注意:</p>
+<ul>
+<li>协程的返回值(调用的协程如果需要使用)应该使用<code>raise gen.Return(result)</code></li>
+<li>单独运行协程需要使用<code>IOLoop.current().run_sync(main)</code>, 其中main是协程函数的入口函数, 但是这样意义不大，和同步的没有什么区别。<code>run_sync</code>将会等待协程执行完毕以后，才会返回。</li>
+</ul>
+<p>当yield一个生成器列表时，将会从第一个生成器开始调用，当其yield一个值的时候，会自动调用第二个生成器，第二个生成器yield一个值的时候，再调用第3个，依次类推。当列表的所有生成器都运行完成时，将会把值赋给yield表达式的左值。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">### 2.3 协程的函数调用</span></span><br><span class="line">在协程中，如果需要调用一个函数，且这个函数中使用了协程，则存在两种写法:</span><br><span class="line">* 被调用的协程函数被`tornado.gen.coroutine`包装。</span><br><span class="line">```py</span><br><span class="line"><span class="keyword">from</span> tornado <span class="keyword">import</span> gen</span><br><span class="line"><span class="keyword">from</span> tornado.ioloop <span class="keyword">import</span> IOLoop</span><br><span class="line"></span><br><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delay_divid</span><span class="params">(a, b, seconds=<span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">yield</span> gen.sleep(seconds)</span><br><span class="line">    <span class="keyword">raise</span> gen.Return(a / b)</span><br><span class="line"></span><br><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"start"</span></span><br><span class="line">    <span class="comment"># 若delay_divid没有被coroutine装饰，则yield抛出的是一个生成器而不是Future，无法被正确处理。</span></span><br><span class="line">    result = <span class="keyword">yield</span> delay_divid(<span class="number">0</span>, <span class="number">5</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">print</span> result</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"end"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IOLoop.current().run_sync(<span class="keyword">lambda</span>: main())</span><br><span class="line"><span class="keyword">print</span> <span class="string">"done"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在python3.x中, 调用者使用yield from，将内层的future直接交给外层。<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tornado <span class="keyword">import</span> gen</span><br><span class="line"><span class="keyword">from</span> tornado.ioloop <span class="keyword">import</span> IOLoop</span><br><span class="line"></span><br><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delay_divid</span><span class="params">(a, b, seconds=<span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">yield</span> gen.sleep(seconds)</span><br><span class="line">    <span class="keyword">raise</span> gen.Return(a / b)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delay_divid2</span><span class="params">(a, b, seconds=<span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">yield</span> gen.sleep(seconds)</span><br><span class="line">    <span class="keyword">raise</span> gen.Return(a / b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@gen.coroutine</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"start"</span>)</span><br><span class="line">    result = <span class="keyword">yield</span> <span class="keyword">from</span> delay_divid2(<span class="number">0</span>, <span class="number">5</span>, <span class="number">1</span>)</span><br><span class="line">    print(result)</span><br><span class="line">    print(<span class="string">"end"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IOLoop.current().run_sync(<span class="keyword">lambda</span>: main())</span><br><span class="line">print(<span class="string">"done"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2019/08/22/tornado笔记/">http://github.com/lsj9383/2019/08/22/tornado笔记/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/08/04/vimscript/">vimscript</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
