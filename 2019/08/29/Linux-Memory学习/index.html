@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>Linux-Memory学习 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Linux-Memory学习</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 29, 2019&nbsp;&nbsp;00:22:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="一、常用内存状态监控命令"><a href="#一、常用内存状态监控命令" class="headerlink" title="一、常用内存状态监控命令"></a>一、常用内存状态监控命令</h1><h2 id="1-1-top"><a href="#1-1-top" class="headerlink" title="1.1 top"></a>1.1 top</h2><p>top命令中可以简单的查看包括内存在内的很多系统与进程信息<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">top - 00:29:54 up 342 days,  2:02,  1 user,  load average: 0.05, 0.04, 0.05</span><br><span class="line">Tasks:  95 total,   2 running,  93 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.7 us,  0.7 sy,  0.0 ni, 98.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1883724 total,   156236 free,   836264 used,   891224 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   836632 avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line"> 4385 root       0 -20  129588  14344   5652 S  0.7  0.8 233:59.22 AliYunDun</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure></p>
+<p>这里面包含了系统的内存信息(第4和5行) 以及进程的内存信息(第5、6、7列)</p>
+<ul>
+<li>系统内存信息</li>
+<li>进程内存信息<ul>
+<li>VIRT, 虚拟内存<ul>
+<li>这本质上是一个占位符，预计程序会使用这些空间，但其实很多空间都还在硬盘中，未被置换到实际物理内存中。<ul>
+<li>例如未初始化的数据，不占实际内存，但是占用虚拟内存。</li>
+<li>例如未执行到的代码片段，不占实际内存，但是占用虚拟内存。</li>
+</ul>
+</li>
+<li>需要注意虚拟内存并不代表虚拟地址空间。</li>
+</ul>
+</li>
+<li>RES, 实际物理内存, 其实也并不是完全准确的物理内存, 主要是两个场景: <ul>
+<li>Fork. 若父进程Fork子进程，由于采用CopyOnWrite技术，子进程的虚拟地址空间是完全映射到和父进程相同的物理内存的，所以子进程没有占用物理内存，但是top中还是会显示子进程占用的物理内存。</li>
+<li>动态链接.两个进程使用导入同一个库时，也会映射到相同的物理内存空间。只有当一个进程的库的内存被写时，才会进行真正的拷贝。</li>
+</ul>
+</li>
+<li>SHR, 共享内存<h2 id="1-2-free"><a href="#1-2-free" class="headerlink" title="1.2 free"></a>1.2 free</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1.8G        816M        167M        1.7M        855M        818M</span><br><span class="line">Swap:            0B          0B          0B</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>free命令较简单，只讲比较重要的。</p>
+<ul>
+<li>shared, 系统涉及的共享内存，新版本Linux才会显示。<ul>
+<li><code>ipcs</code>可以显示共享内存的占用</li>
+</ul>
+</li>
+<li>Linux内核2.6前:<ul>
+<li>buff, 文件写缓存, 主要是为了提升IO密集时的性能，内核先将数据写到缓冲，再同步到慢速设备磁盘上，进行削峰填谷。</li>
+<li>cache, 文件读缓存，将文件读到缓存，其他进程如果读取相同文件，可以复用缓存。</li>
+</ul>
+</li>
+<li>Linux内核2.6后:<ul>
+<li>buffer, 是cache中文件相关的metadata, 维护了cache和硬盘文件的映射关系。</li>
+<li>cache, 和文件相关的，就放在cache中。包含了老版本的buff和cache的功能。</li>
+</ul>
+</li>
+<li>老版本的Linux，通常认为buff/cache + free为实际的空闲内存。但其实并不准确，因为buff/cache并不一定能够完全被回收。<ul>
+<li>buff/cache其实括了共享内存的数据大小, tmpfs, 文件读写缓存。其中只有文件读写缓存可以被释放掉。</li>
+</ul>
+</li>
+<li>新版本的Linux可以使用available, 代表真实的未被占用的内存<h2 id="1-3-sar-r"><a href="#1-3-sar-r" class="headerlink" title="1.3 sar -r"></a>1.3 sar -r</h2>sar是(系统活动报告), -r查看内存相关使用的状态<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">23时56分01秒 kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty</span><br><span class="line">23时56分02秒     81720   1802004     95.66    138872    614376   2296152    121.89   1339088    279712       572</span><br><span class="line">23时56分03秒    163580   1720144     91.32    138872    614236   2197872    116.68   1260368    279672       772</span><br><span class="line">23时56分04秒    163580   1720144     91.32    138872    614236   2197872    116.68   1260368    279672       772</span><br><span class="line">23时56分05秒    163580   1720144     91.32    138872    614236   2197872    116.68   1260368    279672       772</span><br><span class="line">23时56分06秒    163580   1720144     91.32    138872    614236   2197872    116.68   1260368    279672       836</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>和free相比，可以进行实时采样，并且把buffer和cached进行了区分。</p>
+<ul>
+<li>kbcommit, 是指的承诺会给所有进程分配的内存空间。</li>
+<li>%commit, 是承诺给的内存空间相对于最大内存空间的百分比。</li>
+<li>kactive, 活跃的内存, 和swap相关。</li>
+<li>kbinact, 非活跃内存。</li>
+<li><p>kbdirty, 脏数据。</p>
+<h2 id="1-4-sar-B"><a href="#1-4-sar-B" class="headerlink" title="1.4 sar -B"></a>1.4 sar -B</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00时01分37秒  pgpgin/s pgpgout/s   fault/s  majflt/s  pgfree/s pgscank/s pgscand/s pgsteal/s    %vmeff</span><br><span class="line">00时01分38秒      0.00      0.00     67.68      0.00     22.22      0.00      0.00      0.00      0.00</span><br><span class="line">00时01分39秒      0.00      0.00     28.00      0.00     21.00      0.00      0.00      0.00      0.00</span><br><span class="line">00时01分40秒      0.00      0.00     24.00      0.00     54.00      0.00      0.00      0.00      0.00</span><br><span class="line">00时01分41秒      0.00      0.00     19.59      0.00     21.65      0.00      0.00      0.00      0.00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pgpgin/s, 内存页每秒换入(从磁盘)的速率</p>
+</li>
+<li>pgpgout/s, 内存页每秒换出(到磁盘)的速率</li>
+<li>fault/s, 通常包含了两种错误:<ul>
+<li>minflt, 使用某个虚拟内存时，虚拟内存没有映射的物理的内存, 会触发的错误，会把虚拟地址映射到内存中。可以反应出系统申请内存的频次。通常进程申请了内存，内存是在虚拟内存，不在物理内存，给内存写数据的时候，就会触发该错误，并将虚拟内存的数据映射到物理内存中。</li>
+<li>majflt, 需要的数据在内存上已经被换出到swap分区了，需要从swap分区唤回。</li>
+</ul>
+</li>
+<li>majflt/s, 参考上面描述。</li>
+<li>pgscan, 用于swap进行的扫描，主要是内存压力大的时候，扫描内存看看哪些可以换出。</li>
+<li>pgscand, 扫描可以回收的buff/cache</li>
+</ul>
+<p>需要注意pgscan和pgscand是同时进行的，在文件<code>/proc/sys/vm/swappiness</code>文件中描述了进行swap而非回收buff/cache的权重，权重的范围是0～200，值越大就越倾向于使用swap。若为0不代表不进行swap，回收buff/cache页不够用了，还是会swap的。</p>
+<h2 id="1-5-vmstat"><a href="#1-5-vmstat" class="headerlink" title="1.5 vmstat"></a>1.5 vmstat</h2><ul>
+<li>in, 系统中断</li>
+<li>cs, 进程的上下文切换</li>
+</ul>
+<h2 id="1-6-ps"><a href="#1-6-ps" class="headerlink" title="1.6 ps"></a>1.6 ps</h2><h2 id="1-7-proc-meminfo"><a href="#1-7-proc-meminfo" class="headerlink" title="1.7 /proc/meminfo"></a>1.7 /proc/meminfo</h2><p>描述了系统内存的信息, 这里说几个重要的:</p>
+<ul>
+<li>Active, 活跃的内存, swap是不会把这部分内存swap出的。</li>
+<li>Inactive, 非活跃内存, swap会考虑把这部分内存swap出。</li>
+</ul>
+<h2 id="1-8-proc-pid-smaps"><a href="#1-8-proc-pid-smaps" class="headerlink" title="1.8 /proc/${pid}/smaps"></a>1.8 /proc/${pid}/smaps</h2><ul>
+<li>Size, 进程内存页的虚拟地址</li>
+<li>Rss, 实际的物理内存</li>
+<li>Pss, 将CopyOnWrite部分的内存进行平均后的内存</li>
+</ul>
+<h1 id="二、虚拟内存空间"><a href="#二、虚拟内存空间" class="headerlink" title="二、虚拟内存空间"></a>二、虚拟内存空间</h1><h2 id="2-1-32bit"><a href="#2-1-32bit" class="headerlink" title="2.1 32bit"></a>2.1 32bit</h2><p><img src="32bit_virt_memory.png" alt=""><br>内存分布(从高地址往低地址):</p>
+<ul>
+<li>内核态数据<ul>
+<li>NORMAL</li>
+<li>DMA</li>
+</ul>
+</li>
+<li>用户态数据<ul>
+<li>env &amp; args</li>
+<li>stack(grown down)</li>
+<li>mmap(dynamic lib)</li>
+<li>heap(grown up)</li>
+<li>bss</li>
+<li>data</li>
+<li>txt<h2 id="2-2-64bit"><a href="#2-2-64bit" class="headerlink" title="2.2 64bit"></a>2.2 64bit</h2><img src="64bit_virt_memory.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h1 id="三、内存申请"><a href="#三、内存申请" class="headerlink" title="三、内存申请"></a>三、内存申请</h1><p>malloc申请内存分为两种情况:</p>
+<ul>
+<li>申请的内存小于128KB，则采用brk系统调用，将堆空间往上涨。</li>
+<li>申请的内存大于128KB，则采用mmap。<h2 id="3-1-brk"><a href="#3-1-brk" class="headerlink" title="3.1 brk"></a>3.1 brk</h2>brk本质上是将堆空间往上涨，也就是维护了一个只会向上增长的指针, 并且存在这样一个问题:</li>
+<li>当申请a内存，再申请b内存，再申请c内存后，释放掉a内存，则a内存的部分在虚拟地址空间中永远不会被复用！</li>
+</ul>
+<p>释放掉a，虽然实际物理内存会把a内存释放掉，但是进程的虚拟内存中永远不会再使用a了，因此进程就少了一部分内存。不过这是老版本malloc才会有的问题，新版本的malloc那边维护了一个链表，将可用的内存联系起来。</p>
+<h2 id="3-2-mmap"><a href="#3-2-mmap" class="headerlink" title="3.2 mmap"></a>3.2 mmap</h2><p>其实是映射一个文件到内存.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> len, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>将已经打开的文件描述符fd映射到指定的addr文件地址。若没有指定addr，则系统会默认分配一个内存地址，并返回该内存首地址。</p>
+<p>虽然是映射文件到内存，但其实并不一定非要绑定一个文件，可以通过匿名方式(输入参数指定)，可以触使分配一大段mmap内存的内存。</p>
+<p>mmap也可以用来加载库，通常一个进程刚开始，都会执行mmap，用来加载库。</p>
+<h2 id="3-3-内存不足"><a href="#3-3-内存不足" class="headerlink" title="3.3 内存不足"></a>3.3 内存不足</h2><p>若申请内存不足时，系统通常会做3两种操作:</p>
+<ul>
+<li>1) swap，将不活跃的内存换出</li>
+<li>2) buff/cache, 将buff/cache中可以释放的内存释放掉</li>
+<li>3) OOM, 前两步都无法释放出足够的内存时，将会触发OOM</li>
+</ul>
+<p>步骤1和步骤2其实是同时进行的，根据swappiness的权重来决定步骤1或是步骤2中哪个释放的内存更多。</p>
+<p>对于buff/cache，可以通过文件触发回收:</p>
+<ul>
+<li><code>echo 3 &gt; /proc/sys/vm/drop_caches</code>, 释放buff/cache</li>
+<li><code>echo 2 &gt; /proc/sys/vm/drop_caches</code>, 释放buff</li>
+<li><code>echo 1 &gt; /proc/sys/vm/drop_caches</code>, 释放cache</li>
+</ul>
+<h1 id="四、物理内存管理"><a href="#四、物理内存管理" class="headerlink" title="四、物理内存管理"></a>四、物理内存管理</h1><h2 id="4-1-虚拟内存"><a href="#4-1-虚拟内存" class="headerlink" title="4.1 虚拟内存"></a>4.1 虚拟内存</h2><p>内存页: 4Kb</p>
+<h2 id="4-2-Buddy内存分配系统"><a href="#4-2-Buddy内存分配系统" class="headerlink" title="4.2 Buddy内存分配系统"></a>4.2 Buddy内存分配系统</h2><p>主要的内存分配系统，给用户进程进行分配。主要是用于将内存页进行合并分配。</p>
+<h2 id="4-3-Slab"><a href="#4-3-Slab" class="headerlink" title="4.3 Slab"></a>4.3 Slab</h2><p>为了节省内存，给内核分配内存使用.slabtop可以查内核使用的内存。前面提到的命令，所使用的used都没有包含内核使用的内存，仅仅是是用户态的内存。socket一般占用这块空间。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2019/08/29/Linux-Memory学习/">http://github.com/lsj9383/2019/08/29/Linux-Memory学习/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/29/Linux-Network学习/">Linux-Network学习</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/22/tornado笔记/">tornado笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
