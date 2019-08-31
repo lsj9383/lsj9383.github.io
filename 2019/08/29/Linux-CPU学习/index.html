@@ -98,6 +98,68 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -120,7 +182,115 @@
         </header>
 
         <div class="post-content">
-            
+            <h1 id="一、常用CPU监控命令"><a href="#一、常用CPU监控命令" class="headerlink" title="一、常用CPU监控命令"></a>一、常用CPU监控命令</h1><h2 id="1-1-top"><a href="#1-1-top" class="headerlink" title="1.1 top"></a>1.1 top</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">top - 01:10:23 up 344 days,  2:42,  1 user,  load average: 0.01, 0.08, 0.07</span><br><span class="line">Tasks:  95 total,   1 running,  94 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.7 us,  1.0 sy,  0.0 ni, 98.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  1883724 total,   159892 free,   836320 used,   887512 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   836952 avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line"> 4385 root       0 -20  129588  14272   5580 S  0.3  0.8 243:52.83 AliYunDun</span><br><span class="line">12888 user00    20   0  155684   2128   1492 R  0.3  0.1   0:00.09 top</span><br><span class="line">    1 root      20   0   43208   2512   1304 S  0.0  0.1  25:20.56 systemd</span><br><span class="line">    2 root      20   0       0      0      0 S  0.0  0.0   0:01.53 kthreadd</span><br><span class="line">    3 root      20   0       0      0      0 S  0.0  0.0   5:57.19 ksoftirqd/0</span><br><span class="line">    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H</span><br><span class="line">    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0</span><br><span class="line">    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh</span><br></pre></td></tr></table></figure>
+<p>cpu相关指标需要关注:</p>
+<ul>
+<li>load average, 这个和uptime命令中的结果一样，用于衡量系统负载。<ul>
+<li>第一个数，1分钟系统负载</li>
+<li>第二个数，5分钟系统负载</li>
+<li>第三个数，15分钟系统负载</li>
+<li>系统负载: R状态和D状态的进程的平均个数(1秒进行一次采样). <ul>
+<li>R状态指的是正在占用CPU或者等待被调度进入CPU的进程(即都是可以运行的进程)。</li>
+<li>D状态指的是不可中断的进程.不可中断的原因很多，常见的是IO阻塞。</li>
+<li>可以看出，系统负载高包含了IO负载(不可中断个数多)和CPU负载(等待调度到cpu运行的个数多)。</li>
+</ul>
+</li>
+<li>三个数衡量系统负载是在升高或者下降。</li>
+</ul>
+</li>
+<li>$Cpu(s), cpu的各类占用比例，是所有核心的平均值。如果要看到各个核心的，需要按<code>1</code>.<ul>
+<li>us, 用户态占用cpu比率</li>
+<li>sy, 内核态占用cpu比率(系统调用进入内核态)</li>
+<li>ni, 低nice(优先级)占用cpu比率, 这个值高，代表优先级低的进程占用cpu。</li>
+<li>id, idle占用cpu比率，即cpu空闲的比率。</li>
+<li>wa, 等待io的cpu比率, 其实这个不是占用cpu，但是仍然放在这里衡量。</li>
+<li>hi, 硬中断占用cpu比率.</li>
+<li>si, 软中断占用cpu比率.</li>
+<li>st, 通常忽略.</li>
+</ul>
+</li>
+<li>进程信息的第3列(PR)和第4列(NI)都是.<h2 id="1-2-sar-p"><a href="#1-2-sar-p" class="headerlink" title="1.2 sar -p"></a>1.2 sar -p</h2>sar, 系统活动报告, -p表示显示cpu相关信息。<code>sar -p [${cpu_number}] ${simple_time}</code>, sar -p完全可以被top代替，所以忽略。<h2 id="1-3-pidstat"><a href="#1-3-pidstat" class="headerlink" title="1.3 pidstat"></a>1.3 pidstat</h2>非常有用，可以对进程进行周期性采样，显示进程的cpu占用率。新版本linux改命令仅采样当前占用cpu的进程。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ pidstat 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 采样结果:</span></span><br><span class="line">01时41分01秒   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">01时41分02秒     0      4385    0.99    0.00    0.00    0.99     0  AliYunDun</span><br><span class="line">01时41分02秒  1001     13735   16.83    1.98    0.00   18.81     0  python</span><br><span class="line">01时41分02秒  1001     13736   17.82    0.99    0.00   18.81     0  python</span><br><span class="line">01时41分02秒  1001     13737   17.82    0.99    0.00   18.81     0  python</span><br><span class="line">01时41分02秒  1001     13738   16.83    1.98    0.00   18.81     0  python</span><br><span class="line">01时41分02秒  1001     13739   16.83    1.98    0.00   18.81     0  python</span><br><span class="line"></span><br><span class="line">01时41分02秒   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">01时41分03秒    27     24183    4.95    0.00    0.00    4.95     0  mysqld</span><br><span class="line"></span><br><span class="line">01时41分03秒   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">01时41分04秒     0      4385    1.01    0.00    0.00    1.01     0  AliYunDun</span><br><span class="line">01时41分04秒     0      4590    2.02    0.00    0.00    2.02     0  ilogtail</span><br><span class="line">01时41分04秒  1001     13669    0.00    1.01    0.00    1.01     0  pidstat</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="1-4-uptime"><a href="#1-4-uptime" class="headerlink" title="1.4 uptime"></a>1.4 uptime</h2><h2 id="1-5-proc-cpuinfo"><a href="#1-5-proc-cpuinfo" class="headerlink" title="1.5 /proc/cpuinfo"></a>1.5 /proc/cpuinfo</h2><p>可以看到cpu每个核心的信息, 直接看这个文件里面的核心有几个，就知道系统是几核。判断核心的运算性能，主要看bogomips参数，这个代表每秒百万指令的执行个数。</p>
+<h2 id="1-6-vmstat"><a href="#1-6-vmstat" class="headerlink" title="1.6 vmstat"></a>1.6 vmstat</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 169620 137580 1674704    0    0    43    18    1    0  0  0 99  0  0</span><br><span class="line"> 0  0      0 169620 137580 1674736    0    0     0     0 1493 2697  1  0 100  0  0</span><br><span class="line"> 0  0      0 169620 137580 1674736    0    0     0     0 1443 2688  1  1 99  0  0</span><br><span class="line"> 0  0      0 169620 137580 1674736    0    0     0     0 1389 2648  0  0 100  0  0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>swap<ul>
+<li>si, 从磁盘换入到内存的次数</li>
+<li>so, 从内存换出到硬盘的次数</li>
+</ul>
+</li>
+<li>io<ul>
+<li>bi, 块输入</li>
+<li>bo, 块输出</li>
+</ul>
+</li>
+<li>system<ul>
+<li>in, 中断次数</li>
+<li>cs, 上下文切换次数(即进程切换次数)<ul>
+<li>cpu</li>
+</ul>
+</li>
+<li>us, 用户态cpu比例</li>
+<li>sy, 内核态cpu比例</li>
+<li>id, idle的cpu比例</li>
+<li>wa, 等待io的cpu比例</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、进程状态"><a href="#二、进程状态" class="headerlink" title="二、进程状态"></a>二、进程状态</h1><p>可以通过<code>man ps</code>来看linux系统常见状态:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PROCESS STATE CODES</span><br><span class="line">Here are the different values that the s, <span class="built_in">stat</span> and state output specifiers (header <span class="string">"STAT"</span> or <span class="string">"S"</span>) will display to describe the state of a process:</span><br><span class="line"></span><br><span class="line">       D    uninterruptible sleep (usually IO)</span><br><span class="line">       R    running or runnable (on run queue)</span><br><span class="line">       S    interruptible sleep (waiting <span class="keyword">for</span> an event to complete)</span><br><span class="line">       T    stopped by job control signal</span><br><span class="line">       t    stopped by debugger during the tracing</span><br><span class="line">       W    paging (not valid since the 2.6.xx kernel)</span><br><span class="line">       X    dead (should never be seen)</span><br><span class="line">       Z    defunct (<span class="string">"zombie"</span>) process, terminated but not reaped by its parent</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>D状态, 不可中断进程, 这个不可中断代表的是不会被别的进程打断，也不会进行信号处理，但是CPU硬中断处理还是要处理的。</li>
+<li>R状态, 运行中和可运行的进程，即正在占用CPU和被CPU调度的进程。</li>
+<li>S状态, 可中断的进程, 通常等待事件完成。</li>
+<li>T状态, 是处于暂停状态的进程<ul>
+<li>通过<code>kill -19 ${pid}</code> 暂停进程</li>
+<li>通过<code>kill -18 ${pid}</code>继续进程</li>
+<li>通过<code>kill -l</code>可以看到所有的信号</li>
+</ul>
+</li>
+<li>W状态, 老版本的(2.6内核版本之前)才存在, 是进程进行内存页映射的状态</li>
+<li>Z状态, 僵尸状态, 进程运行完后并不会死亡，而是处于僵尸状态，需要父进程进行回收。大量的僵尸进程会占用pid，把pid占用完后会导致新的进程无法创建。僵尸进程会释放掉原本内存、CPU和文件描述符(本质上不占用内存, 但是为了维持状态, 会占用微量内存)。如果父进程不存在了，会把子进程交给1号进程收养。</li>
+</ul>
+<h1 id="二、NUMA"><a href="#二、NUMA" class="headerlink" title="二、NUMA"></a>二、NUMA</h1><p>NUMA(非一致性内存访问)是一种CPU架构:</p>
+<ul>
+<li>每个CPU有自己的内存区, 这样可以避免多个CPU同时占用内存时的锁问题。</li>
+<li>CPU之间相连，以使得CPU跨内存区域访问，也就是对其他内存区的访问交给对应的CPU代理。</li>
+</ul>
+<h2 id="2-1-numactl-H"><a href="#2-1-numactl-H" class="headerlink" title="2.1 numactl -H"></a>2.1 numactl -H</h2><p><code>numactl -H</code>, 对于numa结构，通过该命令查看numa相关指标.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">available: 2 nodes (0-1)</span><br><span class="line">node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 24 25 26 27 28 29 30 31 32 33 34 35</span><br><span class="line">node 0 size: 65417 MB</span><br><span class="line">node 0 free: 1507 MB</span><br><span class="line">node 1 cpus: 12 13 14 15 16 17 18 19 20 21 22 23 36 37 38 39 40 41 42 43 44 45 46 47</span><br><span class="line">node 1 size: 65536 MB</span><br><span class="line">node 1 free: 3896 MB</span><br><span class="line">node distances:</span><br><span class="line">node   0   1</span><br><span class="line">  0:  10  21</span><br><span class="line">  1:  21  10</span><br></pre></td></tr></table></figure></p>
+<p>numa具体来说，并非是完全按照cpu来进行划分内存区的，而是把cpu进行分组划分给node，node内部的cpu之间的内存区域是加锁访问，不同node之间是分内存区域。</p>
+<h2 id="2-2-numastat"><a href="#2-2-numastat" class="headerlink" title="2.2 numastat"></a>2.2 numastat</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">                           node0           node1</span><br><span class="line">numa_hit            686521594775    880749564625</span><br><span class="line">numa_miss            36058095451    157244856835</span><br><span class="line">numa_foreign        157244856835     36058095451</span><br><span class="line">interleave_hit         709374626       729992935</span><br><span class="line">local_node          686348722324    880393452380</span><br><span class="line">other_node           36230967902    157600969080</span><br></pre></td></tr></table></figure>
+<h1 id="三、中断"><a href="#三、中断" class="headerlink" title="三、中断"></a>三、中断</h1><p>中断本质上就是CPU的异步机制, 中断通常由硬件触发。<code>/proc/interrupts</code>里面上系统上注册的中断。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">           CPU0       CPU1</span><br><span class="line">  0:         53          0   IO-APIC-edge      timer</span><br><span class="line">  1:         10          0   IO-APIC-edge      i8042</span><br><span class="line">  4:        713          0   IO-APIC-edge      serial</span><br><span class="line">  6:          3          0   IO-APIC-edge      floppy</span><br><span class="line">  8:          0          0   IO-APIC-edge      rtc0</span><br><span class="line">  9:          0          0   IO-APIC-fasteoi   acpi</span><br><span class="line"> 11:         33          0   IO-APIC-fasteoi   uhci_hcd:usb1, virtio3</span><br><span class="line"> 12:         15          0   IO-APIC-edge      i8042</span><br><span class="line"> 14:          0          0   IO-APIC-edge      ata_piix</span><br><span class="line"> 15:          0          0   IO-APIC-edge      ata_piix</span><br><span class="line"> 24:          0          0   PCI-MSI-edge      virtio2-config</span><br><span class="line"> 25:    1986852   32681567   PCI-MSI-edge      virtio2-req.0</span><br><span class="line"> 26:          7          0   PCI-MSI-edge      virtio0-config</span><br><span class="line"> 27:   12150473  189843945   PCI-MSI-edge      virtio0-input.0</span><br><span class="line"> 28:   91750351  111913513   PCI-MSI-edge      virtio0-output.0</span><br><span class="line"> 29:   94898904  105090350   PCI-MSI-edge      virtio0-input.1</span><br><span class="line"> 30:    4165153  201856517   PCI-MSI-edge      virtio0-output.1</span><br><span class="line"> 31:          0          0   PCI-MSI-edge      virtio1-config</span><br><span class="line"> 32:         33          0   PCI-MSI-edge      virtio1-virtqueues</span><br><span class="line">NMI:          0          0   Non-maskable interrupts</span><br><span class="line">LOC: 3322397292 3183090417   Local timer interrupts</span><br><span class="line">SPU:          0          0   Spurious interrupts</span><br><span class="line">PMI:          0          0   Performance monitoring interrupts</span><br><span class="line">IWI:  103728613  112975740   IRQ work interrupts</span><br><span class="line">RTR:          0          0   APIC ICR <span class="built_in">read</span> retries</span><br><span class="line">RES:  187567014  177351111   Rescheduling interrupts</span><br><span class="line">CAL:  146958098   53547641   Function call interrupts</span><br><span class="line">TLB:   31948440   32303648   TLB shootdowns</span><br><span class="line">TRM:          0          0   Thermal event interrupts</span><br><span class="line">THR:          0          0   Threshold APIC interrupts</span><br><span class="line">DFR:          0          0   Deferred Error APIC interrupts</span><br><span class="line">MCE:          0          0   Machine check exceptions</span><br><span class="line">MCP:      66857      66857   Machine check polls</span><br><span class="line">ERR:          0</span><br><span class="line">MIS:          0</span><br><span class="line">PIN:          0          0   Posted-interrupt notification event</span><br><span class="line">PIW:          0          0   Posted-interrupt wakeup event</span><br></pre></td></tr></table></figure></p>
+<p>interrupts文件包含了每个cpu所处理的中断信息。</p>
+<ul>
+<li>第一列: 中断编号</li>
+<li>第二和三列: 中断在对应核心上处理的次数</li>
+</ul>
+<h2 id="3-1-中断的瓶颈"><a href="#3-1-中断的瓶颈" class="headerlink" title="3.1 中断的瓶颈"></a>3.1 中断的瓶颈</h2><p>当一个中断来了，CPU是必须暂停当前的任务，调用中断处理函数，在互联网中网卡收发包会触发中断，网卡的巨大流量造成频繁中断会给CPU带来压力, 若中断没有处理完又来了中断，则可能会导致中断丢失，网络中表现出来为丢包。</p>
+<p>为了解救这类问题，将中断分段:</p>
+<ul>
+<li>中断上半部: 即硬中断，通常只用来复制数据，将数据从硬件中复制到内核中。</li>
+<li>中断下半部: 手段很多，通常是采用软中断，软中断用来解析内核中的数据。</li>
+</ul>
+<p>下半部的消耗一般比上半部高，如果仍然出现瓶颈，通常是下半部占用cpu非常高。</p>
+<h2 id="3-2-timer中断"><a href="#3-2-timer中断" class="headerlink" title="3.2 timer中断"></a>3.2 timer中断</h2><p>操作系统提供多进程并发使用CPU的能力，通过时间片的方式让R状态的进程使用CPU。时间片的功能由timer定时器中断，周期性中断CPU，让CPU判断是否需要切换进程。</p>
+<h1 id="四、CPU调度方案"><a href="#四、CPU调度方案" class="headerlink" title="四、CPU调度方案"></a>四、CPU调度方案</h1><p>进程和线程在调度器的角度来说都是一致，采用相同的算法来进行调度。这些线程在CPU来看，就是一堆进程。本质上Linux中，线程是轻量级进程。在Linux中线程和进程的唯一区别: <code>是否共享同一个进程资源(内存、工作目录、文件描述符、虚拟地址空间等等)</code>, 所以每个线程其实都是占用了一个pid的。</p>
+<h2 id="4-1-O1调度器"><a href="#4-1-O1调度器" class="headerlink" title="4.1 O1调度器"></a>4.1 O1调度器</h2><p>老版本Linux使用的调度器，基于时间片的。</p>
+<h2 id="4-1-1-IO密集型和CPU密集型"><a href="#4-1-1-IO密集型和CPU密集型" class="headerlink" title="4.1.1 IO密集型和CPU密集型"></a>4.1.1 IO密集型和CPU密集型</h2><h2 id="4-1-2-静态优先级-nice"><a href="#4-1-2-静态优先级-nice" class="headerlink" title="4.1.2 静态优先级(nice)"></a>4.1.2 静态优先级(nice)</h2><p>nice的范围是[-20, 19], 值越低，优先级越高</p>
+<h2 id="4-1-3-动态优先级-pr"><a href="#4-1-3-动态优先级-pr" class="headerlink" title="4.1.3 动态优先级(pr)"></a>4.1.3 动态优先级(pr)</h2><p>Linux2.6cpu会根据io密集和cpu密集来动态调整</p>
+<h2 id="4-2-CFS调度器"><a href="#4-2-CFS调度器" class="headerlink" title="4.2 CFS调度器"></a>4.2 CFS调度器</h2><p>当前的Linux通常都是使用CFS调度器(完全公平调度)。目的是尽量使R状态的进程在一个周期内均分CPU。</p>
+<ul>
+<li><code>cat /proc/sys/kernel/sched_latency_ns</code>, 该文件描述了cfs均分cpu的周期, 即在latency_ns/n为当前每个进程的运行时间.n表示当前R状态的进程个数。</li>
+<li><code>cat /proc/sys/kernel/sched_min_granularity_ns</code>, latency_ns/n的值小于该值，直接用该值做为进程的运行时间。</li>
+<li><code>cat /proc/sys/kernel/sched_child_runs_first</code>, 该文件是一个开关，cfs可以控制是否为子进程总是先于父进程执行。如果关闭了，不一定谁先执行，看系统。</li>
+</ul>
+<h3 id="4-2-1-CFS调度远离"><a href="#4-2-1-CFS调度远离" class="headerlink" title="4.2.1 CFS调度远离"></a>4.2.1 CFS调度远离</h3><p>cfs采用了红黑树动态调整进程的调度优先级, 将进程放入到rbt中，进程的key用<code>virtual runtime</code>, 这个key表示进程的cpu占用时间。cpu调度时，每次把virtual runtime最小的进程拿出来运行，cpu占用完毕后更新该进程的virtual runtime, 进行下一次调度.<br><img src="cfs-rbt.png" alt=""></p>
+<p>需要注意: </p>
+<ul>
+<li>每个cpu核心都会有一个rbt</li>
+<li>rbt的初始key可能不为0(主要是为了避免创建一堆新进程导致其他进程无法获得运行机会)</li>
+</ul>
+
         </div>
 
         
