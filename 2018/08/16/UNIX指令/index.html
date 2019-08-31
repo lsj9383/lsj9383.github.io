@@ -547,6 +547,9 @@
 <li>-vvv: 产生比-vv更详细的输出。</li>
 <li>-w: 将抓包数据输出到文件中而不是标准输出。可通过”-r”选项载入这些文件以进行分析和打印。</li>
 <li>-r: 从给定的数据包文件中读取数据。使用”-“表示从标准输入中读取。</li>
+<li>-X: 将数据用ascii码和hex两种方式进行打印</li>
+<li>-A: 将数据用ascii码进行打印</li>
+<li>-s0: 抓去包的65536个字节，避免包被截断。</li>
 </ul>
 </li>
 <li>not, 对后面的过滤条件进行取反</li>
@@ -574,7 +577,7 @@
 </ul>
 </li>
 </ul>
-<p>常用命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出可以进行抓包的网卡</span></span><br><span class="line">tcpdump -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取指定网卡的数据</span></span><br><span class="line">tcpdump -i &lt;interface&gt;</span><br><span class="line">tcpdump -v -i &lt;interface&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取指定端口的包</span></span><br><span class="line">tcpdump -i &lt;interface&gt; port &lt;port-number&gt;   <span class="comment"># 该端口流入流出的包都抓</span></span><br><span class="line">tcpdump -i &lt;interface&gt; src &lt;port-number&gt;    <span class="comment"># 抓从该端口流出的包(该端口发送出数据)</span></span><br><span class="line">tcpdump -i &lt;interface&gt; dst &lt;port-number&gt;    <span class="comment"># 抓流入该端口的包(向该端口发送数据)</span></span><br></pre></td></tr></table></figure></p>
+<p>常用命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出可以进行抓包的网卡</span></span><br><span class="line">tcpdump -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取指定网卡的数据</span></span><br><span class="line">tcpdump -i &lt;interface&gt;</span><br><span class="line">tcpdump -v -i &lt;interface&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取指定端口的包</span></span><br><span class="line">tcpdump -i &lt;interface&gt; port &lt;port-number&gt;   <span class="comment"># 该端口流入流出的包都抓</span></span><br><span class="line">tcpdump -i &lt;interface&gt; src &lt;port-number&gt;    <span class="comment"># 抓从该端口流出的包(该端口发送出数据)</span></span><br><span class="line">tcpdump -i &lt;interface&gt; dst &lt;port-number&gt;    <span class="comment"># 抓流入该端口的包(向该端口发送数据)</span></span><br><span class="line"></span><br><span class="line">tcpdump -Xns0 -i eth0 tcp and port 80 and host 127.0.0.1</span><br></pre></td></tr></table></figure></p>
 <p>tcpdump还有一系列的过滤表达式，可以进行组合，进而完成复杂的抓包工作。tcpdump的响应的标识含义:</p>
 <ul>
 <li><code>[S.]</code>, SYN，发起连接标志。</li>
