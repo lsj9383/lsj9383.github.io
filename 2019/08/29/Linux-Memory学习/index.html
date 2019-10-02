@@ -201,11 +201,12 @@
 <li>动态链接.两个进程使用导入同一个库时，也会映射到相同的物理内存空间。只有当一个进程的库的内存被写时，才会进行真正的拷贝。</li>
 </ul>
 </li>
-<li>SHR, 共享内存<h2 id="1-2-free"><a href="#1-2-free" class="headerlink" title="1.2 free"></a>1.2 free</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1.8G        816M        167M        1.7M        855M        818M</span><br><span class="line">Swap:            0B          0B          0B</span><br></pre></td></tr></table></figure>
-</li>
+<li>SHR, 共享内存</li>
 </ul>
 </li>
 </ul>
+<p>需要注意，top看到的内存是进程用户态数据所占用的内存。内核态占用的内存可以用<code>slabtop</code>来观察。</p>
+<h2 id="1-2-free"><a href="#1-2-free" class="headerlink" title="1.2 free"></a>1.2 free</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1.8G        816M        167M        1.7M        855M        818M</span><br><span class="line">Swap:            0B          0B          0B</span><br></pre></td></tr></table></figure>
 <p>free命令较简单，只讲比较重要的。</p>
 <ul>
 <li>shared, 系统涉及的共享内存，新版本Linux才会显示。<ul>
@@ -286,14 +287,19 @@
 <h1 id="三、内存申请"><a href="#三、内存申请" class="headerlink" title="三、内存申请"></a>三、内存申请</h1><p>malloc申请内存分为两种情况:</p>
 <ul>
 <li>申请的内存小于128KB，则采用brk系统调用，将堆空间往上涨。</li>
-<li>申请的内存大于128KB，则采用mmap。<h2 id="3-1-brk"><a href="#3-1-brk" class="headerlink" title="3.1 brk"></a>3.1 brk</h2>brk本质上是将堆空间往上涨，也就是维护了一个只会向上增长的指针, 并且存在这样一个问题:</li>
-<li>当申请a内存，再申请b内存，再申请c内存后，释放掉a内存，则a内存的部分在虚拟地址空间中永远不会被复用！</li>
+<li>申请的内存大于128KB，则采用mmap。<h2 id="3-1-brk"><a href="#3-1-brk" class="headerlink" title="3.1 brk"></a>3.1 brk</h2>brk本质上是将堆空间往上涨，也就是维护了一个只会向上增长的指针。</li>
 </ul>
-<p>释放掉a，虽然实际物理内存会把a内存释放掉，但是进程的虚拟内存中永远不会再使用a了，因此进程就少了一部分内存。不过这是老版本malloc才会有的问题，新版本的malloc那边维护了一个链表，将可用的内存联系起来。</p>
-<h2 id="3-2-mmap"><a href="#3-2-mmap" class="headerlink" title="3.2 mmap"></a>3.2 mmap</h2><p>其实是映射一个文件到内存.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> len, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-2-mmap"><a href="#3-2-mmap" class="headerlink" title="3.2 mmap"></a>3.2 mmap</h2><p>其实是mmap是映射一个文件到内存到虚拟地址空间的mmap区域, 这会让mmap区域分配内存. 但其实在Linux2.6内核版本以后, mmap可以不指定文件进行内存的分配。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> len, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p>将已经打开的文件描述符fd映射到指定的addr文件地址。若没有指定addr，则系统会默认分配一个内存地址，并返回该内存首地址。</p>
 <p>虽然是映射文件到内存，但其实并不一定非要绑定一个文件，可以通过匿名方式(输入参数指定)，可以触使分配一大段mmap内存的内存。</p>
 <p>mmap也可以用来加载库，通常一个进程刚开始，都会执行mmap，用来加载库。</p>
+<h2 id="3-3-brk和mmap的折中"><a href="#3-3-brk和mmap的折中" class="headerlink" title="3.3 brk和mmap的折中"></a>3.3 brk和mmap的折中</h2><p>brk存在这样一个问题: 当申请a内存，再申请b内存，再申请c内存后，释放掉a内存，则a内存的部分在虚拟地址空间中永远不会被复用！</p>
+<p>释放掉a，虽然实际物理内存会把a内存释放掉，但是进程的虚拟内存中永远不会再使用a了，因此进程就少了一部分内存。若a的内存非常大，就会导致大片的内存泄漏。为了解决这个问题，于是malloc采用下述的方案:</p>
+<ul>
+<li>小于128k，为小空间，使用brk。不采用mmap是因为mmap的内存分配是以1M为单位，小空间若分配mmap则会让页中断剧增。</li>
+<li>大于128k，为大空间，使用mmap。不采用brk是因为brk会导致虚拟内存泄漏严重。</li>
+</ul>
+<p>新版本malloc才会有的问题，新版本的malloc那边维护了一个链表，将可用的内存联系起来。但是malloc对brk和mmap的区分还是继续沿用。</p>
 <h2 id="3-3-内存不足"><a href="#3-3-内存不足" class="headerlink" title="3.3 内存不足"></a>3.3 内存不足</h2><p>若申请内存不足时，系统通常会做3两种操作:</p>
 <ul>
 <li>1) swap，将不活跃的内存换出</li>

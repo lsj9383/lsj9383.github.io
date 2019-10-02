@@ -98,6 +98,68 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -120,7 +182,193 @@
         </header>
 
         <div class="post-content">
-            
+            <h1 id="一、常用监控命令"><a href="#一、常用监控命令" class="headerlink" title="一、常用监控命令"></a>一、常用监控命令</h1><h2 id="1-1-netstat"><a href="#1-1-netstat" class="headerlink" title="1.1 netstat"></a>1.1 netstat</h2><h3 id="1-1-1-查看socket信息"><a href="#1-1-1-查看socket信息" class="headerlink" title="1.1.1 查看socket信息"></a>1.1.1 查看socket信息</h3><p>常用参数:</p>
+<ul>
+<li>a, 显示全部</li>
+<li>-n, 避免反向解析ip名称</li>
+<li>-t, 只显示tcp套接字</li>
+<li><p>-p, 显示进程相关信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:9999            0.0.0.0:*               LISTEN      31258/python3.6</span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -</span><br><span class="line">tcp        0      0 0.0.0.0:8888            0.0.0.0:*               LISTEN      20567/python3.6</span><br><span class="line">tcp        0      0 0.0.0.0:8889            0.0.0.0:*               LISTEN      11735/python3.6</span><br><span class="line">tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -</span><br><span class="line">tcp        0      0 172.26.175.115:35619    172.26.175.116:8888     TIME_WAIT   -</span><br><span class="line">tcp        0      0 172.26.175.115:443      139.207.107.151:35436   ESTABLISHED -</span><br><span class="line">tcp        0      0 172.26.175.115:27701    172.26.175.116:3306     ESTABLISHED 20572/python3.6</span><br><span class="line">tcp        0     36 172.26.175.115:22       183.14.135.253:64234    ESTABLISHED -</span><br><span class="line">tcp        0      0 172.26.175.115:17751    172.26.175.115:8888     TIME_WAIT   -</span><br><span class="line">tcp        0      0 172.26.175.115:27749    172.26.175.116:3306     ESTABLISHED 20576/python3.6</span><br><span class="line">tcp        0      0 172.26.175.115:443      112.10.89.167:6956      ESTABLISHED -</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Proto, 表示套接字的协议，我们通常观察tcp套接字</p>
+</li>
+<li>对于listen的socket<ul>
+<li>Recv-Q, accept queue中存在的全连接socket</li>
+<li>Send-Q, accept queue的长度</li>
+</ul>
+</li>
+<li>对于非listen的socket:<ul>
+<li>Recv-Q, socket的内核接收缓冲区<ul>
+<li>接收缓冲区满后, 没有读出来, 可能会导致对端的发送缓冲区撑满，进而对端的同步发送函数会阻塞。</li>
+<li>接收缓冲区空时，同步socket的读函数会阻塞。</li>
+</ul>
+</li>
+<li>Send-Q, socket的内核发送缓冲区<ul>
+<li>写socket的函数返回后，代表用户态数据交给了内核发送缓冲区，但是不代表数据已经发送到对端。</li>
+<li>发送缓冲区满后，会导致同步socket写函数阻塞</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Local Address, socket的本地地址</li>
+<li>Foreign Address, socket的对端地址</li>
+<li>state, socket所处的状态</li>
+<li>PID/Program name, 持有该socket的进程信息</li>
+</ul>
+<h3 id="1-1-2-查看系统协议栈的全局情况"><a href="#1-1-2-查看系统协议栈的全局情况" class="headerlink" title="1.1.2 查看系统协议栈的全局情况"></a>1.1.2 查看系统协议栈的全局情况</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ netstat -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只列出部分</span></span><br><span class="line">Ip:</span><br><span class="line">    526292759 total packets received</span><br><span class="line">    0 forwarded</span><br><span class="line">    0 incoming packets discarded</span><br><span class="line">    526292756 incoming packets delivered</span><br><span class="line">    527972404 requests sent out</span><br><span class="line">    2 reassemblies required</span><br><span class="line">    1 packets reassembled ok</span><br><span class="line">Tcp:</span><br><span class="line">    22351239 active connections openings</span><br><span class="line">    17901288 passive connection openings</span><br><span class="line">    510539 failed connection attempts</span><br><span class="line">    1683211 connection resets received</span><br><span class="line">    149 connections established</span><br><span class="line">    522163853 segments received</span><br><span class="line">    556769841 segments send out</span><br><span class="line">    14052066 segments retransmited</span><br><span class="line">    52950 bad segments received.</span><br><span class="line">    3385536 resets sent</span><br><span class="line">    InCsumErrors: 8325</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-路由表"><a href="#1-2-路由表" class="headerlink" title="1.2 路由表"></a>1.2 路由表</h3><p>路由表的命令有两种:</p>
+<ul>
+<li><code>ip route show table ${table}</code>, 显示指定路由表<ul>
+<li>table表示路由表, 通常可选:local, default, main, all, 其中all表示显示全部路由表。</li>
+<li>不指定table时, 默认选手main路由表的信息, 这个表中有回环的路由信息, 优先级最高。</li>
+<li><code>/etc/route2/tb_tables</code>, 保存了当前Linux的所有路由表.</li>
+<li><code>ip rule</code>, 显示当前路由表的选择策略.不仅可以根据源ip选择使用哪个路由表, 也可以显示各个表的路由表优先级。值越小优先级越高。</li>
+</ul>
+</li>
+<li><code>route -n</code>, 查路由表, </li>
+<li>在一个路由表中, 可能一个目标地址有多个匹配，路由表会采取最精确匹配。</li>
+</ul>
+<h3 id="1-3-ifconfig"><a href="#1-3-ifconfig" class="headerlink" title="1.3 ifconfig"></a>1.3 ifconfig</h3><p>查网卡状态</p>
+<h3 id="1-4-ss"><a href="#1-4-ss" class="headerlink" title="1.4 ss"></a>1.4 ss</h3><p>netstat被ss代替了, ss的执行速度更快。ss的参数兼容netstat，也有自己的一套命令</p>
+<h3 id="1-5-arp"><a href="#1-5-arp" class="headerlink" title="1.5 arp"></a>1.5 arp</h3><p>查看arp缓存, <code>arp -n</code>可以直接显示ip</p>
+<h3 id="1-6-sar"><a href="#1-6-sar" class="headerlink" title="1.6 sar"></a>1.6 sar</h3><ul>
+<li><code>sar -n DEV 1</code>, 查看网卡相关的收发包信息</li>
+<li><code>sar -n TCP 1</code>, 查看TCP相关的收发包信息</li>
+<li><code>sar -n IP 1</code>, 查看IP相关的收发包信息</li>
+</ul>
+<h3 id="1-7-nmap"><a href="#1-7-nmap" class="headerlink" title="1.7 nmap"></a>1.7 nmap</h3><p>这个不是linux自带的，centos需要通过<code>yum -y install nmap</code>来进行安装。该命令可以用于扫描端口。<br><code>nmap -sT -p ${port} ${ip}</code>, -sT表示建立TCP的三次握手。</p>
+<h3 id="1-8-ping"><a href="#1-8-ping" class="headerlink" title="1.8 ping"></a>1.8 ping</h3><p>主要讲几个参数:</p>
+<ul>
+<li>-f, flood, 洪水一般的发包, 尽可能多的发包。</li>
+<li>-s, 指定一个包的长度。</li>
+</ul>
+<h1 id="二、网络协议分层体系"><a href="#二、网络协议分层体系" class="headerlink" title="二、网络协议分层体系"></a>二、网络协议分层体系</h1><p>ISO/OSI网络模型:</p>
+<ul>
+<li>应用层</li>
+<li>会话层</li>
+<li>表现层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>链路层</li>
+<li>物理层</li>
+</ul>
+<p>TCP/IP协议模型:</p>
+<ul>
+<li>应用层</li>
+<li>传输层</li>
+<li>表现层</li>
+<li>链路层</li>
+<li>物理层, TCP/IP协议模型不包括该层, 但是承认该层存在。</li>
+</ul>
+<h2 id="2-1-链路层"><a href="#2-1-链路层" class="headerlink" title="2.1 链路层"></a>2.1 链路层</h2><p>解决网络拓扑结构问题，我们常用的是总线型结构。不同的组网形式，底层的通信协议不一致，链路层将底层通信协议输入输出接口统一, 也约定了不同的组网如何进行通信。</p>
+<p>需要注意arp既不属于链路层，也不属于网络层。</p>
+<p>链路层称数据为Frame, 帧。</p>
+<h2 id="2-2-网络层"><a href="#2-2-网络层" class="headerlink" title="2.2 网络层"></a>2.2 网络层</h2><p>链路层确定了各个局部的组网, 网络层将不同的组网联系起来。网络层称数据为Packet, 报文。</p>
+<h2 id="2-3-传输层"><a href="#2-3-传输层" class="headerlink" title="2.3 传输层"></a>2.3 传输层</h2><p>解决传输的质量问题。传输层称数据为Segment, 段。</p>
+<h1 id="三、Socket"><a href="#三、Socket" class="headerlink" title="三、Socket"></a>三、Socket</h1><p>socket属于内核空间。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(domain, type, protocol)</span></span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>domain, 通过<code>AP_INET</code>指定IPvs类型的socket。</li>
+<li>type, 选择udp(<code>SOCKET_DGRAM</code>)和tcp(<code>SOCKET_STREAM</code>)。</li>
+<li>protocol, 基于ip协议，通常填0</li>
+</ul>
+<h2 id="3-1-常用相关参数"><a href="#3-1-常用相关参数" class="headerlink" title="3.1 常用相关参数"></a>3.1 常用相关参数</h2><p>创建完socket后，可以在程序里可以控制一下参数<code>setsocket()</code>:</p>
+<ul>
+<li><code>SO_LINGER</code>, 用于控制socket函数close和shutdown的行为.<ul>
+<li>正常情况下， linger关闭, 关闭者发起FIN包，走正常的四次挥手关闭。</li>
+<li>linger配置打开，关闭者直接发RST包，自己就关闭了，不走四次挥手。可以作为<code>time_wait</code>过多时的第二方案。</li>
+<li>直接发rst进行关闭，会直接忽略内核发送缓冲区的数据，直接进行关闭。</li>
+</ul>
+</li>
+<li><code>SO_RCVBUF</code>, socket的内核接收缓存<ul>
+<li>若建立socket没有指定rcvbuf大小，会采用<code>/proc/sys/net/core/rmem_default</code>的大小</li>
+<li>若人为设定了值，实际使用的是该值翻倍后的大小，但是不能超过<code>/proc/sys/net/core/rmem_max</code>，若超过了会被限幅。</li>
+</ul>
+</li>
+<li><code>SO_SNDBUF</code>, socket的内核发送缓存<ul>
+<li>若建立socket没有指定rcvbuf大小，会采用<code>/proc/sys/net/core/wmem_default</code>的大小</li>
+<li>若人为设定了值，实际使用的是该值翻倍后的大小，但是不能超过<code>/proc/sys/net/core/wmem_max</code>，若超过了会被限幅。</li>
+</ul>
+</li>
+<li><code>SO_REUSEPORT</code>, 新版本内核的配置，让多个进程可以在同一个socket上监听，老版本如果多个进程监听同一个socket，会有惊群现象。</li>
+</ul>
+<h2 id="3-2-listen"><a href="#3-2-listen" class="headerlink" title="3.2 listen"></a>3.2 listen</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd, <span class="keyword">int</span> backlog)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>主要是强调下backlog参数, 这个是AcceptQueue队列的大小，即全连接队列的大小。<code>listen_sock.accept()</code>就是在AcceptQueue中获取全连接状态的socket的。</p>
+<ul>
+<li><code>/proc/sys/net/core/somax_conn</code> 中记录了AcceptQueue队列长度的最大值, backlog参数若超过该值则实际队列大小取该值。</li>
+<li>补充下 <code>/proc/sys/net/ipv4/tcp_max_syn_backlog</code> 记录了SynQueue队列长度的最大值。这个状态是很占内存的，不能设置太大。</li>
+</ul>
+<h2 id="3-3-syn-flood"><a href="#3-3-syn-flood" class="headerlink" title="3.3 syn flood"></a>3.3 syn flood</h2><p>在建立三次连接的时候，客户端发送了syn包，服务器将会维持半连接，并将半连接的socket放在SynQueue空间中, 半连接状态非常耗费内存。</p>
+<p>消耗内存的原因是，半连接要维护客户端的相关信息，等到客户端响应ack的时候，方便根据客户端的信息取出正确的半连接socket。</p>
+<p>若恶意的客户端只发送syn包，不发送ack包，则服务器将会始终维护半连接socket，直到超时。客户端发起大量的syn包，撑满服务器的SynQueue，则服务器将会拒绝别的正常用户的syn包，无法和正常用户建立三次握手。</p>
+<p>为了解决这样的问题，需要配置<code>/proc/sys/net/ipv4/tcp_syncookies</code>, 可以将客户端的连接匹配信息进行md5，避免消耗那么大的内存, 这样就能保存大量的半连接socket了。只会在SynQueue撑满时，才会进行md5的处理。</p>
+<h2 id="3-4-文件描述符限制"><a href="#3-4-文件描述符限制" class="headerlink" title="3.4 文件描述符限制"></a>3.4 文件描述符限制</h2><p>因为socket其实也是文件描述符，这里给出文件描述符的个数限制</p>
+<ul>
+<li><code>/proc/sys/fs/file-max</code>, 定义了最多的文件描述符个数</li>
+<li><code>/proc/sys/file-nr</code>, 显示了3个数字: <code>${已经使用的fd个数} ${可以被回收的fd个数} ${最多的fd个数}</code></li>
+<li><code>ulimit -n</code></li>
+</ul>
+<h1 id="TCP核心点"><a href="#TCP核心点" class="headerlink" title="TCP核心点"></a>TCP核心点</h1><h2 id="建立链接"><a href="#建立链接" class="headerlink" title="建立链接"></a>建立链接</h2><h2 id="断开链接"><a href="#断开链接" class="headerlink" title="断开链接"></a>断开链接</h2><p><code>TIME_WAIT</code>相关的配置:</p>
+<ul>
+<li><code>/proc/sys/net/ipv4/tcp_max_tw_buckets</code>, 限制了timewait状态的socket个数。<ul>
+<li>需要注意，timewait的socket虽然不怎么占资源，但是timewait的socket在内部维护了红黑树，为了平衡红黑树的代价会很大，内核占cpu的比例会上升。</li>
+<li>为了避免内核占cpu的比例上升，可以把这个值改小。改小后，可能会导致不可靠关闭的可能性增加，另一端的等待延时可能会增加。</li>
+</ul>
+</li>
+<li><code>/proc/sys/net/ipv4/tcp_tw_recyle</code></li>
+<li><code>/proc/sys/net/ipv4/tcp_tw_reuse</code></li>
+</ul>
+<h2 id="连接队列"><a href="#连接队列" class="headerlink" title="连接队列"></a>连接队列</h2><p>连接队列分为两种:</p>
+<ul>
+<li>半连接队列, 服务器接收到客户端发送的SYN包后就会建立半连接，并将半连接放入<code>syns queue</code>。</li>
+<li>全连接队列, 服务器接收到客户端响应的ACK包后，会将连接从<code>syns queue</code>移动到<code>accept queue</code>。</li>
+<li>上面两种均统称backlog。</li>
+</ul>
+<p>建立连接和队列:<br><img src="connect_syns_accept.png" alt=""></p>
+<p>状态变更和队列:<br><img src="syns_accept_queue.png" alt=""></p>
+<ul>
+<li>syns queue的大小由<code>net.ipv4.tcp_max_syn_backlog</code>参数决定</li>
+<li><p>accept queue的大小由<code>listen(fd, backlog)</code>中的backlog参数和<code>net.core.somaxconn</code>参数一同决定，取最小值。</p>
+</li>
+<li><p>syns queue如果满了</p>
+<ul>
+<li><code>syncookies=0</code> 且 <code>tcp_abort_on_overflow=0</code>, 服务器会直接忽略掉新的SYN包。</li>
+<li><code>syncookies=0</code> 且 <code>tcp_abort_on_overflow=1</code>, 服务器会响应RST包。</li>
+<li><code>syncookies=1</code> 服务器会对客户端信息进行hash以映射到半连接socket，理论上此时可以无限制半连接个数。</li>
+</ul>
+</li>
+<li>accept queue如果满了<ul>
+<li><code>tcp_abort_on_overflow=0</code>, 则会直接忽略掉三次握手最后的ACK, 但是不会从syn queue中删除。会重发syn+ack，触使客户端重发ack，若此时accept queue有空则将连接设置为全连接。若多次重试也没有empty，则最终服务器发送RST。</li>
+<li><code>tcp_abort_on_overflow=1</code>, 服务器会直接响应RST，拒绝连接。</li>
+</ul>
+</li>
+</ul>
+<h1 id="附录、工作中遇到的问题"><a href="#附录、工作中遇到的问题" class="headerlink" title="附录、工作中遇到的问题"></a>附录、工作中遇到的问题</h1><p>只做个人记录</p>
+<h2 id="1-响应502问题"><a href="#1-响应502问题" class="headerlink" title="1.响应502问题"></a>1.响应502问题</h2><ul>
+<li>问题背景: 现网A请求返回502</li>
+<li>问题特征:<ul>
+<li>1.ngx的错误日志记录后台upstream server没有一个可用。<code>no live upstreams while connecting to upstream</code></li>
+<li>2.ngx没有core, server也没有core，502响应为偶现。</li>
+<li>3.人为循环发起该请求，可以复现502响应，1分钟会出现10次左右。</li>
+<li>4.测试环境不会响应502。</li>
+<li>5.server的TIME WAIT状态的socket量很大。</li>
+</ul>
+</li>
+<li>问题原因<ul>
+<li>1.定位后发现，server有大量的B请求响应404。server并未在http上注册对请求B的处理。</li>
+<li>2.大部分http服务器对响应404的连接会直接断开，实际上就是断开的server和ngx的连接，导致server存在大量TIME WAIT。</li>
+<li>3.server频繁断开连接，TIME WAIT过多，对应ip和端口的socket被耗尽, 导致ngx无法重新连接server, 该server的其他请求会直接在ngx返回502 。</li>
+</ul>
+</li>
+<li>问题解决：<ul>
+<li>1.ngx直接拒绝掉B请求。</li>
+<li>2.或可以在服务器上注册请求B, 进行返回错误的处理。若业务没有特殊需要，建议使用上一种解决方法。</li>
+</ul>
+</li>
+</ul>
+<h1 id="附录二、参考文献"><a href="#附录二、参考文献" class="headerlink" title="附录二、参考文献"></a>附录二、参考文献</h1><ul>
+<li><a href="https://www.itcodemonkey.com/article/5834.html" target="_blank" rel="noopener">TCP 半连接队列和全连接队列</a></li>
+</ul>
+
         </div>
 
         
