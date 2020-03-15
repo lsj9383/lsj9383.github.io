@@ -224,10 +224,41 @@
 <p>即最常用的</p>
 <h3 id="1-enumerate优化"><a href="#1-enumerate优化" class="headerlink" title="1) enumerate优化"></a>1) enumerate优化</h3><p>很明显, 最普通的for循环语句的方案无法支持打印当前元素的索引, 为了记录当前元素的索引需要很奇葩的额外定义一个变量来记录:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">idx = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> iterable:</span><br><span class="line">    statement</span><br><span class="line">    idx += <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
 <p>上述方案不仅繁琐，而且需要程序员额外维护递增逻辑。此类场景可以使用Python的enumerate内置函数, 该内置函数是包装可迭代对象, 返回的迭代器每次next会返回当前索引以及对应的值:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> idx, element <span class="keyword">in</span> enumerate(iterable):</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-zip优化"><a href="#2-zip优化" class="headerlink" title="2) zip优化"></a>2) zip优化</h3><h1 id="三、集合"><a href="#三、集合" class="headerlink" title="三、集合"></a>三、集合</h1><h1 id="附录-参考文献"><a href="#附录-参考文献" class="headerlink" title="附录: 参考文献"></a>附录: 参考文献</h1><ul>
-<li><a href="https://github.com/piglei/one-python-craftsman">[1] Python工匠</a></li>
+<h3 id="2-zip优化"><a href="#2-zip优化" class="headerlink" title="2) zip优化"></a>2) zip优化</h3><h1 id="三、集合"><a href="#三、集合" class="headerlink" title="三、集合"></a>三、集合</h1><h1 id="四、打包与分发"><a href="#四、打包与分发" class="headerlink" title="四、打包与分发"></a>四、打包与分发</h1><p>可以通过setuptools对package进行打包、安装和分发。在使用setuptools前，可以先使用pip对setuptools进行升级:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade setuptools</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-1-最简单的使用"><a href="#4-1-最简单的使用" class="headerlink" title="4.1 最简单的使用"></a>4.1 最简单的使用</h2><p>setuptools可以将，最基本的使用方式:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># setup.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup, find_packages</span><br><span class="line">setup(</span><br><span class="line">    name=<span class="string">"$&#123;name&#125;"</span>,</span><br><span class="line">    version=<span class="string">"0.1"</span>,</span><br><span class="line">    packages=find_packages(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>通过<code>python setup.py install</code>可以进行安装。需要注意：</p>
+<ul>
+<li><code>name参数</code> 并非package名称，只是一次setup打包的名称, 该名称也用于pip中进行索引安装。</li>
+<li>一次打包下会有多个packages，通过<code>packages</code>参数指定。</li>
+<li><code>find_packages()</code> 函数可以找到当前目录下的所有package(包含package下面的package)，原理是识别目录下是否有<code>__init__.py</code>，如果有则认为是包，并继续深度扫描下一层的包，否则跳过。</li>
+</ul>
+<h2 id="4-3-setup常用参数"><a href="#4-3-setup常用参数" class="headerlink" title="4.3 setup常用参数"></a>4.3 setup常用参数</h2><ul>
+<li>name</li>
+<li>version</li>
+<li>display_meta, 以下的参数用于在pip中进行显示。<ul>
+<li>author, 作者名称</li>
+<li>author_email, 作者邮箱</li>
+<li>description, 包描述</li>
+<li>url, project home page</li>
+<li>project_urls, dict</li>
+</ul>
+</li>
+<li>packages，包名。</li>
+<li>install_requires, 依赖的包名，可以指定版本信息。</li>
+<li>dependency_links, 安装依赖所使用的制品库链接，默认就是pypi。</li>
+</ul>
+<h2 id="4-4-egg包"><a href="#4-4-egg包" class="headerlink" title="4.4 egg包"></a>4.4 egg包</h2><p>通过setuptools安装的包通常是egg包，egg包是对实际包进行zip压缩后的结果。egg包的名称和setup函数中的name参数对应。</p>
+<p>egg包放在python的sys.path下并不能加载，还需要在<code>easy-install.pth</code>中添加egg包路径(setuptools安装时会自动添加该egg路径)。</p>
+<h2 id="4-5-卸载"><a href="#4-5-卸载" class="headerlink" title="4.5 卸载"></a>4.5 卸载</h2><p>egg包的卸载分为两步:</p>
+<ul>
+<li>删除egg包</li>
+<li>从<code>easy-install.pth</code>中剔除该egg包</li>
+</ul>
+<h1 id="附录-参考文献"><a href="#附录-参考文献" class="headerlink" title="附录: 参考文献"></a>附录: 参考文献</h1><ul>
+<li><a href="https://github.com/piglei/one-python-craftsman">1] Python工匠</a></li>
 <li>[2] 流畅的Python</li>
 <li>[3] 数据结构与算法——Python实现</li>
+<li>[4] <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#eggsecutable-scripts" target="_blank" rel="noopener">setuptools</a></li>
 </ul>
 
         </div>
