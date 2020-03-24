@@ -182,7 +182,8 @@
         </header>
 
         <div class="post-content">
-            <p>当前工作和个人实践中仍然有很多项目采用陈旧的部署方案，这对编译环境 &amp; 运行环境均有要求，例如动态链接库的丢失。可能包含 Docker、k8s、Helm、Prometheus、istio 等相关的内容和组件。</p>
+            <p>当前工作和个人实践中仍然有很多项目采用陈旧的部署方案，这无论是集成CI/CD，或是自动扩缩容都有极大的限制。</p>
+<p>这里对传统项目转容器的一些个人实践记录，可能包含 Docker、k8s、Helm、Prometheus、istio 等相关的内容和组件。</p>
 <h2 id="一、Docker-实践记录"><a href="#一、Docker-实践记录" class="headerlink" title="一、Docker 实践记录"></a>一、Docker 实践记录</h2><h3 id="1-Docker-的启动和配置"><a href="#1-Docker-的启动和配置" class="headerlink" title="1.Docker 的启动和配置"></a>1.Docker 的启动和配置</h3><p>我的 CentOS 7.x 版本的 Docker 是默认使用 systemd 进行控制的，包含三个部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/systemd/system/docker.service</span><br><span class="line">/usr/lib/systemd/system/docker.socket</span><br><span class="line">/usr/lib/systemd/system/containerd.service</span><br></pre></td></tr></table></figure></p>
 <p>dockerd 的配置文件是: <code>/etc/docker/daemon.json</code>，变更了dockerd配置文件后，通常需要使用 systemctl 进行 dockerd 重启。</p>
 <h3 id="2-查-Docker-的运行日志"><a href="#2-查-Docker-的运行日志" class="headerlink" title="2.查 Docker 的运行日志"></a>2.查 Docker 的运行日志</h3><p>Docker 交由 sytemd 进行管理，所以使用 systemd 的命令集查询 Docker 日志即可：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询dockerd状态，包括部分日志</span></span><br><span class="line">$ systemctl status docker.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定 systemd unit 的日志 (推荐)</span></span><br><span class="line">$ journalctl -u docker</span><br></pre></td></tr></table></figure></p>
