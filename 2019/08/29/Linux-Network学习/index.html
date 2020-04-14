@@ -307,8 +307,14 @@
 <li><code>/proc/sys/file-nr</code>, 显示了3个数字: <code>${已经使用的fd个数} ${可以被回收的fd个数} ${最多的fd个数}</code></li>
 <li><code>ulimit -n</code></li>
 </ul>
-<h1 id="TCP核心点"><a href="#TCP核心点" class="headerlink" title="TCP核心点"></a>TCP核心点</h1><h2 id="建立链接"><a href="#建立链接" class="headerlink" title="建立链接"></a>建立链接</h2><h2 id="断开链接"><a href="#断开链接" class="headerlink" title="断开链接"></a>断开链接</h2><p><code>TIME_WAIT</code>相关的配置:</p>
-<ul>
+<h1 id="四、TCP核心点"><a href="#四、TCP核心点" class="headerlink" title="四、TCP核心点"></a>四、TCP核心点</h1><h2 id="4-1-建立链接"><a href="#4-1-建立链接" class="headerlink" title="4.1 建立链接"></a>4.1 建立链接</h2><h2 id="4-2-断开链接"><a href="#4-2-断开链接" class="headerlink" title="4.2 断开链接"></a>4.2 断开链接</h2><p>断开连接是一个4次挥手的过程，目的在于通信双发都确定自己通信结束，并且数据包在网络中不再存在。</p>
+<h3 id="4-2-1-TIME-WAIT"><a href="#4-2-1-TIME-WAIT" class="headerlink" title="4.2.1 TIME_WAIT"></a>4.2.1 TIME_WAIT</h3><ul>
+<li>TIME_WAIT 的目的<ul>
+<li>确保对端发送的数据在连接关闭前全部接收到。</li>
+<li>TIME_WAIT 的持续时间通常是 2MSL，这是因为如果 ACK 丢包，会让对端重新发送 FIN 包，两个包一共的存活时间是 2MSL。</li>
+</ul>
+</li>
+<li>相关配置<ul>
 <li><code>/proc/sys/net/ipv4/tcp_max_tw_buckets</code>, 限制了timewait状态的socket个数。<ul>
 <li>需要注意，timewait的socket虽然不怎么占资源，但是timewait的socket在内部维护了红黑树，为了平衡红黑树的代价会很大，内核占cpu的比例会上升。</li>
 <li>为了避免内核占cpu的比例上升，可以把这个值改小。改小后，可能会导致不可靠关闭的可能性增加，另一端的等待延时可能会增加。</li>
@@ -317,13 +323,28 @@
 <li><code>/proc/sys/net/ipv4/tcp_tw_recyle</code></li>
 <li><code>/proc/sys/net/ipv4/tcp_tw_reuse</code></li>
 </ul>
-<h2 id="连接队列"><a href="#连接队列" class="headerlink" title="连接队列"></a>连接队列</h2><p>连接队列分为两种:</p>
+</li>
+</ul>
+<h3 id="4-2-2-LAST-ACK"><a href="#4-2-2-LAST-ACK" class="headerlink" title="4.2.2 LAST_ACK"></a>4.2.2 LAST_ACK</h3><p>被动关闭的一端在发送FIN后，会进入 LAST_ACK，等待请求关闭的一方发送 ACK，这时候有如下情形：</p>
+<ul>
+<li>接收到 ACK，正式关闭连接。</li>
+<li>重新发送 FIN，根据对端不同的状态会有不同的处理：<ul>
+<li>对端处于 FIN_WAIT_2 状态或者 TIME_WATI 状态，都会发送 ACK 包。</li>
+<li>对端处于已经关闭的状态，会发送 RST 包，接收到后关闭。</li>
+</ul>
+</li>
+<li>FIN 包始发出去后一直没有响应，LAST_ACK 在持续一段时间后，会自动关闭连接。<ul>
+<li>对端如果接收到过 FIN 包，说明对端已经进入 TIME_WAIT 了，打开最后都进行了关闭。</li>
+<li>对端如果没有接收到过 FIN 包，则自己重发 FIN 包，因为连接已经关闭，所以收到一个 RST，自己也就随之关闭。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-3-连接队列"><a href="#4-3-连接队列" class="headerlink" title="4.3 连接队列"></a>4.3 连接队列</h2><p>连接队列分为两种:</p>
 <ul>
 <li>半连接队列, 服务器接收到客户端发送的SYN包后就会建立半连接，并将半连接放入<code>syns queue</code>。</li>
 <li>全连接队列, 服务器接收到客户端响应的ACK包后，会将连接从<code>syns queue</code>移动到<code>accept queue</code>。</li>
 <li>上面两种均统称backlog。</li>
 </ul>
-<p>建立连接和队列:<br><img src="connect_syns_accept.png" alt=""></p>
 <p>状态变更和队列:<br><img src="syns_accept_queue.png" alt=""></p>
 <ul>
 <li>syns queue的大小由<code>net.ipv4.tcp_max_syn_backlog</code>参数决定</li>
