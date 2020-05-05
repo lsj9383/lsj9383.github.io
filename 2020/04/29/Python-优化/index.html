@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>Python 优化 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python 优化</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 29, 2020&nbsp;&nbsp;23:22:55</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Python-调优"><a href="#Python-调优" class="headerlink" title="Python 调优"></a>Python 调优</h1><p>Python Profile </p>
+<h2 id="一、性能调优"><a href="#一、性能调优" class="headerlink" title="一、性能调优"></a>一、性能调优</h2><p>Python 内置的性能分析器有两种：</p>
+<ul>
+<li>cProfile，这是一个 C 扩展模块，推荐使用。</li>
+<li>profile，这是纯 Python 模块，相比于 cProfile 会显著增加性能分析的耗时。</li>
+</ul>
+<p>无论是 cProfile 或是 profile 都只能分析单进程单线程的代码，不适用于并行进程的分析。</p>
+<p>对于多线程场景：</p>
+<ul>
+<li>可以使用 <a href="https://pypi.org/project/yappi/" target="_blank" rel="noopener">yappi 模块</a></li>
+<li>仍然使用 cProfile 模块，对每个线程启动 cProfile 进行分析。</li>
+</ul>
+<h3 id="1-1-cProfile"><a href="#1-1-cProfile" class="headerlink" title="1.1 cProfile"></a>1.1 cProfile</h3><p>假设我们现在有一个简单的 Python 求和功能脚本：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test.py</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mysum</span><span class="params">(eles)</span>:</span></span><br><span class="line">    sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(eles)):</span><br><span class="line">        sum += eles[i]</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    eles = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        eles.append(random.random())</span><br><span class="line">    mysum(eles)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>运行该脚本，将会进行如下的输出：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ python test.py</span><br><span class="line">        20007 <span class="keyword">function</span> calls <span class="keyword">in</span> 0.005 seconds</span><br><span class="line"></span><br><span class="line">   Ordered by: standard name</span><br><span class="line"></span><br><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(<span class="keyword">function</span>)</span><br><span class="line">        1    0.000    0.000    0.005    0.005 &lt;string&gt;:1(&lt;module&gt;)</span><br><span class="line">        1    0.003    0.003    0.005    0.005 test.py:11(main)</span><br><span class="line">        1    0.001    0.001    0.001    0.001 test.py:4(mysum)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;len&#125;</span><br><span class="line">    10000    0.001    0.000    0.001    0.000 &#123;method <span class="string">'append'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'disable'</span> of <span class="string">'_lsprof.Profiler'</span> objects&#125;</span><br><span class="line">    10000    0.001    0.000    0.001    0.000 &#123;method <span class="string">'random'</span> of <span class="string">'_random.Random'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;range&#125;</span><br></pre></td></tr></table></figure></p>
+<p>cProfile 会将性能分析输出为一个报表，报表的字段含义：</p>
+<ul>
+<li>ncalls, 函数的执行次数。如果函数是递归调用，则 ncalls 为 : <code>{总调用次数}/{主动调用次数}</code>。</li>
+<li>tottime, 函数的总运行时间（不包含调用函数所消耗的时间）。</li>
+<li>percall, 函数运行一次的平均时间，即 percall == tottime / ncalls。如果函数是递归调用，则运行时间为 percall == cumtime / 总调用次数。</li>
+<li>cumtime, 函数及其子函数的累计耗时。递归调用时，会包含递归的时间</li>
+<li>percall, 函数运行一次的累计时间，即  percall == cumtime / ncalls。如果函数是递归调用，则运行时间为 percall == cumtime / 主动调用次数。</li>
+</ul>
+<p>递归调用的测试情况：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test_recursion.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mysum_recursion</span><span class="params">(eles)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br><span class="line">    <span class="keyword">return</span> eles[<span class="number">0</span>] + mysum_recursion(eles[<span class="number">1</span>:]) <span class="keyword">if</span> eles <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    eles = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">9</span>):</span><br><span class="line">        eles.append(random.random())</span><br><span class="line">    <span class="comment"># 主动调用两次，每次主动调用都触发 10 次的 mysum_recursion 被调用</span></span><br><span class="line">    mysum_recursion(eles)</span><br><span class="line">    mysum_recursion(eles)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    cProfile.run(<span class="string">'main()'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>性能分析调用<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ python test_recursion.py</span><br><span class="line">         62 <span class="keyword">function</span> calls (44 primitive calls) <span class="keyword">in</span> 0.201 seconds</span><br><span class="line"></span><br><span class="line">   Ordered by: standard name</span><br><span class="line"></span><br><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(<span class="keyword">function</span>)</span><br><span class="line">        1    0.000    0.000    0.201    0.201 &lt;string&gt;:1(&lt;module&gt;)</span><br><span class="line">        1    0.000    0.000    0.201    0.201 test_recursion.py:10(main)</span><br><span class="line">     20/2    0.000    0.000    0.201    0.101 test_recursion.py:5(mysum_recursion)</span><br><span class="line">        9    0.000    0.000    0.000    0.000 &#123;method <span class="string">'append'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'disable'</span> of <span class="string">'_lsprof.Profiler'</span> objects&#125;</span><br><span class="line">        9    0.000    0.000    0.000    0.000 &#123;method <span class="string">'random'</span> of <span class="string">'_random.Random'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;range&#125;</span><br><span class="line">       20    0.201    0.010    0.201    0.010 &#123;time.sleep&#125;</span><br></pre></td></tr></table></figure></p>
+<p>cProfile 有 3 种常用的调用方式：</p>
+<ul>
+<li><p>对某个函数进行性能分析</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line">cProfile.run(command, filename=<span class="keyword">None</span>, sort=<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>command, 函数执行的命令，cProfile 模块会通过 exec 开启新的进程来执行相应的函数并进行性能分析。</li>
+<li>filename, 性能分析结果输出到某个文件，如果为 None，则输出到 stdout。</li>
+<li>sort, 性能分析的排序方式。</li>
+</ul>
+</li>
+<li><p>对现有脚本进行分析<br>  cProfile 提供了命令行工具，可以对现有的 Python 脚本代码进行性能分析：</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python -m cProfile [-o output_file] [-s sort_order] (-m module | myscript.py)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-o 指定将性能分析结果输出到某个文件，输出的是二进制格式。</li>
+<li>-s 指定排序方式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python -m cProfile -o prof.txt -s ncalls test.py</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>对某个代码块进行分析</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"></span><br><span class="line">prof = cProfile.profile()</span><br><span class="line">prof.enable()</span><br><span class="line"><span class="comment"># do something</span></span><br><span class="line">prof.disable()</span><br><span class="line">prof.print_stats()</span><br><span class="line"><span class="comment"># 输出成文件按</span></span><br><span class="line"><span class="comment"># prof.dump_stats("prof.stat")</span></span><br></pre></td></tr></table></figure>
+<p>  如果是对某个函数进行测试，可以用runcall方法进行简化:</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"></span><br><span class="line">prof = cProfile.profile()</span><br><span class="line">prof.runcall(test)</span><br><span class="line">prof.print_stats()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在进行报表输出时，通常是需要指定排序方式的，排序方式的参数取值有两种：</p>
+<ul>
+<li>字符串</li>
+<li>SortKey 枚举（pstats模块）</li>
+</ul>
+<p>字符串取值对应的排序方式:</p>
+<table>
+<thead>
+<tr>
+<th>字符串</th>
+<th>参数对应的意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ncalls</td>
+<td>被调用的次数</td>
+</tr>
+<tr>
+<td>cumulative</td>
+<td>函数运行的总时间</td>
+</tr>
+<tr>
+<td>file</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>module</td>
+<td>模块名</td>
+</tr>
+<tr>
+<td>pcalls</td>
+<td>简单调用统计</td>
+</tr>
+<tr>
+<td>line</td>
+<td>行号</td>
+</tr>
+<tr>
+<td>name</td>
+<td>函数名</td>
+</tr>
+<tr>
+<td>nfl</td>
+<td>name &amp; file &amp; line</td>
+</tr>
+<tr>
+<td>stdname</td>
+<td>标准函数名</td>
+</tr>
+<tr>
+<td>time</td>
+<td>函数运行时间(不包括子函数时间)，即tottime</td>
+</tr>
+</tbody>
+</table>
+<p>这里仅列出常见的 cProfile 使用方式，cProfile 更多的接口调用可以参考 <a href="https://docs.python.org/zh-cn/3.7/library/profile.html#module-cProfile" target="_blank" rel="noopener">module-cProfile</a></p>
+<h3 id="1-2-pstats"><a href="#1-2-pstats" class="headerlink" title="1.2 pstats"></a>1.2 pstats</h3><p>cProfile 中的排序功能实际上是借助的 pstats 模块，实际上 pstats 除了排序功能外，还有其他强大的功能。</p>
+<p>pstats 在使用前，需要使用 profile 的数据进行初始化，可以使用 profile 对象，也可以使用 profile 的文件进行初始化：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"><span class="keyword">import</span> pstats</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_by_profile_object</span><span class="params">()</span>:</span></span><br><span class="line">    pr = cProfile.Profile()</span><br><span class="line">    pr.enable()</span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line">    pr.disable()</span><br><span class="line">    p = pstats.Stats(pr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_by_profile_file</span><span class="params">()</span>:</span></span><br><span class="line">    pr = cProfile.Profile()</span><br><span class="line">    pr.enable()</span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line">    pr.disable()</span><br><span class="line">    pr.dumo_stats(<span class="string">"pr.txt"</span>)</span><br><span class="line">    p = pstats.Stats(<span class="string">"pr.txt"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>pstats 提供以下的功能：</p>
+<ul>
+<li><p>对 profile 的分析进行排序</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p = pstats.Stats(pr)</span><br><span class="line">p.sort_stats(<span class="string">"time"</span>).print_stats()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出函数的调用者以及对应的调用次数</p>
+  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test_stats_caller.py</span></span><br><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> pstats</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mysum</span><span class="params">(eles)</span>:</span></span><br><span class="line">    sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(eles)):</span><br><span class="line">        sum += eles[i]</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    eles = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        eles.append(random.random())</span><br><span class="line">    mysum(eles)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    pr = cProfile.Profile()</span><br><span class="line">    pr.enable()</span><br><span class="line">    main()</span><br><span class="line">    pr.disable()</span><br><span class="line">    p = pstats.Stats(pr)</span><br><span class="line">    p.print_callers()</span><br></pre></td></tr></table></figure>
+<p>  运行后输出:</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ python test_stats_caller.py</span><br><span class="line">Random listing order was used</span><br><span class="line"></span><br><span class="line">Function                                          was called by...</span><br><span class="line">                                                    ncalls  tottime  cumtime</span><br><span class="line">&#123;method <span class="string">'append'</span> of <span class="string">'list'</span> objects&#125;               &lt;-   10000    0.001    0.001  test_stats_caller.py:11(main)</span><br><span class="line">test_stats_caller.py:5(mysum)                     &lt;-       1    0.001    0.001  test_stats_caller.py:11(main)</span><br><span class="line">&#123;method <span class="string">'random'</span> of <span class="string">'_random.Random'</span> objects&#125;     &lt;-   10000    0.001    0.001  test_stats_caller.py:11(main)</span><br><span class="line">&#123;len&#125;                                             &lt;-       1    0.000    0.000  test_stats_caller.py:5(mysum)</span><br><span class="line">test_stats_caller.py:11(main)                     &lt;-</span><br><span class="line">&#123;method <span class="string">'disable'</span> of <span class="string">'_lsprof.Profiler'</span> objects&#125;  &lt;-</span><br><span class="line">&#123;range&#125;                                           &lt;-       1    0.000    0.000  test_stats_caller.py:5(mysum)</span><br><span class="line">                                                           1    0.000    0.000  test_stats_caller.py:11(main)</span><br></pre></td></tr></table></figure>
+<p>  左边是函数，右边是该函数的调用者以及调用次数、时间等信息。</p>
+</li>
+</ul>
+<h3 id="1-3-timeit"><a href="#1-3-timeit" class="headerlink" title="1.3 timeit"></a>1.3 timeit</h3><p>如果希望计算一段代码的耗时，我们通常会这样做:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line"></span><br><span class="line">now = time.time()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    test()</span><br><span class="line">cost = time.time() - now</span><br></pre></td></tr></table></figure></p>
+<p>除此之外，我们可以用 timeit 进行方便的耗时计算：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行 10 次 test() 的耗时</span></span><br><span class="line">timeit.timeit(stmt=<span class="string">"test()"</span>, setup=<span class="string">"from __main__ import test"</span>, number=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># timeit 运行 2 次，每次 timeit 计算 10 次 test() 的耗时，返回列表</span></span><br><span class="line">timeit.repeat(stmt=<span class="string">"test()"</span>, setup=<span class="string">"from __main__ import test"</span>, number=<span class="number">10</span>, repeat=<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<p>需要注意，repeat 是串行连续的运行 timeit 计算耗时，而不是同时并行计算 timeit 的耗时。</p>
+<h3 id="1-4-案例分析"><a href="#1-4-案例分析" class="headerlink" title="1.4 案例分析"></a>1.4 案例分析</h3><p>这里对 DBUtils 库提供的连接池的多线程并发性能做一个测试和调优。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dbutils_test.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cProfile</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> MySQLdb</span><br><span class="line"><span class="keyword">from</span> DBUtils.PooledDB <span class="keyword">import</span> PooledDB</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">g_db_pool = PooledDB(MySQLdb,</span><br><span class="line">                     mincached=<span class="number">30</span>,</span><br><span class="line">                     host=<span class="string">"aaa.bbb.ccc.ddd"</span>,</span><br><span class="line">                     user=<span class="string">"xxxx"</span>,</span><br><span class="line">                     passwd=<span class="string">"yyyy"</span>,</span><br><span class="line">                     port=<span class="number">3306</span>,</span><br><span class="line">                     db=<span class="string">"ioa_idp_db"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_</span><span class="params">(idx)</span>:</span></span><br><span class="line">    connection = g_db_pool.connection()</span><br><span class="line">    cursor = connection.cursor(MySQLdb.cursors.DictCursor)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        sql = <span class="string">"SELECT uuid FROM table WHERE uuid = 1"</span></span><br><span class="line">        cursor.execute(sql)</span><br><span class="line">        item = cursor.fetchone()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        connection.rollback()</span><br><span class="line">        <span class="keyword">raise</span> e</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        connection.commit()</span><br><span class="line">        cursor.close()</span><br><span class="line">        connection.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span><span class="params">(idx, lock)</span>:</span></span><br><span class="line">    prof = cProfile.Profile()</span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"=================== %s start ==============="</span> % idx</span><br><span class="line">    prof.runcall(query_, idx)</span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"=================== %s finsh ==============="</span> % idx</span><br><span class="line">    prof.dump_stats(<span class="string">"%s.out"</span> % idx)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    lock = threading.Lock()</span><br><span class="line">    threads = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">        threads.append(threading.Thread(target=query, args=(i, lock)))</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.start()</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.join()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">import</span> timeit</span><br><span class="line">    cost = timeit.timeit(stmt=<span class="string">"main()"</span>, setup=<span class="string">"from __main__ import main"</span>, number=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"cost:"</span>, cost</span><br></pre></td></tr></table></figure></p>
+<p>上述的代码会初始化一个有 30 个连接的连接池，并开启 1k 个线程，同时从连接池中获取连接并执行 sql 语句。</p>
+<ul>
+<li>通过 timeit 对整个 1k 次查询进行耗时统计。</li>
+<li>通过 cProfile 对每个线程的执行的情况进行统计，并将每个线程的执行情况序列化到文件中。</li>
+</ul>
+<p>还需要一个程序可以将 profile 文件进行解析：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print_profile.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> pstats</span><br><span class="line"></span><br><span class="line">id_ = sys.argv[<span class="number">1</span>] <span class="keyword">if</span> len(sys.argv) &gt;= <span class="number">2</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">p = pstats.Stats(<span class="string">"%s.out"</span> % id_)</span><br><span class="line">p.sort_stats(<span class="string">"time"</span>).print_stats()</span><br><span class="line"><span class="comment"># p.sort_stats("time").print_callers()</span></span><br></pre></td></tr></table></figure></p>
+<p>现在来看下运行的情况：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">$ python dbutils_test.py</span><br><span class="line">cost: 6.25373601913</span><br><span class="line"></span><br><span class="line">$ print_profile.py 999</span><br><span class="line">Tue May  5 00:42:21 2020    999.out</span><br><span class="line"></span><br><span class="line">         198 <span class="keyword">function</span> calls <span class="keyword">in</span> 6.007 seconds</span><br><span class="line"></span><br><span class="line">   Ordered by: internal time</span><br><span class="line"></span><br><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(<span class="keyword">function</span>)</span><br><span class="line">        2    5.996    2.998    5.996    2.998 &#123;method <span class="string">'acquire'</span> of <span class="string">'thread.lock'</span> objects&#125;</span><br><span class="line">        1    0.004    0.004    0.005    0.005 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:62(__init__)</span><br><span class="line">        1    0.002    0.002    0.002    0.002 &#123;method <span class="string">'query'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.001    0.001    0.001    0.001 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:240(autocommit)</span><br><span class="line">        1    0.001    0.001    0.001    0.001 &#123;method <span class="string">'commit'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.001    0.001    0.001    0.001 &#123;method <span class="string">'rollback'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    6.007    6.007 dbutils_test.py:20(query_)</span><br><span class="line">        1    0.000    0.000    4.634    4.634 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:277(connection)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'store_result'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.006    0.006 /usr/lib64/python2.7/site-packages/MySQLdb/__init__.py:78(Connect)</span><br><span class="line">       58    0.000    0.000    0.000    0.000 &#123;isinstance&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:435(__getattr__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:142(_do_get_result)</span><br><span class="line">        2    0.000    0.000    5.996    2.998 /usr/lib64/python2.7/threading.py:146(acquire)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:75(__init__)</span><br><span class="line">        1    0.000    0.000    1.369    1.369 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:356(cache)</span><br><span class="line">        4    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:40(numeric_part)</span><br><span class="line">        1    0.000    0.000    0.006    0.006 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:147(__init__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:528(__init__)</span><br><span class="line">        4    0.000    0.000    0.000    0.000 &#123;method <span class="string">'match'</span> of <span class="string">'_sre.SRE_Pattern'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.006    0.006 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:209(_create)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:107(_warning_check)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:186(release)</span><br><span class="line">        2    0.000    0.000    1.369    0.684 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:427(close)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:315(_do_query)</span><br><span class="line">        1    0.000    0.000    0.001    0.001 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:442(rollback)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:122(nextset)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:591(tough_method)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:692(__getattr__)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:353(_query)</span><br><span class="line">        1    0.000    0.000    0.006    0.006 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:111(connect)</span><br><span class="line">        3    0.000    0.000    0.000    0.000 &#123;method <span class="string">'items'</span> of <span class="string">'dict'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:362(fetchone)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;method <span class="string">'release'</span> of <span class="string">'thread.lock'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:351(_get_result)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method fetch_row&#125;</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:164(execute)</span><br><span class="line">        5    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:159(_get_db)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;method <span class="string">'split'</span> of <span class="string">'str'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.001    0.001 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:427(commit)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:375(notify)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:324(_fetch_row)</span><br><span class="line">        1    0.000    0.000    0.006    0.006 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:271(steady_connection)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:513(cursor)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:245(cursor)</span><br><span class="line">        5    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:63(_note)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:576(close)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:97(close)</span><br><span class="line">        3    0.000    0.000    0.000    0.000 &#123;method <span class="string">'startswith'</span> of <span class="string">'str'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:559(_clearsizes)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:475(_cursor)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:301(set_character_set)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:342(_ping_check)</span><br><span class="line">        1    0.000    0.000    0.001    0.001 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:330(_reset)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;_weakref.proxy&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:380(fetchall)</span><br><span class="line">        5    0.000    0.000    0.000    0.000 &#123;thread.get_ident&#125;</span><br><span class="line">        4    0.000    0.000    0.000    0.000 &#123;method <span class="string">'group'</span> of <span class="string">'_sre.SRE_Match'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;_mysql.get_client_info&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:92(__del__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:383(threadsafety)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:589(_get_tough_method)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'pop'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:412(__init__)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:103(_check_executed)</span><br><span class="line">        4    0.000    0.000    0.000    0.000 &#123;getattr&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:206(_get_unicode_literal)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:358(_post_get_result)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method describe&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:308(_store)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;len&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'affected_rows'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method field_flags&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:237(_is_owned)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'next_result'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'copy'</span> of <span class="string">'dict'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'get_server_info'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'disable'</span> of <span class="string">'_lsprof.Profiler'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'info'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'insert_id'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:298(_setsession)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:442(__del__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'get_autocommit'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'get'</span> of <span class="string">'dict'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;callable&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'warning_count'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'append'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;method <span class="string">'character_set_name'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:201(_get_string_literal)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:564(_setsizes)</span><br><span class="line">        5    0.000    0.000    0.000    0.000 &#123;method <span class="string">'pop'</span> of <span class="string">'dict'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:703(__del__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:211(_get_string_decoder)</span><br></pre></td></tr></table></figure></p>
+<p>从上述可以看出：</p>
+<ul>
+<li>1k 个线程同时从连接池中获取连接，然后进行查询总耗时 6s。</li>
+<li>对于单个线程的耗时主要在线程锁的获取上，上锁的总次数是两次，总耗时接近 6s。</li>
+</ul>
+<p>通过 <code>p.print_callers()</code> 的方式打印调用情况，可以看出锁的耗时主要是在 <code>db_pool.connection()</code> 上，即主要耗时主要是在获取连接时。</p>
+<p>分析代码后可以发现，可以知道获取获取连接之所以耗时的原因：</p>
+<ul>
+<li>在获取连接前 DBUtils 会先进行上锁，并且做以下处理：<ul>
+<li>DBUtils 的默认处理方式是：如果在获取连接时，连接池中的连接不足，会新建新的连接。在测试场景中，连接池中的连接个数有 30 个，但是同时有 1k 个线程同时获取连接，因此在获取连接时会大量进行连接建立。</li>
+<li>每次获取连接的时候，都会通过 ping_check() 校验。</li>
+</ul>
+</li>
+<li>每个线程在归连接给连接池的时候，默认会上锁，然后进行连接重置。这个重置其实就是若连接没有关闭，会被回滚（通常连接被连接池回收，并不意味着连接池关闭）。释放和获取连接时，申请的均是同一个锁，因此这会延长获取连接时候的阻塞时间。</li>
+</ul>
+<p>直接通过 PoolDB 的初始化参数进行优化：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">g_db_pool = PooledDB(MySQLdb,</span><br><span class="line">                     mincached=<span class="number">30</span>,</span><br><span class="line">                     maxcached=<span class="number">30</span>,</span><br><span class="line">                     blocking=<span class="keyword">True</span>,</span><br><span class="line">                     host=<span class="string">"aaa.bbb.ccc.ddd"</span>,</span><br><span class="line">                     user=<span class="string">"xxxx"</span>,</span><br><span class="line">                     passwd=<span class="string">"yyyy"</span>,</span><br><span class="line">                     port=<span class="number">3306</span>,</span><br><span class="line">                     db=<span class="string">"ioa_idp_db"</span>,</span><br><span class="line">                     ping=<span class="number">0</span>,</span><br><span class="line">                     reset=<span class="keyword">False</span>,)</span><br></pre></td></tr></table></figure></p>
+<p>连接池初始化连接有 30 个，且最大只有 30 个，当线程获取连接时如果连接池已空，则阻塞等待连接归还。获取连接时禁止 ping_check，释放连接时禁止重置连接。</p>
+<p>重新运行测试:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">$ python dbutils_test.py</span><br><span class="line">cost: 1.19736599922</span><br><span class="line"></span><br><span class="line">$ python print_profile.py 999</span><br><span class="line">Tue May  5 01:05:42 2020    999.out</span><br><span class="line"></span><br><span class="line">         98 <span class="keyword">function</span> calls <span class="keyword">in</span> 0.005 seconds</span><br><span class="line"></span><br><span class="line">   Ordered by: internal time</span><br><span class="line"></span><br><span class="line">   ncalls  tottime  percall  cumtime  percall filename:lineno(<span class="keyword">function</span>)</span><br><span class="line">        1    0.002    0.002    0.002    0.002 &#123;method <span class="string">'query'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.002    0.002    0.002    0.002 &#123;method <span class="string">'commit'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.001    0.001    0.001    0.001 &#123;method <span class="string">'next_result'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'store_result'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;method <span class="string">'acquire'</span> of <span class="string">'thread.lock'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:146(acquire)</span><br><span class="line">        1    0.000    0.000    0.005    0.005 dbutils_test.py:20(query_)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:92(__del__)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:427(commit)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:142(_do_get_result)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:277(connection)</span><br><span class="line">        1    0.000    0.000    0.001    0.001 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:122(nextset)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:356(cache)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:75(__init__)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:692(__getattr__)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:591(tough_method)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:315(_do_query)</span><br><span class="line">        5    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:159(_get_db)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:427(close)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method fetch_row&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:475(_cursor)</span><br><span class="line">        2    0.000    0.000    0.001    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:97(close)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:107(_warning_check)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:186(release)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:351(_get_result)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:435(__getattr__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:528(__init__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/connections.py:245(cursor)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:358(_post_get_result)</span><br><span class="line">        2    0.000    0.000    0.001    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:576(close)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:375(notify)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:362(fetchone)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:564(_setsizes)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:164(execute)</span><br><span class="line">        4    0.000    0.000    0.000    0.000 &#123;getattr&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 &#123;method <span class="string">'release'</span> of <span class="string">'thread.lock'</span> objects&#125;</span><br><span class="line">        5    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:63(_note)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:380(fetchall)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'insert_id'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:559(_clearsizes)</span><br><span class="line">        1    0.000    0.000    0.002    0.002 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:353(_query)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:412(__init__)</span><br><span class="line">        2    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:103(_check_executed)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method describe&#125;</span><br><span class="line">        3    0.000    0.000    0.000    0.000 &#123;len&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/site-packages/MySQLdb/cursors.py:324(_fetch_row)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/PooledDB.py:442(__del__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'affected_rows'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'warning_count'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:589(_get_tough_method)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;isinstance&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib64/python2.7/threading.py:237(_is_owned)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:383(threadsafety)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:703(__del__)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'pop'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:513(cursor)</span><br><span class="line">        3    0.000    0.000    0.000    0.000 &#123;method <span class="string">'startswith'</span> of <span class="string">'str'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:330(_reset)</span><br><span class="line">        3    0.000    0.000    0.000    0.000 /usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py:342(_ping_check)</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;_weakref.proxy&#125;</span><br><span class="line">        5    0.000    0.000    0.000    0.000 &#123;thread.get_ident&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'info'</span> of <span class="string">'_mysql.connection'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;built-in method field_flags&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'items'</span> of <span class="string">'dict'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'append'</span> of <span class="string">'list'</span> objects&#125;</span><br><span class="line">        1    0.000    0.000    0.000    0.000 &#123;method <span class="string">'disable'</span> of <span class="string">'_lsprof.Profiler'</span> objects&#125;</span><br></pre></td></tr></table></figure></p>
+<p>换了一种初始化方式后，查询效率大幅度提升，总耗时 1.19 s，并且每个连接池的锁耗时不再成为瓶颈。</p>
+<p>需要注意，上述只是使用 cProfile 进行性能调优的一个示例，不代表在实际中使用 DBUtils 时需要这样用，因为如果关闭了 ping_check 和 reset，意味着放弃连接的可靠性。</p>
+<p>实际场景中，如果使用 DBUtils 又对性能有要求，可以考虑以下处理方式：</p>
+<ul>
+<li>关闭 ping_check 和 reset，通过业务侧代码在取出连接后进行 ping_check 和 reset 来检测连接以及归还前的重置。</li>
+<li>将线程池进一步池化，并每次随机选择一个连接池来获取连接。  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">g_pools = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    g_pools.append(PooledDB(MySQLdb,</span><br><span class="line">                            mincached=<span class="number">3</span>,</span><br><span class="line">                            host=<span class="string">"aaa.bbb.ccc.ddd"</span>,</span><br><span class="line">                            user=<span class="string">"xxxx"</span>,</span><br><span class="line">                            passwd=<span class="string">"yyyy"</span>,</span><br><span class="line">                            port=<span class="number">3306</span>,</span><br><span class="line">                            db=<span class="string">"ioa_idp_db"</span>,)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">import</span> random</span><br><span class="line">    pool = random.sample(g_pools, <span class="number">1</span>)</span><br><span class="line">    conn = pool.connection()</span><br><span class="line">    cursor = conn.cursor(MySQLdb.cursors.DictCursor)</span><br><span class="line">    <span class="comment"># do something</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="二、内存调优"><a href="#二、内存调优" class="headerlink" title="二、内存调优"></a>二、内存调优</h2><h3 id="2-1-Python-垃圾回收机制"><a href="#2-1-Python-垃圾回收机制" class="headerlink" title="2.1 Python 垃圾回收机制"></a>2.1 Python 垃圾回收机制</h3><h3 id="2-2-gc"><a href="#2-2-gc" class="headerlink" title="2.2 gc"></a>2.2 gc</h3><h3 id="2-3-objgraph"><a href="#2-3-objgraph" class="headerlink" title="2.3 objgraph"></a>2.3 objgraph</h3><h3 id="2-4-案例分析"><a href="#2-4-案例分析" class="headerlink" title="2.4 案例分析"></a>2.4 案例分析</h3><h3 id="2-5"><a href="#2-5" class="headerlink" title="2.5"></a>2.5</h3><h2 id="附录、参考文献"><a href="#附录、参考文献" class="headerlink" title="附录、参考文献"></a>附录、参考文献</h2><ul>
+<li><a href="">[1] 编写高质量代码 改善Python程序的91个建议</a></li>
+<li><a href="">[2] Effective Python</a></li>
+<li><a href="">[3] profile</a></li>
+<li><a href="https://docs.python.org/3/library/gc.html" target="_blank" rel="noopener">[4] Garbage Collector interface</a></li>
+<li><a href="">[5] objgraph doc</a></li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2020/04/29/Python-优化/">http://github.com/lsj9383/2020/04/29/Python-优化/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/30/Nginx-SSL证书配置/">Nginx SSL证书配置</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
