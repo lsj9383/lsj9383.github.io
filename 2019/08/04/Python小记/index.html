@@ -254,6 +254,7 @@
 <li>删除egg包</li>
 <li>从<code>easy-install.pth</code>中剔除该egg包</li>
 </ul>
+<h1 id="五、函数"><a href="#五、函数" class="headerlink" title="五、函数"></a>五、函数</h1><h2 id="5-1-模拟-C-语言的静态变量"><a href="#5-1-模拟-C-语言的静态变量" class="headerlink" title="5.1 模拟 C 语言的静态变量"></a>5.1 模拟 C 语言的静态变量</h2><p>Python 的函数不存在 C 语言这样的静态变量，如果想实现一个简单的统计函数调用次数的功能反而会显得比较麻烦。objgraph 的 growth 函数的是想方式给了我一点启发，可以比较简单的做到类似 C 语言的静态变量功能。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> call_count = <span class="number">0</span>;</span><br><span class="line">    call_count += <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> a + b + call_count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="附录-参考文献"><a href="#附录-参考文献" class="headerlink" title="附录: 参考文献"></a>附录: 参考文献</h1><ul>
 <li><a href="https://github.com/piglei/one-python-craftsman">1] Python工匠</a></li>
 <li>[2] 流畅的Python</li>
