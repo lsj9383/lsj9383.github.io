@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>iptables 记录 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">iptables 记录</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 29, 2020&nbsp;&nbsp;23:50:22</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>本文主要参考了 <a href="http://www.zsythink.net/archives/category/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/iptables" target="_blank" rel="noopener">iptables 详解</a>，并对内容进行概括梳理、记录，方便自己需要时查阅。</p>
+<h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>Linux 的防火墙是 netfilter，iptables 是防火墙的客户端代理，负责接受安全设定并执行到 netfilter 中。</p>
+<ul>
+<li>规则：根据指定的匹配条件来尝试匹配每个流经此处的报文，一旦匹配成功，则由规则后面指定的处理动作进行处理；</li>
+<li>链：是规则的顺序集合，网络包打到链后顺序判断规则匹配以及对应的操作。iptables 有 5 种链，每种链都对应了一组顺序规则：<ul>
+<li>PREROUTING</li>
+<li>INPUT</li>
+<li>FORWARD</li>
+<li>OUTPUT</li>
+<li>POSTROUTING</li>
+</ul>
+</li>
+<li>表：根据规则的行为种类，将规则划分到不同的表中。相似功能的规则属于同一种表。iptables 拥有如下的表：<ul>
+<li>filter表：负责过滤功能，防火墙；内核模块：iptables_filter</li>
+<li>nat表：network address translation，网络地址转换功能；内核模块：iptable_nat</li>
+<li>mangle表：拆解报文，做出修改，并重新封装 的功能；iptable_mangle</li>
+<li>raw表：关闭nat表上启用的连接追踪机制；iptable_raw</li>
+</ul>
+</li>
+</ul>
+<p>在配置规则时，通常需要指定规则所处的链和表。</p>
+<p>一个网络包从输入到输出的链、表关系如下图所示：</p>
+<p><img src="iptables_profile.png" alt=""></p>
+<h2 id="二、常用命令"><a href="#二、常用命令" class="headerlink" title="二、常用命令"></a>二、常用命令</h2><h3 id="2-1-查询命令"><a href="#2-1-查询命令" class="headerlink" title="2.1 查询命令"></a>2.1 查询命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询指定链中某个表的规则</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -nvL [<span class="variable">$&#123;chain&#125;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># (policy ACCEPT 141K packets, 28M bytes) 表示该链的默认动作（没有匹配的规则时采取的动作），以及默认处理的网络包个数和流量。</span></span><br><span class="line">Chain INPUT (policy ACCEPT 141K packets, 28M bytes)</span><br><span class="line">num   pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line">1        2   168 REJECT     all  --  *      *       100.109.182.175      0.0.0.0/0            reject-with icmp-port-unreachable</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果忽略 -t ${table} 则是 filter 表</li>
+<li>如果忽略 ${chain} 则列出所有链对应表的规则</li>
+<li>选项解释:<ul>
+<li>-n, 避免将ip转化为域名</li>
+<li>-v, 显示更详细的信息</li>
+<li>–line, 列出规则对应的序号</li>
+</ul>
+</li>
+<li>输出解释:<ul>
+<li>num, 序号</li>
+<li>pkts, 匹配上该规则的网络包个数</li>
+<li>bytes, 匹配上该规则的网络包大小</li>
+<li>target, 匹配后的处理方式：REJECT 拒绝；DROP 丢弃；ACCEPT 接受；</li>
+<li>opt, 表示规则对应的选项</li>
+<li>in, 表示数据包由哪个接口(网卡)流入</li>
+<li>out, 表示数据包由哪个接口(网卡)流出</li>
+<li>source, 示规则对应的源头地址</li>
+<li>destination, 表示规则对应的目标地址</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-删除和存储"><a href="#2-2-删除和存储" class="headerlink" title="2.2 删除和存储"></a>2.2 删除和存储</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除指定链和表中对应序号的规则</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -D <span class="variable">$&#123;chain&#125;</span> <span class="variable">$&#123;rule-num&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将对应链和表中的规则清空，慎用。</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -F <span class="variable">$&#123;chain&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存 iptables 规则（如果变更后没有保存，则只是暂时生效，重启后丢失）</span></span><br><span class="line">$ service iptables save                           <span class="comment"># centos 6</span></span><br><span class="line">$ iptables-save &gt; /etc/sysconfig/iptables         <span class="comment"># centos 7</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-新增规则"><a href="#2-3-新增规则" class="headerlink" title="2.3 新增规则"></a>2.3 新增规则</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在对应的链、表中的 末尾(-A) / 头部(-I) 插入一个规则</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -A[/-I] <span class="variable">$&#123;chain&#125;</span> <span class="variable">$&#123;condition&#125;</span> -j <span class="variable">$&#123;target&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上述的 condition 是匹配条件，如果给出了多个匹配条件，则匹配条件之间是 and 关系</span></span><br><span class="line">-s <span class="variable">$&#123;source&#125;</span>                            <span class="comment"># 匹配源 ip</span></span><br><span class="line">-d <span class="variable">$&#123;destination&#125;</span>                       <span class="comment"># 匹配目的 ip</span></span><br><span class="line">-p <span class="variable">$&#123;proto&#125;</span>                             <span class="comment"># 匹配协议类型(centos7): tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh</span></span><br><span class="line">-i <span class="variable">$&#123;network-interface&#125;</span>                 <span class="comment"># 匹配输入的网络接口</span></span><br><span class="line">-o <span class="variable">$&#123;network-interface&#125;</span>                 <span class="comment"># 匹配输出的网络接口</span></span><br><span class="line">[-m tcp] --dport <span class="variable">$&#123;destination-port&#125;</span>    <span class="comment"># 目标端口，属于 tcp 模块的扩展属性。当忽略 -m 时，自动使用协议名。</span></span><br><span class="line">[-m tcp] --sport <span class="variable">$&#123;source-port&#125;</span>         <span class="comment"># 源端口，属于 tcp 模块的扩展属性。当忽略 -m 时，自动使用协议名。</span></span><br><span class="line"></span><br><span class="line">$ iptables -t filter -I INPUT -s <span class="variable">$&#123;source&#125;</span> -d <span class="variable">$&#123;destination&#125;</span> -j ACCEPT</span><br><span class="line"><span class="comment"># ssh 一般使用端口 22，如果拒绝 source 到端口 22 的请求，意味着禁止该 source 的 ssh 连接。</span></span><br><span class="line">$ iptables -t filter -I INPUT -s <span class="variable">$&#123;source&#125;</span> -p tcp --dport 22 -j REJECT</span><br><span class="line"><span class="comment"># 可以使用 &#123;start&#125;:&#123;end&#125; 方式选择端口匹配范围</span></span><br><span class="line">$ iptables -t filter -I INPUT -s <span class="variable">$&#123;source&#125;</span> -p tcp --dport 10:100 -j REJECT</span><br></pre></td></tr></table></figure>
+<p>之所以对端口的限制属于扩展属性，那是因为端口是传输层的协议才拥有的属性。</p>
+<h3 id="2-4-规则匹配常用模块"><a href="#2-4-规则匹配常用模块" class="headerlink" title="2.4 规则匹配常用模块"></a>2.4 规则匹配常用模块</h3><p>引入模块的方式直接使用 -m ${module} 即可。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iprange 模块，用于匹配 ip 范围</span></span><br><span class="line">-m iprange --src-range <span class="variable">$&#123;start-ip&#125;</span>:<span class="variable">$&#123;end-ip&#125;</span>        <span class="comment"># 控制源 ip 范围</span></span><br><span class="line">-m iprange --dst-range <span class="variable">$&#123;start-ip&#125;</span>:<span class="variable">$&#123;end-ip&#125;</span>        <span class="comment"># 控制源 ip 范围</span></span><br><span class="line">$ iptables -t filter -I INPUT -m iprange --src-range 192.168.1.127-192.168.1.146 -j DROP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># string 模块，用于匹配包中的字符串</span></span><br><span class="line">-m string --algo <span class="variable">$&#123;algo&#125;</span> --string <span class="variable">$&#123;match-str&#125;</span>      <span class="comment"># algo 为匹配算法，可选的有 bm / kmp</span></span><br><span class="line">$ iptables -t filter -I INPUT -p tcp --sport 80 -m string --algo bm --string <span class="string">"OOXX"</span> -j REJECT</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># limit 模块，控制包速率，采用的方式为令牌桶。匹配策略为【拿到令牌才能匹配】。</span></span><br><span class="line">-m <span class="built_in">limit</span> --<span class="built_in">limit</span>-burst <span class="variable">$&#123;brust&#125;</span> --<span class="built_in">limit</span> <span class="variable">$&#123;rate&#125;</span>     <span class="comment"># brust 为令牌桶中最多的令牌数。rate 为令牌发放速率，单位：second、minute 、hour、day。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上述限制一分钟只能通过 10 个包。拿到令牌的请求匹配第一条规则直接 ACCEPT，没有拿到令牌的请求匹配第二条规则，被拒绝。</span></span><br><span class="line">$ iptables -t filter -I INPUT -p icmp -m <span class="built_in">limit</span> --<span class="built_in">limit</span>-burst 3 --<span class="built_in">limit</span> 10/minute -j ACCEPT</span><br><span class="line">$ iptables -t filter -A INPUT -p icmp -j REJECT</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-自定义链"><a href="#2-5-自定义链" class="headerlink" title="2.5 自定义链"></a>2.5 自定义链</h3><p>iptables 提供了 PREROUTE、FORWARD、INPUT、OUTPUT、POSTROUTE 五种默认的链，在每种链中，有着若干的针对不同场景的规则。</p>
+<p>为了方便一个链中对不同场景规则的管理，iptables 采用自定义链，将同一个场景的规则放在一个自定义链中。</p>
+<p>例如 k8s 服务就有专门的自定义链 KUBE-SERVICES，用于处理 k8s 相关的包。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在指定的 table 中创建一个自定义链</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -N <span class="variable">$&#123;custom-chain&#125;</span></span><br><span class="line">$ iptables -t filter -N INPUT_WEB</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 引用自定义链，本质上自定义链就是一个 target，即将匹配的包交给自定义链进一步处理</span></span><br><span class="line">$ iptables [-t <span class="variable">$&#123;table&#125;</span>] -I/-A <span class="variable">$&#123;chain&#125;</span> <span class="variable">$&#123;condition&#125;</span> -j <span class="variable">$&#123;custom-chain&#125;</span></span><br><span class="line">$ iptables -I INPUT -p tcp --dport 80 -j INPUT_WEB</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义链插入规则，和在其他链中插入规则上一样的</span></span><br><span class="line">$ iptables -I/-A <span class="variable">$&#123;custom-chain&#125;</span> <span class="variable">$&#123;condition&#125;</span> -j <span class="variable">$&#123;action&#125;</span></span><br><span class="line">$ iptables -I INPUT_WEB -s 100.109.182.175 -j ACCEPT</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除自定义链，要求自定义链没有被任何默认链引用，否则无法被删除</span></span><br><span class="line">$ iptables -X <span class="variable">$&#123;custom-chain&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 给自定义链重新命名</span></span><br><span class="line">$ iptables -E <span class="variable">$&#123;custom-chain&#125;</span> <span class="variable">$&#123;custom-chain-new&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示指定的链信息，对于自定义链，会显示被默认链引用的次数</span></span><br><span class="line">$ iptables -nvL INPUT_WEB</span><br><span class="line">Chain INPUT_WEB (1 references)</span><br><span class="line"> pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line">    0     0 ACCEPT     all  --  *      *       100.109.182.175      0.0.0.0/0</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-iptables-LOG"><a href="#2-6-iptables-LOG" class="headerlink" title="2.6 iptables LOG"></a>2.6 iptables LOG</h3><p>当规则的 target 为 LOG 时，请求包与规则匹配时，数据包信息将会记录在日志 <code>/var/log/messages</code> 中。</p>
+<p>日志记录可以选择日志的前缀，方便提取对应规则生产的日志，也可以配置日志级别。并不会记录数据包里面的详细信息，详细信息还得靠 tcpdump 抓包。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># LOG 动作可以进行的配置</span></span><br><span class="line">--<span class="built_in">log</span>-prefix  <span class="string">"<span class="variable">$&#123;prefix&#125;</span>"</span>               <span class="comment"># 设置日志前缀</span></span><br><span class="line">--<span class="built_in">log</span>-level    <span class="variable">$&#123;level&#125;</span>                 <span class="comment"># emerg，alert，crit，error，warning，notice，info，debug</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、NAT"><a href="#三、NAT" class="headerlink" title="三、NAT"></a>三、NAT</h2><ul>
+<li>NAT（Network Address Translation）网络地址转换</li>
+<li>SNAT，转换数据包的源信息</li>
+<li>DNAT，转换数据包的目标信息</li>
+</ul>
+<p>对于 SNAT 的配置，发起请求的时候会替换源信息，获取响应时会替换目标信息。响应的过程是一个 DNAT，但是无需配置。配置 SNAT 时，自动就能做到响应的 DNAT 处理。<br>对于 DNAT 的配置，发起请求的时候会替换目标信息，获取响应时会替换源信息。响应过程时一个 SNAT，但是无需配置。配置 DNAT 时，自动就能做到响应的 SNAT 处理。</p>
+<h3 id="3-1-SNAT"><a href="#3-1-SNAT" class="headerlink" title="3.1 SNAT"></a>3.1 SNAT</h3><p>源IP/源端口转换，当请求的数据包抵达 iptables 时，iptables 可以将数据包的源IP和源端口进行替换。</p>
+<p>SNAT 最常见的场景就是内网的节点需要请求外网的 IP，而内网只有一个公共 IP 可以上网。公共 IP 通常作为路由器，当内网请求抵达路由器时，会将源 IP / 源 PORT 用路由 IP / 路由 PORT 取代，并记录替换信息。外网数据回包时会使用路由 IP 和路由 PORT 作为目标 IP 和目标 PORT，因为路由节点记录了替换信息，因此会将目标 IP 和目标 PORT 替换为原来发起请求的 IP 和 PORT，并转发。</p>
+<p>通常 SNAT 都是配置在 POSTROUTE / INPUT 链的 nat 表中。</p>
+<ul>
+<li>POSTROUTE, 因为目标 IP 不是路由 IP，路由器将直接转发请求，并在转发出去前（POSTROUTE）将包源变更。</li>
+<li>INPUT，请求是发给自己的，则可以在抵达上层协议前，将源变更。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果数据包来自 source，则将数据包中的 source 替换为 to-source</span></span><br><span class="line">$ iptables -t nat -I POSTROUTE -s <span class="variable">$&#123;source&#125;</span> -j SNAT --to-source <span class="variable">$&#123;to-source&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要替换端口，则需要使用 -p tcp</span></span><br><span class="line">$ iptables -t nat -I POSTROUTE -p tcp -s <span class="variable">$&#123;source&#125;</span> -j SNAT --to-source <span class="variable">$&#123;to-source&#125;</span>:<span class="variable">$&#123;to-port&#125;</span></span><br><span class="line"></span><br><span class="line">$ iptables -t nat -I INPUT -s 9.134.240.5 -j SNAT --to-source 9.134.9.104</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-DNAT"><a href="#3-2-DNAT" class="headerlink" title="3.2 DNAT"></a>3.2 DNAT</h3><p>目的IP/目的端口转换，当请求的数据包抵达 iptables 时，iptables 可以将数据包的目的IP和目的端口进行替换。</p>
+<p>DNAT 最常见的场景就是内网服务器多台，但是只有一个公共 IP。公共 IP 对外暴露的 IP 和端口以提供服务，公共 IP 接收当请求后会根据请求的端口，将请求包的目标信息转换为对应的内网目标 IP 和端口，并转发至该内网节点。</p>
+<p>通常 DNAT 在 PREROUTE 中进行配置，也就是在进入节点就进行替换，避免自己上层应用处理请求。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将请求 3306 端口的数据包的目标信息转为指定的目标</span></span><br><span class="line">$ iptables -t nat -I PREROUTE -p tcp --dport 3306 -j NAT --to-destination 9.134.9.104:3306</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-MASQUERADE"><a href="#3-3-MASQUERADE" class="headerlink" title="3.3 MASQUERADE"></a>3.3 MASQUERADE</h3><p>和 SNAT 基本一致，但是可以自动选择可用的 ip 替换为源 ip，不用像 snat 一样配置固定的源 ip。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2020/05/29/iptables-记录/">http://github.com/lsj9383/2020/05/29/iptables-记录/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/05/28/容器化实践（四）：存储/">容器化实践（四）：存储</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

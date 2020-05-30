@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>容器化实践（三）：Kubernetes网络 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">容器化实践（三）：Kubernetes网络</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 28, 2020&nbsp;&nbsp;01:06:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="2-7-Flannel"><a href="#2-7-Flannel" class="headerlink" title="2.7 Flannel"></a>2.7 Flannel</h3><p>我个人使用的网络方案是 Flannel，Flannel支持三种实现：</p>
+<ul>
+<li>VXLAN。</li>
+<li>host-gw。</li>
+<li>UDP, 最早的方案，比较简单，但是性能差。</li>
+</ul>
+<h4 id="2-7-1-Flannel-UDP-方案"><a href="#2-7-1-Flannel-UDP-方案" class="headerlink" title="2.7.1 Flannel UDP 方案"></a>2.7.1 Flannel UDP 方案</h4><p>性能虽差，但是比较容易理解，记录一下。该方案之所以叫 UDP，可能是因为任何数据流通都被 fannel 封装为了 udp 包进转发。该方案中，互通节点均需要安装 flannel, 且均运行 <code>flanneld</code> 进程，这是 flannel 主进程，也是用于转发的进程。</p>
+<p>flannel udp 方案的细节：</p>
+<ul>
+<li>flanneld 会监听本机 8285 端口。</li>
+<li>flanneld 自己会维护一个子网表，该子网数据记录在 etcd 中，且通常每个 node 都会成为一个子网。</li>
+<li>在 node 中虚拟化出一个 flannel0 的设备，这是一种 TUN 设备。该设备如果接收到了数据包，会直接发给 flanneld。</li>
+<li>flanneld 会给每个宿主机分配一个子网ip，dockerd 启动时 配置 bip 为该ip即可，docker0 网桥就会以该 ip 作为交换机 ip。</li>
+<li>flanneld 会配置路由表，将所有给其子网发送的数据包均路由给 flannel0 设备。</li>
+<li>docker0 和 flanneld 之间会涉及内核态与用户态的转换。</li>
+</ul>
+<p>收发流程可以参考下图：<br><img src="flannel-udp.png" alt=""></p>
+<p>频繁的内核与用户态的转换，有非常严重的性能问题。</p>
+<h4 id="2-7-2-VxLAN"><a href="#2-7-2-VxLAN" class="headerlink" title="2.7.2 VxLAN"></a>2.7.2 VxLAN</h4><p>VxLAN 和 UDP 方案非常类似，但是可以在内核中进行封装、解封装、转发的操作。</p>
+<p>flannel VxLAN 方案的细节：</p>
+<ul>
+<li>flannel 会在每个节点生成 flannel.1 设备，这是一个 VTEP 设备（VXLAN Tunnel End Point）。</li>
+<li>当某个 node A 加入 flannel 网络时，会自动在所有 flannel 节点中配置路由表，将目的地为 node A 的 docker0 地址的请求，转发给 flannel.1 设备。</li>
+<li>当某个 node A 加入 flannel 网络时，会自动将所有节点的 MAC 表进行更新，将 node A 的 flannel.1 设备的 MAC 地址进行注入，注入的实际数据记录了 node A 的 docker0 地址对应的 MAC 地址。（node A 的 docker0 的地址用 node A 的 VTEP MAC 地址进行表示）</li>
+<li>当某个 node A 加入 flannel 网络时，会在 FDB 中进行记录，记录了某个 MAC 地址需要通过哪个IP进行转发。通常这里的MAC地址就是目标VTEP的MAC地址，而IP则是所在节点的 eth0 的IP。这是为了告诉 flannel.1 数据包该发送给哪个主机。</li>
+<li>flannel.1 设备收到 docker0 传过来的数据包后，会进行 IP 包的封装，IP包的最外层使用<code>目的VTEP的MAC地址</code>以及<code>目的容器docker0的IP地址</code>。</li>
+<li>flannel.1 在 IP 包的基础上继续封装，封装成 UDP 包，该包中发送给目标主机的 eth0。</li>
+</ul>
+<p>具体流程如下:<br><img src="flannel-vxlan.png" alt=""></p>
+<h4 id="2-7-3-host-gw"><a href="#2-7-3-host-gw" class="headerlink" title="2.7.3 host-gw"></a>2.7.3 host-gw</h4><h3 id="2-8-k8s-网络模型"><a href="#2-8-k8s-网络模型" class="headerlink" title="2.8 k8s 网络模型"></a>2.8 k8s 网络模型</h3><p>k8s 没有使用 docker0 网桥，而是会给每个节点生成 cni0 作为虚拟网桥，其实功能和 docker0 完全一致。k8s 会为集群中的每个宿主机配置 cni0 以及生成对应的网段，而 cni0 的使用的网段需要在 fannel 的子网范围内。</p>
+<p>在初始化 k8s 的时候，可以定义 fannel 管理的子网范围：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm init --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure></p>
+<p>之前提到过，k8s 对于 pod 网络资源的共享，实际上会启动 Infra 容器，该容器作为初始容器，所需要的容器会加入 Infra 的 namespace。</p>
+<p>之所以使用 cni0，这是因为 k8s 启动一个 pod 中的容器时，为了共享同一个 pod 中容器的网络资源，需要通过 CNI 插件（flannel 就是一种 CNI 插件）进行很多的设置。关于网络相关的操作，是通过 CRI（容器运行时接口）来进行的，这个被称为 dockershim。</p>
+<p>k8s 的跨主机通信部分的流程完全符合 flannel 的 VxLAN 方案，只是使用的是 cni0 作为网桥。<br><img src="k8s-vxlan.png" alt=""></p>
+<h3 id="2-9-k8s-中的几种-IP"><a href="#2-9-k8s-中的几种-IP" class="headerlink" title="2.9 k8s 中的几种 IP"></a>2.9 k8s 中的几种 IP</h3><h3 id="2-10-k8s-DNS"><a href="#2-10-k8s-DNS" class="headerlink" title="2.10 k8s DNS"></a>2.10 k8s DNS</h3><p>k8s 集群内的 Pod 之间进行通信，需要知道容器的 ip 地址和端口，但是 Pod 有多个，且地址是随时变化的，所以 Pod 与 Pod 之间进行访问通常通过 Service 来进行实现。</p>
+<p>利用 Service 可以生成 VIP，访问时只需要知道 VIP 和 TargetPort 。获得 VIP 的方法有如下几种：</p>
+<ul>
+<li>利用 apiserver，Pod 中的代码直接用 k8s 的 apiserver 获取服务的 VIP。该方案会让代码耦合 k8s，不具通用性。</li>
+<li>利用环境变量，Pod 启动的时候，k8s 会把服务的 VIP 注入到环境变量中。该方案的问题是需要服务先启动，才能注入 VIP 到环境变量中。依赖关系较为复杂的场景下处理起来非常丑陋。</li>
+<li>DNS，使用 Service 的名称去查询 VIP。这是最常用的处理方式。</li>
+</ul>
+<p>DNS 服务不是一个独立的系统服务，而是作为一种 addon 插件而存在，我们通常使用  kube-dns 插件，默认会启动 3 个 Pod，且每个 Pod 有 3 个容器：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -n kube-system</span><br><span class="line">NAME                                    READY     STATUS    RESTARTS   AGE</span><br><span class="line">...</span><br><span class="line">kube-dns-86f4d74b45-cqf86                         3/3       Running   0          6d</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">$ kubectl describe pod kube-dns-86f4d74b45-cqf86 -n kube-system</span><br><span class="line">Containers:</span><br><span class="line">  kubedns:</span><br><span class="line">    ...</span><br><span class="line">  dnsmasq:</span><br><span class="line">    ...</span><br><span class="line">  sidecar:</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>kubedns: kubedns 基于 SkyDNS 库，通过 apiserver 监听 Service 和 Endpoints 的变更事件同时也同步到本地 Cache，实现了一个实时的 Kubernetes 集群内 Service 和 Pod 的 DNS服务发现</li>
+<li>dnsmasq: dsnmasq 容器则实现了 DNS 的缓存功能(在内存中预留一块默认大小为 1G 的地方，保存当前最常用的 DNS 查询记录，如果缓存中没有要查找的记录，它会到 kubedns 中查询，并把结果缓存起来)，通过监听 ConfigMap 来动态生成配置</li>
+<li>sider: sidecar 容器实现了可配置的 DNS 探测，并采集对应的监控指标暴露出来供 prometheus 使用</li>
+</ul>
+<p>为 k8s 配置了 DNS 服务后，就会自动生成域名，这里有两种情况：</p>
+<ul>
+<li>对于 normal service，这种类型存在 VIP，域名解析直接拿到对应的 VIP。<ul>
+<li>域名格式：<code>${servicename}.${namespace}.svc.cluster.local</code></li>
+</ul>
+</li>
+<li>对于 headless servce，这种类型不存在 VIP（ClusterIP 为 None），域名解析拿到对应 POD 的 IP。<ul>
+<li>域名格式：<code>${podname}.${servicename}.${namespace}.svc.cluster.local</code></li>
+</ul>
+</li>
+</ul>
+<p>需要注意的是，只有在 k8s 的 Pod 容器中才能使用域名进行访问，在宿主机中是不能的。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2020/05/28/容器化实践（三）：Kubernetes网络/">http://github.com/lsj9383/2020/05/28/容器化实践（三）：Kubernetes网络/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/28/容器化实践（四）：存储/">容器化实践（四）：存储</a>
+            
+            
+            <a class="next" rel="next" href="/2020/05/28/容器化实践（二）：Kubernetes/">容器化实践（二）：Kubernetes</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

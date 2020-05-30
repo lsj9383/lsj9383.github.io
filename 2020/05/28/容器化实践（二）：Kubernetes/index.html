@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>容器化实践（二）：Kubernetes | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">容器化实践（二）：Kubernetes</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 28, 2020&nbsp;&nbsp;01:05:59</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="二、Kubernetes-实践记录"><a href="#二、Kubernetes-实践记录" class="headerlink" title="二、Kubernetes 实践记录"></a>二、Kubernetes 实践记录</h2><h3 id="2-1-安装和部署"><a href="#2-1-安装和部署" class="headerlink" title="2.1 安装和部署"></a>2.1 安装和部署</h3><p>k8s 的安装可以借助 kubeadm 进行简化。</p>
+<h4 id="2-1-1-master-配置"><a href="#2-1-1-master-配置" class="headerlink" title="2.1.1 master 配置"></a>2.1.1 master 配置</h4><p>环境配置<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 禁用防火墙</span></span><br><span class="line">$ systemctl stop firewalld</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用SELINUX</span></span><br><span class="line">$ setenforce 0</span><br><span class="line">$ cat /etc/selinux/config</span><br><span class="line">SELINUX=disabled</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 k8s.conf</span></span><br><span class="line">$ vim /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">$ modprobe br_netfilter</span><br><span class="line">$ sysctl -p /etc/sysctl.d/k8s.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置安装 k8s 的 yum 源</span></span><br><span class="line">$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span><br><span class="line">        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">$ yum makecache fast</span><br></pre></td></tr></table></figure></p>
+<p>预先拉取 master 节点上涉及到的镜像:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">docker pull cnych/kube-proxy-amd64:v1.10.0</span><br><span class="line">docker pull cnych/flannel:v0.10.0-amd64</span><br><span class="line">docker pull cnych/pause-amd64:3.1</span><br><span class="line">docker pull cnych/kubernetes-dashboard-amd64:v1.8.3</span><br><span class="line">docker pull cnych/heapster-influxdb-amd64:v1.3.3</span><br><span class="line">docker pull cnych/heapster-grafana-amd64:v4.4.3</span><br><span class="line">docker pull cnych/heapster-amd64:v1.4.2</span><br><span class="line">docker pull cnych/k8s-dns-kube-dns-amd64:1.14.8</span><br><span class="line">docker pull cnych/k8s-dns-dnsmasq-nanny-amd64:1.14.8</span><br><span class="line">docker pull cnych/k8s-dns-sidecar-amd64:1.14.8</span><br><span class="line"></span><br><span class="line">docker tag cnych/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64</span><br><span class="line">docker tag cnych/pause-amd64:3.1 k8s.gcr.io/pause-amd64:3.1</span><br><span class="line">docker tag cnych/kube-proxy-amd64:v1.10.0 k8s.gcr.io/kube-proxy-amd64:v1.10.0</span><br><span class="line"></span><br><span class="line">docker tag cnych/k8s-dns-kube-dns-amd64:1.14.8 k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.8</span><br><span class="line">docker tag cnych/k8s-dns-dnsmasq-nanny-amd64:1.14.8 k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.8</span><br><span class="line">docker tag cnych/k8s-dns-sidecar-amd64:1.14.8 k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.8</span><br><span class="line"></span><br><span class="line">docker tag cnych/kubernetes-dashboard-amd64:v1.8.3 k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3</span><br><span class="line">docker tag cnych/heapster-influxdb-amd64:v1.3.3 k8s.gcr.io/heapster-influxdb-amd64:v1.3.3</span><br><span class="line">docker tag cnych/heapster-grafana-amd64:v4.4.3 k8s.gcr.io/heapster-grafana-amd64:v4.4.3</span><br><span class="line">docker tag cnych/heapster-amd64:v1.4.2 k8s.gcr.io/heapster-amd64:v1.4.2</span><br></pre></td></tr></table></figure></p>
+<p>现在可以正式进行 k8s 的启动了：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 k8s</span></span><br><span class="line">$ yum install -y kubelet-1.10.0-0 kubectl-1.10.0-0 kubeadm-1.10.0-0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 kubeadm 配置文件中的参数</span></span><br><span class="line">$ vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf</span><br><span class="line">Environment=<span class="string">"KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"</span></span><br><span class="line">$ systemctl daemon-reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 k8s, 且指定 k8s 版本，指定 k8s 集群的子网，指定 master 节点 ip</span></span><br><span class="line">$ kubeadm init --kubernetes-version=v1.10.0 --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.0.87</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录下输出的 join 命令，用于将 worker 节点中运行，添加到 k8s 集群</span></span><br><span class="line"><span class="comment"># kubeadm join 192.168.0.87:6443 --token dcnc52.dur0hn8ydjgrjkbn --discovery-token-ca-cert-hash sha256:c65c7fde46465f08d426d37f0e1c3ebc6354e1a4fda56d426900ffdfe768929c</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个时候可以看到 k8s 已经处于 activate 状态了</span></span><br><span class="line">$ systemctl status kubelet</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此时集群中的 nodes 仅仅只有一个master节点, 且并不处于 ready 状态，这是因为还没有配置网络插件</span></span><br><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                      STATUS     ROLES     AGE       VERSION</span><br><span class="line">iz8vbcrus31oj4ht48k0u3z   NotReady   master    2m        v1.10.0</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-3-2-worker-配置"><a href="#2-3-2-worker-配置" class="headerlink" title="2.3.2 worker 配置"></a>2.3.2 worker 配置</h4><p>可以将一个节点加入集群，成为 worker:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用和 master 相同的方法，安装好 kubeadm</span></span><br><span class="line">$ kubeadm join 192.168.0.87:6443 --token dcnc52.dur0hn8ydjgrjkbn --discovery-token-ca-cert-hash sha256:c65c7fde46465f08d426d37f0e1c3ebc6354e1a4fda56d426900ffdfe768929c</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-3-3-网络配置"><a href="#2-3-3-网络配置" class="headerlink" title="2.3.3 网络配置"></a>2.3.3 网络配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在没有配置好网络的情况下，节点均是 NotReady 状态</span></span><br><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                      STATUS     ROLES     AGE       VERSION</span><br><span class="line">iz8vbcrus31oj4ht48k0u3z   NotReady   master    6m        v1.10.0</span><br><span class="line">iz8vbcrus31oj4ht48k0u4z   NotReady   &lt;none&gt;    18s       v1.10.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取 flannel 的 k8s 组件，并直接加载 pods, 这些 pods 均在 kube-system 的 ns 下</span></span><br><span class="line">$ wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br><span class="line">$ kubectl apply -f kube-flannel.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 pods 状态</span></span><br><span class="line">$ kubectl get pods -n kube-system</span><br><span class="line">NAME                                              READY     STATUS    RESTARTS   AGE</span><br><span class="line">etcd-iz8vbcrus31oj4ht48k0u3z                      1/1       Running   0          10m</span><br><span class="line">kube-apiserver-iz8vbcrus31oj4ht48k0u3z            1/1       Running   0          10m</span><br><span class="line">kube-controller-manager-iz8vbcrus31oj4ht48k0u3z   1/1       Running   0          10m</span><br><span class="line">kube-dns-86f4d74b45-cqf86                         3/3       Running   0          11m</span><br><span class="line">kube-flannel-ds-amd64-9q4jx                       1/1       Running   0          1m</span><br><span class="line">kube-flannel-ds-amd64-r4f54                       1/1       Running   0          1m</span><br><span class="line">kube-proxy-85gmw                                  1/1       Running   0          11m</span><br><span class="line">kube-proxy-wlm4f                                  1/1       Running   0          5m</span><br><span class="line">kube-scheduler-iz8vbcrus31oj4ht48k0u3z            1/1       Running   0          10m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新查看 nodes 情况, 全部就绪</span></span><br><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                      STATUS    ROLES     AGE       VERSION</span><br><span class="line">iz8vbcrus31oj4ht48k0u3z   Ready     master    11m       v1.10.0</span><br><span class="line">iz8vbcrus31oj4ht48k0u4z   Ready     &lt;none&gt;    5m        v1.10.0</span><br></pre></td></tr></table></figure>
+<p>如果部署过程中有问题，可以重置 k8s: <code>$ kubeadm reset</code></p>
+<h3 id="2-4-污点机制"><a href="#2-4-污点机制" class="headerlink" title="2.4 污点机制"></a>2.4 污点机制</h3><p>通常 k8s 需要两台节点才能进行配置，那是因为 master 节点默认是不能启动 Pod 的，这个限制是受 k8s 的污点机制影响。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打上污点标签</span></span><br><span class="line">kubectl taint nodes <span class="variable">$&#123;node-name&#125;</span> foo=bar:NoSchedule</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看节点节点的污点标签，下面是一个 master 节点的污点标签（自动生成的）</span></span><br><span class="line">$ kubectl describe node <span class="variable">$&#123;node-names&#125;</span> | grep Taints</span><br><span class="line">Taints:             node-role.kubernetes.io/master:NoSchedule</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>${node-names}</code> 可以通过 <code>kubectl get nodes</code> 进行查看。</li>
+<li>污点标签的格式是: <code>${key}=${value}:${effect}</code><ul>
+<li>key-value, 是标准的kv对。</li>
+<li>effect 是标签的影响，NoSchedule 代表不会部署 pods。可见 mater 默认标签为:<ul>
+<li>key: <code>node-role.kubernetes.io</code></li>
+<li>value: 空</li>
+<li>effect: <code>NoSchedule</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果希望标签在某个污点标签的节点上运行，需要配置<code>tolerations</code>：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span></span><br><span class="line"><span class="attr">  v1kind:</span> <span class="string">Pod</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"><span class="attr">  spec:</span></span><br><span class="line"><span class="attr">    tolerations:</span></span><br><span class="line"><span class="attr">      - key:</span> <span class="string">"foo"</span></span><br><span class="line"><span class="attr">        operator:</span> <span class="string">"Exists"</span></span><br><span class="line"><span class="attr">        effect:</span> <span class="string">"NoSchedule"</span></span><br></pre></td></tr></table></figure></p>
+<p>如果我们希望在单机进行 k8s 的测试，则需要将 master 节点的污点去除。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-4-常用-API-对象"><a href="#2-4-常用-API-对象" class="headerlink" title="2.4 常用 API 对象"></a>2.4 常用 API 对象</h3><p>对于 API 对象，都是通过 yaml 文件进行描述，再通过 kubectl 命令将描述的对象实例化。常用的方:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 yaml 描述的对象实例化</span></span><br><span class="line">$ kubectl apply -f <span class="variable">$&#123;yaml&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 yaml 文件描述的对象删除</span></span><br><span class="line">$ kubectl delete -f <span class="variable">$&#123;yaml&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>下面详细介绍集中 kube 中的 API 对象。</p>
+<h4 id="2-4-1-Pods"><a href="#2-4-1-Pods" class="headerlink" title="2.4.1 Pods"></a>2.4.1 Pods</h4><p>pod 是一堆容器的集合，也是 k8s 的最小调度单位。通常这些容器之间是有依赖关系的，这些容器之间会共享网络、存储等相关资源（处于相同的 namespace 下）。</p>
+<p>pod 运行在什么节点上完全上由 k8s 进行调度，也可以通过配置，将 pod 固定当某些 node 上。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># nodeSelector:                   # 该配置可以让 pod 只在 disktype:ssd 的标签 node 上运行。</span></span><br><span class="line">  <span class="comment">#   disktype: ssd</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">flaskapp-demo</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">jcdemo/flaskapp</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">5000</span>       <span class="comment"># 通过 podIP 访问时采用的端口。k8s 集群内部的服务端口, 通过 podIP:containerPort 进行访问。</span></span><br><span class="line">          <span class="comment"># hostPort: 5001          # 通过 nodeIP 访问时采用的端口。会把请求转发给 podIP:containerPort。</span></span><br></pre></td></tr></table></figure></p>
+<p>相关操作命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获得所有的 pods, 若没有指定 namespace 则查询的是 default 下的 pod</span></span><br><span class="line">$ kubectl get pods -n <span class="variable">$&#123;namespace&#125;</span> [--show-labels]</span><br><span class="line">NAME                  READY     STATUS    RESTARTS   AGE</span><br><span class="line">static-web            1/1       Running   0          55m</span><br><span class="line">tesk-flaks-rc-6ptr9   1/1       Running   0          1m</span><br><span class="line">tesk-flaks-rc-ztqjk   1/1       Running   0          1m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询 pod 的详细描述，包括ip、port、日志等等</span></span><br><span class="line">$ kubectl describe pods <span class="variable">$&#123;pod-name&#125;</span> -n <span class="variable">$&#123;namespace&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据名称删除 pod</span></span><br><span class="line">kubectl delete pod <span class="variable">$&#123;pod-name&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果说希望进入pod中，可以通过查看容器id，然后再进去对应的容器，不过 k8s 提供了更方便的方法：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果pod中有多个容器，需要指定容器名称</span></span><br><span class="line">$ kubectl <span class="built_in">exec</span> -it <span class="variable">$&#123;pod-name&#125;</span> [--container <span class="variable">$&#123;container-name&#125;</span>] -- /bin/sh</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-4-2-RC-RS"><a href="#2-4-2-RC-RS" class="headerlink" title="2.4.2 RC/RS"></a>2.4.2 RC/RS</h4><p>RC(Replication Controller) 和 RS(Replica Set) 都可以用来管理 Pod 的副本个数，目的是 Pod 异常时可以自动重启新的 Pod，并且也方便在 Pod 处理能力不足时新增 Pod 副本数量。RS 是 RC 的进化版，功能完全一致，但是其 selector 拥有更强的选择能力。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">tesk-flaks-rc</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">rc</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">flaskapp-demo</span></span><br><span class="line"><span class="attr">          image:</span> <span class="string">jcdemo/flaskapp</span></span><br><span class="line"><span class="attr">          ports:</span></span><br><span class="line"><span class="attr">            - containerPort:</span> <span class="number">5000</span>       <span class="comment"># 容器内部的服务端口</span></span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>RC 的 selector 并不能选择已经创建好的 Pod，需要控制的 Pod 的信息必须在 spec.template 中给出。</li>
+<li>pod 的名称是 tesk-flaks-rc-${随机后缀}</li>
+</ul>
+<p>相关操作命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get rc -n <span class="variable">$&#123;namespace&#125;</span></span><br><span class="line">NAME            DESIRED   CURRENT   READY     AGE</span><br><span class="line">tesk-flaks-rc   2         2         2         12m</span><br><span class="line"></span><br><span class="line">$ kubectl describe rc tesk-flaks-rc</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-4-2-Deployment"><a href="#2-4-2-Deployment" class="headerlink" title="2.4.2 Deployment"></a>2.4.2 Deployment</h4><p>Deployment 管理 RC/RS ，而 RC/RS 管理 Pods。因此 Deployment 拥有 RS 的全部功能，除此之外，还具有以下能力：</p>
+<ul>
+<li>版本记录</li>
+<li>回滚到指定版本</li>
+<li>升级暂停</li>
+<li>制定升级策略</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">tesk-flask-deploy</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">flaskapp-demo</span></span><br><span class="line"><span class="attr">          image:</span> <span class="string">jcdemo/flaskapp</span></span><br><span class="line"><span class="attr">          ports:</span></span><br><span class="line"><span class="attr">            - containerPort:</span> <span class="number">5000</span>       <span class="comment"># 容器内部的服务端口</span></span><br></pre></td></tr></table></figure>
+<p>相关操作命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get deployment -n <span class="variable">$&#123;namespace&#125;</span></span><br><span class="line">NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">tesk-flask-deploy   2         2         2            2           2m</span><br><span class="line"></span><br><span class="line">$ kubectl describe deployment tesk-flask-deploy</span><br><span class="line"></span><br><span class="line"><span class="comment"># deployment 会自动生成 rs</span></span><br><span class="line">$ kubectl get rs</span><br></pre></td></tr></table></figure></p>
+<p>注意，使用这种方式创建的 pod，其名称为 <code>${metadata.name}-${随机后缀}</code>，pod 的标签为 <code>${spec.template.metadata.labels}</code></p>
+<h4 id="2-4-3-Service"><a href="#2-4-3-Service" class="headerlink" title="2.4.3 Service"></a>2.4.3 Service</h4><p>Service 用于对满足条件的 pod 进行组合，对外提供服务（容器外以及集群外）。</p>
+<ul>
+<li><p>配置 targetPort，并自动分配 ClusterIP。该模式的 ClusterIP 只是暴露在集群内部，只有集群内可以访问。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">test-flask-service-1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">web</span>          <span class="comment"># pod 的 label</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5000</span>                <span class="comment"># pods外，通过 clusterIP:port 访问</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">5001</span>          <span class="comment"># 访问 clusterIP:port, 会自动将请求发送给 podIP:targetPort, 具体用哪个 podIP，默认采用的轮训负载均衡模式。</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">myapp-http</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 NodePort。集群外有其中一个 Node IP，便可以通过ip:nodeport访问。</p>
+<ul>
+<li>nodepord是自动生成的。</li>
+<li>NodePort的模式其实就是在ClusterPort的基础上，生成了一个额外的NodePort。<ul>
+<li>可以通过 nodeip:nodeport 进行访问。</li>
+<li>可以用 clusterip:port 进行访问。</li>
+<li>可以用 podip:targetport 进行访问。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">test-flask-service-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">test-flask</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">NodePort</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5002</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">5000</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">myapp-http</span></span><br></pre></td></tr></table></figure>
+<p>当 Service 部署好后，k8s 也会生成对应的域名，域名格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;pod-name&gt;.&lt;svc-name&gt;.&lt;namespace&gt;.svc.cluster.local</span><br></pre></td></tr></table></figure></p>
+<p>当通过域名来访问时，分为了两种类型:</p>
+<ul>
+<li>headless service，域名可以解析出每个 Pod 的实际 IP 地址。</li>
+<li>normal service，域名解析出 VIP，通过每个节点上的 iptables 将 VIP 的请求路由给 Pod。</li>
+</ul>
+<p>相关命令:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Service 建立好后，可以用该命令查看 ClusterIP 和 NodePort，对于 ClusterIP 和 NodePort 自动生成的场景非常必要</span></span><br><span class="line">$ kubectl get services</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Service 代理的 Pod IP（Endpoints）</span></span><br><span class="line">$ kubectl describe service <span class="built_in">test</span>-flask-service-2|grep Endpoints</span><br><span class="line">Endpoints:                10.244.0.36:5000,10.244.1.24:5000</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-4-4-Job"><a href="#2-4-4-Job" class="headerlink" title="2.4.4 Job"></a>2.4.4 Job</h4><ul>
+<li>Job</li>
+<li>CronJob</li>
+</ul>
+<h4 id="2-4-5-StatefulSet"><a href="#2-4-5-StatefulSet" class="headerlink" title="2.4.5 StatefulSet"></a>2.4.5 StatefulSet</h4><h3 id="2-6-RBAC"><a href="#2-6-RBAC" class="headerlink" title="2.6 RBAC"></a>2.6 RBAC</h3>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2020/05/28/容器化实践（二）：Kubernetes/">http://github.com/lsj9383/2020/05/28/容器化实践（二）：Kubernetes/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/28/容器化实践（三）：Kubernetes网络/">容器化实践（三）：Kubernetes网络</a>
+            
+            
+            <a class="next" rel="next" href="/2020/05/28/容器化实践（一）：Docker/">容器化实践（一）：Docker</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

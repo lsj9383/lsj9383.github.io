@@ -10,7 +10,7 @@
 
 
 
-<title>Tableau Server OIDC AuthN | 小记</title>
+<title>Python Coroutine | 小记</title>
 
 
 
@@ -164,7 +164,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Tableau Server OIDC AuthN</h1>
+            <h1 class="post-title">Python Coroutine</h1>
             
                 <div class="post-meta">
                     
@@ -173,7 +173,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">March 29, 2020&nbsp;&nbsp;20:59:15</a>
+                        Date: <a href="#">May 25, 2020&nbsp;&nbsp;23:22:50</a>
                         </span>
                     
                     
@@ -182,16 +182,20 @@
         </header>
 
         <div class="post-content">
-            <blockquote>
-<blockquote>
-<p>TODO 有时间了再来补全</p>
-</blockquote>
-</blockquote>
-<p>Tableau Server 支持通过第三方提供身份认证进行登录的模式。 Tableau Server 支持多种第三方认证协议，该文主要是介绍 OIDC 的认证方案。</p>
-<p>需要注意的是仅 Tableau Server 支持该认证方案，在 Tableau Online 中可以使用 SAML2.0 方案。</p>
-<h2 id="一、Tableau-Server"><a href="#一、Tableau-Server" class="headerlink" title="一、Tableau Server"></a>一、Tableau Server</h2><p>该文只会介绍 Tableau Server 的身份认证方案，对 BI 方面的使用不会涉及。</p>
-<h2 id="二、JWS"><a href="#二、JWS" class="headerlink" title="二、JWS"></a>二、JWS</h2><h3 id="2-1-JWT"><a href="#2-1-JWT" class="headerlink" title="2.1 JWT"></a>2.1 JWT</h3><h3 id="2-2-JWK"><a href="#2-2-JWK" class="headerlink" title="2.2 JWK"></a>2.2 JWK</h3><h3 id="2-3-JKU"><a href="#2-3-JKU" class="headerlink" title="2.3 JKU"></a>2.3 JKU</h3><h2 id="三、OIDC"><a href="#三、OIDC" class="headerlink" title="三、OIDC"></a>三、OIDC</h2><p>Tableau Server 涉及到了 OIDC 中的两个部分内容：<code>OIDC Core</code> 以及 <code>OIDC Discovery</code></p>
-<h3 id="3-1-OIDC-Discovery"><a href="#3-1-OIDC-Discovery" class="headerlink" title="3.1 OIDC Discovery"></a>3.1 OIDC Discovery</h3><h3 id="3-2-OIDC-Core"><a href="#3-2-OIDC-Core" class="headerlink" title="3.2 OIDC Core"></a>3.2 OIDC Core</h3><h2 id="四、Tableau-API"><a href="#四、Tableau-API" class="headerlink" title="四、Tableau API"></a>四、Tableau API</h2>
+            <p>本文主要总结 Python 协程的相关 API 接口、原理、标准。</p>
+<p>由于 Python 各个版本中，Coroutine 相关接口有非常大的不同，并且版本越高的 Coroutine 接口越方便好用，因此从高版本开始介绍 Python Coroutine。</p>
+<h1 id="一、Python-3-7及更高版本"><a href="#一、Python-3-7及更高版本" class="headerlink" title="一、Python 3.7及更高版本"></a>一、Python 3.7及更高版本</h1><h1 id="二、Python-3-5-3-6"><a href="#二、Python-3-5-3-6" class="headerlink" title="二、Python 3.5 - 3.6"></a>二、Python 3.5 - 3.6</h1><h1 id="二、Python-3-4"><a href="#二、Python-3-4" class="headerlink" title="二、Python 3.4"></a>二、Python 3.4</h1><h1 id="三、Python-2-x"><a href="#三、Python-2-x" class="headerlink" title="三、Python 2.x"></a>三、Python 2.x</h1><h1 id="附录、参考文献"><a href="#附录、参考文献" class="headerlink" title="附录、参考文献"></a>附录、参考文献</h1><ul>
+<li><a href="https://docs.python.org/zh-cn/3/library/asyncio.html" target="_blank" rel="noopener">[1] asycio</a></li>
+<li><a href="https://docs.python.org/zh-cn/3/library/asyncio.html" target="_blank" rel="noopener">[2] aiohttp</a></li>
+<li><a href="https://www.tornadoweb.org/en/stable/" target="_blank" rel="noopener">[3] tornado</a></li>
+<li><a href="https://lotabout.me/2017/Python-Generator/?nsukey=uYd%2FeMZKjauzf%2Ft%2FwG2kecYKJMh%2BTJrCo67ZiZUOQHq9YY5QTLjJGGowet7uvqwWv%2BbPctc%2F9pkCKEUFOsQSoABeg2twbgZ9AVZ%2FZOw8GXqB7J5rHlmg%2BiM5aNE%2BZK2j2fiEfFoknKyVJz9GTVUthyRWZK9C6GoopTPUolkr0iPBEl6R326k21wGLwq%2Fi67ZnIH764dgqmHLMdXQmljbhg%3D%3D" target="_blank" rel="noopener">[4] Python Generator</a></li>
+<li><a href="https://lotabout.me/2017/Python-Generator/" target="_blank" rel="noopener">[5] Python Generator</a></li>
+<li><a href="https://lotabout.me/2017/understand-python-asyncio/" target="_blank" rel="noopener">[6] 理解 Python asyncio</a></li>
+<li><a href="">[7] 流畅的 Python</a></li>
+<li><a href="https://www.python.org/dev/peps/pep-3156/" target="_blank" rel="noopener">[8] PEP 3156 - Asynchronous IO Support Rebooted: the “asyncio” Module</a></li>
+<li><a href="https://www.python.org/dev/peps/pep-3153/" target="_blank" rel="noopener">[9] PEP 3153 - Asynchronous IO support</a></li>
+</ul>
+
         </div>
 
         
@@ -205,7 +209,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://github.com/lsj9383/2020/03/29/Tableau-Server-OIDC-AuthN/">http://github.com/lsj9383/2020/03/29/Tableau-Server-OIDC-AuthN/</a></span>
+                        <span><a href="http://github.com/lsj9383/2020/05/25/Python-Coroutine/">http://github.com/lsj9383/2020/05/25/Python-Coroutine/</a></span>
                     </p>
                 
                 <!-- 
@@ -238,10 +242,10 @@
         </section> -->
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/03/30/Nginx-SSL证书配置/">Nginx SSL证书配置</a>
+                <a class="prev" rel="prev" href="/2020/05/28/容器化实践（一）：Docker/">容器化实践（一）：Docker</a>
             
             
-            <a class="next" rel="next" href="/2020/03/15/生活点滴/">生活点滴</a>
+            <a class="next" rel="next" href="/2020/05/21/http缓存/">http缓存</a>
             
         </section>
 
