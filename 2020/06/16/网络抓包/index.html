@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="其实不过是杂记">
+
+
+
+<title>网络抓包 | 小记</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body class="dark-theme">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小记</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input hidden id="switch_default" type="checkbox" class="switch_default">
+                <label style="display:none" for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小记</a><a id="mobile-toggle-theme">·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">网络抓包</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Arthur Lu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 16, 2020&nbsp;&nbsp;22:49:50</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="一、Windows-抓包（Fiddler）"><a href="#一、Windows-抓包（Fiddler）" class="headerlink" title="一、Windows 抓包（Fiddler）"></a>一、Windows 抓包（Fiddler）</h2><p>Fiddler 是一种网页调试代理工具，非常适合抓取 HTTP / HTTPS 的网络数据包。</p>
+<h3 id="1-1-监听原理"><a href="#1-1-监听原理" class="headerlink" title="1.1 监听原理"></a>1.1 监听原理</h3><p>Fiddler 本质是是一个代理服务器进程，以此显示和调试经过 Fiddler 的所有请求和响应。</p>
+<p>启动 Fiddler 后，会自动将自己设置为系统的代理服务器，系统的所有请求都会走 Fiddler 进程。</p>
+<p><img src="fiddler.png" alt=""></p>
+<p>如果需要抓手机上相关请求的包，则需要确保手机和 PC 的请求可以互通（通常都位于同一局域网下）。</p>
+<h3 id="1-2-基本使用"><a href="#1-2-基本使用" class="headerlink" title="1.2 基本使用"></a>1.2 基本使用</h3><p>Fiddler 运行时会将自动配置为系统的代理服务器，Fiddler 关闭时会自动取消该配置。如果 Fiddler 异常退出，可能会导致代理配置仍然存在，进而无法上网，此时只需要重启下 Fiddler 即可恢复。</p>
+<h3 id="1-3-抓取-HTTPS-的包"><a href="#1-3-抓取-HTTPS-的包" class="headerlink" title="1.3 抓取 HTTPS 的包"></a>1.3 抓取 HTTPS 的包</h3><p>Fiddler 安装好的时刻就已经可以自动且正确的抓取 HTTP 包了，但是对于 HTTPS 的数据包却无法抓取，这是因为 HTTPS 数据包经过了 SSL 的数据加密，Fiddler 只能拿到密文数据。</p>
+<p>下图是 HTTP 和 HTTPS 包的比较：<br><img src="http_test.png" alt=""><br><img src="https_test.png" alt=""></p>
+<p>如果要支持抓取 HTTPS 数据包，则需要配置并绝对信任 Fiddler 的证书，其本质就是 Fiddler 作为中间人替换掉服务器的证书，客户端和 Fiddler 之间的 HTTPS 则是使用 Fiddler 的证书。</p>
+<p>打开对于 HTTPS 的支持：</p>
+<ul>
+<li>Tools -&gt; Options -&gt; HTTPS</li>
+<li>按照下图进行配置：<br><img src="support_https.png" alt=""></li>
+</ul>
+<p>在勾选 <code>Decrypt HTTPS traffic</code> 选项后，会弹框提示安装并信任 Fiddler 的证书。</p>
+<p>接下来重新发起 HTTPS 请求，可以看到解密后的信息：<br><img src="https_raw_test.png" alt=""></p>
+<h3 id="1-4-抓取手机的网络包"><a href="#1-4-抓取手机的网络包" class="headerlink" title="1.4 抓取手机的网络包"></a>1.4 抓取手机的网络包</h3><p>如果需要支持手机抓包，则需要配置手机连接到 Fiddler 代理服务器。</p>
+<p>Fiddler 代理服务器的远程连接开关默认就是没有开启的，需要在 Tools -&gt; Options -&gt; Connections 中进行配置<br><img src="connections_port.png" alt=""></p>
+<p>开启后需要重新启动 Fiddler 才能进行正常的代理。</p>
+<p>手机端需要确保可以连接到 PC 机，并配置代理服务器，对于 IPhone 而言：<br><img src="phone_proxy.png" alt=""></p>
+<p>在配置好后，需要配置手机信赖 Fiddler 的证书：</p>
+<ul>
+<li>在 safair 中访问 <code>http://${proxy_ip}:${proxy_port}</code></li>
+<li>下载证书，在页面中单击 <code>FiddlerRoot certificate</code><br><img src="download_crt.jpg" alt=""></li>
+<li>安装证书，证书下载完成后需要进行证书的校验和安装，路径为 <code>设置-&gt;通用-&gt;描述文件与设备管理</code> 选择信任 FiddlerRoot 即可。<br><img src="install_crt.png" alt=""></li>
+<li>信赖证书，需要配置对安装证书的信赖，路径为 <code>设置-&gt;通用-&gt;关于本机-&gt;证书信任设置</code> 打开对 Fiddler 证书的信任。<br><img src="believe_crt.png" alt=""></li>
+</ul>
+<p>上述配置完成后，使用手机发起请求，即可在 Fiddler 中完成对手机抓包。</p>
+<h3 id="1-5-配置-Fiddler-认证"><a href="#1-5-配置-Fiddler-认证" class="headerlink" title="1.5 配置 Fiddler 认证"></a>1.5 配置 Fiddler 认证</h3><p>当使用 Fiddler 时，为了避免 Fiddler 服务器被局域网中的其他设备恶意连接，需要设置身份认证的账号和密码，确保一定程度的安全性。</p>
+<h3 id="1-6-公司对-Fiddler-的配置"><a href="#1-6-公司对-Fiddler-的配置" class="headerlink" title="1.6 公司对 Fiddler 的配置"></a>1.6 公司对 Fiddler 的配置</h3><ul>
+<li>连接上 Tencent-Wifi 或 Tencent-LabWifi。</li>
+<li>Fiddler 配置服务器端口为 8080。</li>
+<li>一定要配置 Fiddler 认证，否则会触发公司安全告警。</li>
+</ul>
+<h2 id="二、Windows-抓包（Wireshark）"><a href="#二、Windows-抓包（Wireshark）" class="headerlink" title="二、Windows 抓包（Wireshark）"></a>二、Windows 抓包（Wireshark）</h2><p>Wireshark 类似于 Linux 的 tcpdump，是对网卡进行监听来获取网络数据包的。</p>
+<h2 id="三、MacOS-抓包（Charles）"><a href="#三、MacOS-抓包（Charles）" class="headerlink" title="三、MacOS 抓包（Charles）"></a>三、MacOS 抓包（Charles）</h2><h2 id="四、Linux-抓包（tcpdump）"><a href="#四、Linux-抓包（tcpdump）" class="headerlink" title="四、Linux 抓包（tcpdump）"></a>四、Linux 抓包（tcpdump）</h2>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Arthur Lu</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://github.com/lsj9383/2020/06/16/网络抓包/">http://github.com/lsj9383/2020/06/16/网络抓包/</a></span>
+                    </p>
+                
+                <!-- 
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                 -->
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <!-- <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section> -->
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/06/11/容器化实践（三）API-对象/">容器化实践（三）API 对象</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Arthur Lu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
