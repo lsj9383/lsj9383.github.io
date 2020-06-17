@@ -188,6 +188,7 @@
 <p><img src="fiddler.png" alt=""></p>
 <p>如果需要抓手机上相关请求的包，则需要确保手机和 PC 的请求可以互通（通常都位于同一局域网下）。</p>
 <h3 id="1-2-基本使用"><a href="#1-2-基本使用" class="headerlink" title="1.2 基本使用"></a>1.2 基本使用</h3><p>Fiddler 运行时会将自动配置为系统的代理服务器，Fiddler 关闭时会自动取消该配置。如果 Fiddler 异常退出，可能会导致代理配置仍然存在，进而无法上网，此时只需要重启下 Fiddler 即可恢复。</p>
+<p>在启动 Fiddler 后，可以在代理设置中看到本地代理的设置自动生效（如果没有启动 Fiddler 或者关闭 Fiddler 时，这里不会显示代理服务器）<br><img src="proxy_watch.png" alt=""></p>
 <h3 id="1-3-抓取-HTTPS-的包"><a href="#1-3-抓取-HTTPS-的包" class="headerlink" title="1.3 抓取 HTTPS 的包"></a>1.3 抓取 HTTPS 的包</h3><p>Fiddler 安装好的时刻就已经可以自动且正确的抓取 HTTP 包了，但是对于 HTTPS 的数据包却无法抓取，这是因为 HTTPS 数据包经过了 SSL 的数据加密，Fiddler 只能拿到密文数据。</p>
 <p>下图是 HTTP 和 HTTPS 包的比较：<br><img src="http_test.png" alt=""></p>
 <p><img src="https_test.png" alt=""></p>
@@ -213,7 +214,14 @@
 <p>上述配置完成后，使用手机发起请求，即可在 Fiddler 中完成对手机抓包。</p>
 <h3 id="1-5-配置-Fiddler-认证"><a href="#1-5-配置-Fiddler-认证" class="headerlink" title="1.5 配置 Fiddler 认证"></a>1.5 配置 Fiddler 认证</h3><p>当使用 Fiddler 时，为了避免 Fiddler 服务器被局域网中的其他设备恶意连接，需要设置身份认证的账号和密码，确保一定程度的安全性。</p>
 <p>Fiddler 需要配置一个用户账号名和密码，且需要用 base64 来存储。</p>
-<p>Fiddler 自带了 base64 的转换工具：<br><img src="base64.png" alt=""></p>
+<p>具体步骤：</p>
+<ul>
+<li>开启代理认证：<code>Rules -&gt; Require Proxy Authentication</code></li>
+<li>确认账号密码：<code>${username}:${password}</code></li>
+<li>获得账号密码串的 base64，Fiddler 有自带工具：<br><img src="base64.png" alt=""><br>通过命令来配置账号和密码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prefs set fiddler.proxy.creds $&#123;md5&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="auth.png" alt=""></p>
 <h3 id="1-6-公司对-Fiddler-的配置"><a href="#1-6-公司对-Fiddler-的配置" class="headerlink" title="1.6 公司对 Fiddler 的配置"></a>1.6 公司对 Fiddler 的配置</h3><ul>
 <li>连接上 Tencent-Wifi 或 Tencent-LabWifi。</li>
 <li>Fiddler 配置服务器端口为 8080。</li>
