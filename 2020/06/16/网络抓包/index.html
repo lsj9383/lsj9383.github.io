@@ -192,14 +192,15 @@
 <h3 id="1-3-抓取-HTTPS-的包"><a href="#1-3-抓取-HTTPS-的包" class="headerlink" title="1.3 抓取 HTTPS 的包"></a>1.3 抓取 HTTPS 的包</h3><p>Fiddler 安装好的时刻就已经可以自动且正确的抓取 HTTP 包了，但是对于 HTTPS 的数据包却无法抓取，这是因为 HTTPS 数据包经过了 SSL 的数据加密，Fiddler 只能拿到密文数据。</p>
 <p>下图是 HTTP 和 HTTPS 包的比较：<br><img src="http_test.png" alt=""></p>
 <p><img src="https_test.png" alt=""></p>
-<p>如果要支持抓取 HTTPS 数据包，则需要配置并绝对信任 Fiddler 的证书，其本质就是 Fiddler 作为中间人替换掉服务器的证书，客户端和 Fiddler 之间的 HTTPS 则是使用 Fiddler 的证书。</p>
+<p>如果要支持抓取 HTTPS 数据包，则需要配置并绝对信任 Fiddler 自己的 CA 证书。</p>
 <p>打开对于 HTTPS 的支持：</p>
 <ul>
 <li>Tools -&gt; Options -&gt; HTTPS</li>
 <li>按照下图进行配置：<br><img src="support_https.png" alt=""></li>
 </ul>
-<p>在勾选 <code>Decrypt HTTPS traffic</code> 选项后，会弹框提示安装并信任 Fiddler 的证书。</p>
+<p>在勾选 <code>Decrypt HTTPS traffic</code> 选项后，会弹框提示安装并信任 Fiddler 的 CA 证书。</p>
 <p>接下来重新发起 HTTPS 请求，可以看到解密后的信息：<br><img src="https_raw_test.png" alt=""></p>
+<p>这时候，Fiddler 会针对访问的域名生成对应的证书，例如访问 <code>https://www.baidu.com</code>：<br><img src="crt.png" alt=""></p>
 <h3 id="1-4-抓取手机的网络包"><a href="#1-4-抓取手机的网络包" class="headerlink" title="1.4 抓取手机的网络包"></a>1.4 抓取手机的网络包</h3><p>如果需要支持手机抓包，则需要配置手机连接到 Fiddler 代理服务器。</p>
 <p>Fiddler 代理服务器的远程连接开关默认就是没有开启的，需要在 Tools -&gt; Options -&gt; Connections 中进行配置<br><img src="connections_port.png" alt=""></p>
 <p>开启后需要重新启动 Fiddler 才能进行正常的代理。</p>
