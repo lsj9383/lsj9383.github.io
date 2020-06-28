@@ -208,10 +208,17 @@
 <p>docker commit 只会打包第一层和第三层，第二层 docker 自身引入的一些变更不会打包。</p>
 <h2 id="六、Dockerfile"><a href="#六、Dockerfile" class="headerlink" title="六、Dockerfile"></a>六、Dockerfile</h2><h3 id="6-1-ENTRYPOINT-和-CMD"><a href="#6-1-ENTRYPOINT-和-CMD" class="headerlink" title="6.1 ENTRYPOINT 和 CMD"></a>6.1 ENTRYPOINT 和 CMD</h3><p>在编写 Dockerfile 时，需要特别注意 ENTRYPOINT 以及 CMD:</p>
 <ul>
-<li>在 docker run 时，默认执行的命令脚本为: <code>ENTRYPOINT CMD</code>。</li>
-<li>ENTRYPOINT 默认为 <code>/bin/sh -c</code>。</li>
+<li>在 docker run 时，可简单认为默认执行的命令脚本为: <code>ENTRYPOINT CMD</code>。</li>
 <li>在 docker run 时，我们可以改写 CMD， 但是不能改写 ENTRYPOINT。</li>
 </ul>
+<p>ENTRYPOINT，CMD 更具体的关系如下表:<br><img src="entrypoint_cmd.jpg" alt=""></p>
+<h3 id="6-2-HEALTHCHECK"><a href="#6-2-HEALTHCHECK" class="headerlink" title="6.2 HEALTHCHECK"></a>6.2 HEALTHCHECK</h3><p>当一个镜像使用了 HEALTHCHECK 后，除普通的状态外，还有额外三种状态：</p>
+<ul>
+<li>starting： 容器还在启动中，未进行 health check。</li>
+<li>healthy： 如果 health check 成功。</li>
+<li>unhealthy： 如果 health check 失败。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HEALTHCHECK [OPTIONS] CMD <span class="built_in">command</span></span><br><span class="line"><span class="comment"># demo: HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/ || exit 1</span></span><br><span class="line"><span class="comment"># --interval=DURATION (default: 30s)      每次进行 health check 的间隔。</span></span><br><span class="line"><span class="comment"># --timeout=DURATION (default: 30s)       每次 health check 超时后。</span></span><br><span class="line"><span class="comment"># --start-period=DURATION (default: 0s)   容器启动后多久进行 health check。</span></span><br><span class="line"><span class="comment"># --retries=N (default: 3)                设置 health check 连续失败次数一旦达到设置的值容器状态就会变成 unhealthy。</span></span><br></pre></td></tr></table></figure>
 <h2 id="七、容器网络"><a href="#七、容器网络" class="headerlink" title="七、容器网络"></a>七、容器网络</h2><p>只会介绍 bridge 网络模式，因为 k8s 很多网络模型均是基于该模型的。</p>
 <p>通常容器网络会设置 namespace 进行隔离，单个宿主机为了打通不同 namespace 下的容器网络，需要借助两个关键的虚拟网络设备:</p>
 <ul>
@@ -219,11 +226,38 @@
 <li>Veth Pair, 创建后会生成两个虚拟网卡，这两个网卡之间的数据是相通的，用来连接不同 namespace 下的网络。</li>
 </ul>
 <p>通常情况下，通过 Veth Pair, 将一端作为容器的 eth0 网卡，另一端插在宿主机的 docker0 网桥上，宿主机和容器的网络就被打通了，且宿主机成为了容器的交换机。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 bridge 相关工具</span></span><br><span class="line">$ yum install -y bridge-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看网桥信息</span></span><br><span class="line">$ brctl show</span><br><span class="line">bridge name	         bridge id		     STP enabled	   interfaces</span><br><span class="line">docker0		        8000.02427e3c0e47	       no		      veth1086589</span><br><span class="line">                                                      veth3cbb8f0</span><br><span class="line">                                                      vethf2a8737</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 bridge 相关工具</span></span><br><span class="line">$ yum install -y bridge-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看网桥信息</span></span><br><span class="line">$ brctl show</span><br><span class="line">bridge name          bridge id       STP enabled     interfaces</span><br><span class="line">docker0            8000.02427e3c0e47       no         veth1086589</span><br><span class="line">                                                      veth3cbb8f0</span><br><span class="line">                                                      vethf2a8737</span><br></pre></td></tr></table></figure>
 <p>因为我开启了 三个容器 (Web Server &amp; Redis &amp; MySQL)，所以会有 三对 Veth Pair，在宿主机中的 Veth 均插在 docker0 的网桥上。</p>
 <p>这非常明显，宿主机上启动的容器均被 docker0 将网络打通，处于一个局域网。docker0 作为交换机，通过 arp 可以拿到所有容器 eth0 网卡的 mac 地址，这样一个容器的 eth0 直接给另一个容器的 eth0 发送数据就能做到了。</p>
 <p>Docker 默认的网络方案只适合单机容器之间进行通信，对于跨主机的容器通信则无法实现，但是 k8s 却是一个集群，不同节点上的容器可能存在相互依赖关系，如何实现跨主通信是 k8s 必须解决的问题，这在 k8s 网络部分会进行简述。</p>
-<h2 id="附录、参考文献"><a href="#附录、参考文献" class="headerlink" title="附录、参考文献"></a>附录、参考文献</h2>
+<h2 id="七、私有服务器"><a href="#七、私有服务器" class="headerlink" title="七、私有服务器"></a>七、私有服务器</h2><p>一个镜像的定位标识：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Registr/]Repo[:tag]</span><br></pre></td></tr></table></figure></p>
+<p>标识中的概念：</p>
+<ul>
+<li>注册服务器（Registry），存放镜像的服务器，例如：<ul>
+<li>Docker Hub ，Docker 官方注册服务器，也是 Docker 安装后的默认注册服务器。</li>
+<li>registry.cn-zhangjiakou.aliyuncs.com ，阿里云注册服务器。</li>
+</ul>
+</li>
+<li>仓库（Repositories），同一个项目中不同的版本镜像都是放在一个仓库中，repo 是两段式命名： <code>&lt;用户名&gt;/&lt;软件名&gt;</code>。例如：<ul>
+<li>nginx</li>
+<li>redis</li>
+<li>signalping/trade_server_image</li>
+</ul>
+</li>
+<li>标签（tag），用于标记仓库中具体的镜像，例如：<ul>
+<li>ubuntu:18.04</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-1-注册服务器"><a href="#7-1-注册服务器" class="headerlink" title="7.1 注册服务器"></a>7.1 注册服务器</h3><p>登录：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker login registry.cn-zhangjiakou.aliyuncs.com</span><br></pre></td></tr></table></figure></p>
+<p>查看当前登录注册服务器和登录凭证：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.docker/config.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># auth 就是 Basic Auth 格式的凭证</span></span><br><span class="line"><span class="comment"># &#123;</span></span><br><span class="line"><span class="comment">#  "auths": &#123;</span></span><br><span class="line"><span class="comment">#       "https://index.docker.io/v1/": &#123;"auth": "xxxx"&#125;,</span></span><br><span class="line"><span class="comment">#       "registry.cn-hangzhou.aliyuncs.com": &#123;"auth": "xxxx"&#125;,</span></span><br><span class="line"><span class="comment">#       "registry.cn-zhangjiakou.aliyuncs.com": &#123; "auth": "xxxx"&#125;</span></span><br><span class="line"><span class="comment">#   &#125;,</span></span><br><span class="line"><span class="comment">#  "HttpHeaders": &#123;</span></span><br><span class="line"><span class="comment">#      "User-Agent": "Docker-Client/19.03.5 (linux)"</span></span><br><span class="line"><span class="comment">#  &#125;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上传镜像：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.登录</span></span><br><span class="line">$ docker login registry.cn-zhangjiakou.aliyuncs.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2标记本地镜像</span></span><br><span class="line"><span class="comment"># $ docker tag [ImageId/ImageName] registry.cn-zhangjiakou.aliyuncs.com/signalping/trade_server_image:[镜像版本号]</span></span><br><span class="line">$ docker tag agent:latest registry.cn-zhangjiakou.aliyuncs.com/acs/agent:0.8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.上传</span></span><br><span class="line">$ docker push registry.cn-hangzhou.aliyuncs.com/acs/agent:0.8</span><br></pre></td></tr></table></figure></p>
+<h2 id="附录、参考文献"><a href="#附录、参考文献" class="headerlink" title="附录、参考文献"></a>附录、参考文献</h2><ul>
+<li><a href="https://docs.docker.com/develop/" target="_blank" rel="noopener">Develop with Docker</a></li>
+<li><a href="https://yeasy.gitbook.io/docker_practice/" target="_blank" rel="noopener">Docker 从入门到实践</a></li>
+<li><a href="https://help.aliyun.com/product/60716.html?spm=a2c4g.11186623.6.540.188c42c7MkjQYy" target="_blank" rel="noopener">阿里云容器镜像服务</a></li>
+</ul>
+
         </div>
 
         
